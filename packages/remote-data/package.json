@@ -1,0 +1,21 @@
+{
+  "name": "@ngspot/remote-data",
+  "version": "1.0.0",
+  "keywords": [
+    "request",
+    "loading",
+    "error",
+    "remote-data",
+    "angular",
+    "react",
+    "vue"
+  ],
+  "homepage": "https://github.com/DmitryEfimenko/ngspot/packages/remote-data",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DmitryEfimenko/ngspot",
+    "directory": "packages/remote-data"
+  },
+  "author": "Dmitry Efimenko",
+  "license": "MIT"
+}

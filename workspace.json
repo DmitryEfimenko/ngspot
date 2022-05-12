@@ -1,0 +1,9 @@
+{
+  "version": 2,
+  "projects": {
+    "ng-superclass": "packages/ng-superclass",
+    "remote-data": "packages/remote-data",
+    "remote-data-rx": "packages/remote-data-rx",
+    "rxjs": "packages/rxjs"
+  }
+}

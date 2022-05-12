@@ -1,0 +1,25 @@
+{
+  "name": "@ngspot/remote-data-rx",
+  "version": "1.0.0",
+  "keywords": [
+    "request",
+    "loading",
+    "error",
+    "remote-data",
+    "rxjs",
+    "angular",
+    "react",
+    "vue"
+  ],
+  "homepage": "https://github.com/DmitryEfimenko/ngspot/packages/remote-data-rx",
+  "peerDependencies": {
+    "rxjs": "*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DmitryEfimenko/ngspot",
+    "directory": "packages/remote-data-rx"
+  },
+  "author": "Dmitry Efimenko",
+  "license": "MIT"
+}
