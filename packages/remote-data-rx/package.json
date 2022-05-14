@@ -1,6 +1,6 @@
 {
   "name": "@ngspot/remote-data-rx",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "keywords": [
     "request",
     "loading",
@@ -13,6 +13,7 @@
   ],
   "homepage": "https://github.com/DmitryEfimenko/ngspot/packages/remote-data-rx",
   "peerDependencies": {
+    "@ngspot/remote-data": "^1.0.0",
     "rxjs": "*"
   },
   "repository": {

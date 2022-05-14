@@ -8,9 +8,9 @@
  */
 
 import { readCachedProjectGraph } from '@nrwl/devkit';
+import chalk from 'chalk';
 import { execSync } from 'child_process';
 import { readFileSync, writeFileSync } from 'fs';
-import chalk from 'chalk';
 
 function invariant(condition, message) {
   if (!condition) {
@@ -38,7 +38,10 @@ invariant(
   `Could not find project "${name}" in the workspace. Is the project.json configured correctly?`
 );
 
-const outputPath = project.data?.targets?.build?.options?.outputPath;
+const outputPath =
+  project.data?.targets?.build?.executor === '@nrwl/angular:package'
+    ? project.data?.targets?.build?.outputs?.[0]
+    : project.data?.targets?.build?.options?.outputPath;
 invariant(
   outputPath,
   `Could not find "build.options.outputPath" of project "${name}". Is project.json configured  correctly?`

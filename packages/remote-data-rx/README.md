@@ -5,7 +5,7 @@
 [![PRs](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)]()
 [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
-> An RxJS extension library for tracking completable observables (such as HTTP requests) with loading and error information via RemoteData data structure.
+> An RxJS extension library for tracking observables (such as HTTP requests) with loading and error information via RemoteData data structure.
 
 ## Features
 
@@ -13,13 +13,27 @@
 - ✅ Configurable for many scenarios
 - ✅ Compatible with any framework
 
+## Installation
+
+### NPM
+
+```sh
+npm install @ngspot/remote-data-rx
+```
+
+### Yarn
+
+```sh
+yarn add @ngspot/remote-data-rx
+```
+
 ## The RemoteData data structure
 
 See [@ngspot/remote-data](https://www.npmjs.com/package/@ngspot/remote-data)
 
 ## `trackRemoteData` RxJS Operator
 
-Using RemoteData state builder functions is better than composing the object by hand, but there is a better way if you are using observables. Use the `trackRemoteData` operator:
+Using RemoteData state builder functions is better than composing the object by hand, but there is an even better way if using observables. Use the `trackRemoteData` operator:
 
 ```ts
 import { trackRemoteData } from '@ngspot/remote-data-rx';
@@ -49,7 +63,7 @@ export interface TrackRemoteDataOpts<T, E = Error> {
 
 ### option: "subject":
 
-Imagine you have a side-effect in your application, which is in charge of posting data to the server. In this case, there is no way to assign the result of the post to an observable. So instead, we're telling the `trackRemoteData` operator to push results into a different subject. For a convenience sake, this library provides a tiny function to generate such subject, which is a BehaviorSubject initialized with `notAskedState`. The function is called `trackingRemoteDataSubject()`.
+Imagine having a side-effect in the application, which is in charge of posting data to the server. In this case, there is no way to assign the result of the post to an observable. So instead, developers tell the `trackRemoteData` operator to push results into a different subject. For convenience's sake, this library provides a tiny function to generate such subject, which is a BehaviorSubject initialized with `notAskedState`. The function is called `trackingRemoteDataSubject()`.
 
 ```ts
 import { trackRemoteData } from '@ngspot/remote-data-rx';
@@ -69,15 +83,15 @@ class MyComponent {
 }
 ```
 
-Now we can subscribe to the `savingState$` in the template.
+Now developers can subscribe to the `savingState$` in the template.
 
-Notice that under the hood the "complete" event is not passed into the provided subject. This way `saveData()` method can be called many times and the provided Subject won't be completed.
+Notice, that under the hood, the "complete" event is not passed into the provided subject. This way `saveData()` method can be called many times and the provided Subject won't be completed.
 
 ### option "keepPreviousValue"
 
-By default, when `trackRemoteData()` operator is used, it will always set `value` property of the RemoteData to `undefined` when the state is "loading". However, this may not be the desired behavior. Perhaps, instead of just displaying the loading indicator, it's needed to also keep the previously-loaded data while graying it out. The `keepPreviousValue` is exactly for this use-case.
+By default, when the `trackRemoteData()` operator is used, it will always set `value` property of the RemoteData to `undefined` when the state is "loading". However, this may not be the desired behavior. Perhaps, instead of just displaying the loading indicator the application requires to keep the previously loaded data shown while graying the data out. The `keepPreviousValue` is exactly for this use-case.
 
-Imagine we load data based on the change of the `userId$` observable:
+Imagine loading data based on the change of the `userId$` observable:
 
 ```ts
 import { trackRemoteData, PreviousValueCache } from '@ngspot/remote-data-rx';
@@ -95,7 +109,7 @@ class MyComponent {
 }
 ```
 
-The `PreviousValueCache` is a storage we have to provide so that the `trackRemoteData` operator has a place to store the previous value between each new request.
+The `PreviousValueCache` is storage to provide so that the `trackRemoteData` operator has a place to store the previous value between each new request.
 
 ## Previous Art
 

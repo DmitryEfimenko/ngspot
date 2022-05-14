@@ -1,7 +1,13 @@
 import { Directive, OnChanges, SimpleChanges } from '@angular/core';
-import { asapScheduler, BehaviorSubject, merge, Observable, of, Subject } from 'rxjs';
+import {
+  asapScheduler,
+  BehaviorSubject,
+  merge,
+  Observable,
+  of,
+  Subject,
+} from 'rxjs';
 import { delay, distinctUntilChanged, filter, map } from 'rxjs/operators';
-
 import { SubscribeSink } from './subscribe-sink';
 
 /**
@@ -39,9 +45,12 @@ import { SubscribeSink } from './subscribe-sink';
  * ```
  */
 // maybe this won't need the fake selector after https://github.com/angular/angular/issues/36427
-@Directive({ selector: '[scDirectiveSuperclass]' })
+@Directive({ selector: '[ngsDirectiveSuperclass]' })
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
-export abstract class DirectiveSuperclass extends SubscribeSink implements OnChanges {
+export abstract class DirectiveSuperclass
+  extends SubscribeSink
+  implements OnChanges
+{
   /**
    *  Emits the set of `@Input()` property names that change during each call to `ngOnChanges()`.
    */
@@ -55,7 +64,9 @@ export abstract class DirectiveSuperclass extends SubscribeSink implements OnCha
   );
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.inputChanges$.next(new Set(Object.getOwnPropertyNames(changes) as Array<keyof this>));
+    this.inputChanges$.next(
+      new Set(Object.getOwnPropertyNames(changes) as Array<keyof this>)
+    );
     this.onChangesRan$$.next(true);
   }
 
@@ -68,7 +79,11 @@ export abstract class DirectiveSuperclass extends SubscribeSink implements OnCha
     //   - on the first call to ngOnChanges
     //   - after a delay if ngOnChanges is never called (when nothing is bound to the directive)
     //   - when the value actually changes
-    return merge(this.onChangesRan$, this.inputChanges$, of(0).pipe(delay(0, asapScheduler))).pipe(
+    return merge(
+      this.onChangesRan$,
+      this.inputChanges$,
+      of(0).pipe(delay(0, asapScheduler))
+    ).pipe(
       map(() => this[key]),
       distinctUntilChanged()
     );
