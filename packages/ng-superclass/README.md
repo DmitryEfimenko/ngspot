@@ -194,7 +194,7 @@ Both methods make use of observable streams, which gives the developer full cont
     <input [formControl]="control" />
   `,
 })
-class MyCounter extends FormComponentSuperclass<Date, string> {
+class MyCounter extends WrappedControlSuperclass<Date, string> {
   control = new FormControl();
 
   // make sure that the Date type that this custom control receives from the

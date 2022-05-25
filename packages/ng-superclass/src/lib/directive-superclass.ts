@@ -11,36 +11,20 @@ import { delay, distinctUntilChanged, filter, map } from 'rxjs/operators';
 import { SubscribeSink } from './subscribe-sink';
 
 /**
- * Extend this when creating a directive (including a component, which is a kind of directive) to gain access to the helpers demonstrated below. **Warning:** You _must_ include a constructor in your subclass.
+ * Extend this when creating a directive (including a component, which is a kind of directive) to gain access to the helpers demonstrated below.
  *
  * ```ts
  * @Component({
- *   selector: "s-color-text",
+ *   selector: "app-color-text",
  *   template: `
  *     <span [style.background]="color">{{ color }}</span>
  *   `,
- *   // note that `bindToInstance()` works even with OnPush change detection
  *   changeDetection: ChangeDetectionStrategy.OnPush,
  * })
  *  class ColorTextComponent extends DirectiveSuperclass {
  *   @Input() color: string;
  *
- *   constructor(
- *     @Inject("color$") color$: Observable<string>,
- *     injector: Injector,
- *   ) {
- *     super(injector);
- *
- *     // combine everything to calculate `color` and keep it up to date
- *     this.bindToInstance(
- *       "color",
- *       combineLatest(
- *         this.getInput$("prefix"),
- *         this.getInput$("prefix2"),
- *         color$,
- *       ).pipe(map((parts) => parts.filter((p) => p).join(""))),
- *     );
- *   }
+ *   color$ = this.getInput$("color");
  * }
  * ```
  */

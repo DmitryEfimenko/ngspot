@@ -8,14 +8,6 @@ import { syncOuterAndInnerControls } from './sync-controls/sync-outer-and-inner-
 /**
  * Extend this when creating a form component that simply wraps existing ones, to reduce a lot of boilerplate. **Warning:** You _must_ include a constructor in your subclass.
  *
- * To wrap a single form control use the subclass {@linkcode WrappedFormControlSuperclass}:
- * ```ts
- * @Component({
- *   template: `<input [formControl]="control">`,
- *   providers: [provideValueAccessor(StringComponent)],
- * })
- * class StringComponent extends WrappedFormControlSuperclass<string> {}
- * ```
  *
  * Example of wrapping multiple inner components:
  * ```ts
@@ -32,7 +24,6 @@ import { syncOuterAndInnerControls } from './sync-controls/sync-outer-and-inner-
  *       <input id="last" formControlName="lastName" />
  *     </div>
  *   `,
- *   providers: [provideValueAccessor(FullNameComponent)],
  * })
  * class FullNameComponent extends WrappedControlSuperclass<FullName> {
  *   control = new FormGroup({
@@ -40,9 +31,9 @@ import { syncOuterAndInnerControls } from './sync-controls/sync-outer-and-inner-
  *     lastName: new FormControl(),
  *   });
  *
- *   protected outerToInner(outer: FullName | null): FullName {
+ *   override outerToInner(outer$: Observable<FullName | null>): Observable<FullName> {
  *     // `outer` can come in as `null` during initialization when the user binds with `ngModel`
- *     return outer || new FullName();
+ *     return outer$.pipe(map(value) => (value ?? new FullName()));
  *   }
  * }
  * ```
@@ -51,18 +42,21 @@ import { syncOuterAndInnerControls } from './sync-controls/sync-outer-and-inner-
  * ```ts
  * @Component({
  *   template: `<input type="datetime-local" [control]="formControl">`,
- *   providers: [provideValueAccessor(DateComponent)],
  * })
  * class DateComponent extends WrappedFormControlSuperclass<Date, string> {
- *   protected innerToOuter(inner: string): Date {
- *     return new Date(inner + "Z");
+ *   override innerToOuter(inner$: Observable<string>): Observable<Date> {
+ *     return inner$.pipe(
+ *       map((value) => { return new Date(value + 'Z') })
+ *     );
  *   }
  *
- *   protected outerToInner(outer: Date): string {
- *     if (outer === null) {
- *       return ""; // happens during initialization
- *     }
- *     return outer.toISOString().substr(0, 16);
+ *   override outerToInner(outer$: Observable<Date>): Observable<string> {
+ *     return outer$.pipe(map((value) => {
+ *       if (value == null) {
+ *         return ''; // happens during initialization
+ *       }
+ *       return value.toISOString().substr(0, 16);
+ *     }));
  *   }
  * }
  * ```

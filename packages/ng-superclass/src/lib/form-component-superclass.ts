@@ -42,7 +42,6 @@ export function provideValueAccessor(type: Type<any>): Provider {
  *   template: `
  *     <button (click)="increment()" [disabled]="isDisabled">{{ counter }}</button>
  *   `,
- *   providers: [provideValueAccessor(CounterComponent)],
  * })
  * class CounterComponent extends FormComponentSuperclass<number> {
  *   counter = 0;
