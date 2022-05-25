@@ -13,6 +13,9 @@
     "affected:test": "nx affected --target=test",
     "migration": "nx migrate --run-migrations",
     "postinstall": "ngcc --properties es2015 browser module main",
+    "version:ng-superclass": "nx run ng-superclass:version",
+    "version:remote-data": "nx run remote-data:version",
+    "version:remote-data-rx": "nx run remote-data-rx:version",
     "prepare": "husky install"
   },
   "private": true,
