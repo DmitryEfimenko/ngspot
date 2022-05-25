@@ -15,8 +15,10 @@ One time config: `git config --global push.followTags true`
 1. Run `npm run test`
 1. Run `git add .`
 1. Run `npm run c` and choose fix or feature
+1. Run `nx run <lib>:version --dryRun true`
+1. Make sure that CHANGELOG looks right and run the command without --dryRun option
 1. Run `npm run build:all`
-1. Run `nx publish <lib> --ver=<required-version> --tag=[custom-tag]`
+1. Run `nx publish <lib> --ver=<required-version> --tag=latest`
 1. Push changes `git push`
 
 🔎 **Smart, Fast and Extensible Build System**

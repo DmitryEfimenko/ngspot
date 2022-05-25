@@ -10,8 +10,10 @@
     "format": "nx format:write",
     "update": "nx migrate latest",
     "affected": "nx affected",
+    "affected:test": "nx affected --target=test",
     "migration": "nx migrate --run-migrations",
-    "postinstall": "ngcc --properties es2015 browser module main"
+    "postinstall": "ngcc --properties es2015 browser module main",
+    "prepare": "husky install"
   },
   "private": true,
   "dependencies": {
@@ -40,6 +42,7 @@
     "@commitlint/config-conventional": "^16.2.4",
     "@hirez_io/jest-given": "^1.1.0",
     "@hirez_io/observer-spy": "^2.2.0",
+    "@jscutlery/semver": "^2.23.4",
     "@nrwl/angular": "^14.1.5",
     "@nrwl/cli": "14.1.4",
     "@nrwl/cypress": "14.1.5",
@@ -57,6 +60,7 @@
     "eslint": "~8.12.0",
     "eslint-config-prettier": "8.1.0",
     "git-cz": "^4.8.0",
+    "husky": "^7.0.4",
     "jest": "27.5.1",
     "jest-preset-angular": "11.1.1",
     "ng-packagr": "^13.0.0",

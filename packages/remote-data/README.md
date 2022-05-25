@@ -91,13 +91,19 @@ Here's one example of usage:
 
 ```html
 <!-- Show a spinner if state is loading -->
-<my-loading-spinner *ngIf="data.isLoading"></my-loading-spinner>
+<my-loading-spinner *ngIf="data.state === 'loading'"></my-loading-spinner>
 
 <!-- Show the data if state is loaded -->
-<my-data-view *ngIf="data.value" [data]="data.value"></my-data-view>
+<my-data-view
+  *ngIf="data.state === 'success'"
+  [data]="data.value"
+></my-data-view>
 
 <!-- Show an error message if state is error -->
-<my-error-view *ngIf="data.error" [error]="data.error"></my-error-view>
+<my-error-view
+  *ngIf="data.state === 'error'"
+  [error]="data.error"
+></my-error-view>
 ```
 
 #### React
@@ -106,11 +112,15 @@ Here's one example of usage:
 return (
   <>
     // Show a spinner if state is loading
-    {data.isLoading && <my-loading-spinner></my-loading-spinner>}
+    {data.state === 'loading' && <my-loading-spinner></my-loading-spinner>}
     // Show the data if state is loaded
-    {data.value && <my-data-view data={data.value}></my-data-view>}
+    {data.state === 'success' && (
+      <my-data-view data={data.value}></my-data-view>
+    )}
     // Show an error message if state is error
-    {data.error && <my-error-view error={data.error}></my-error-view>}
+    {data.state === 'error' && (
+      <my-error-view error={data.error}></my-error-view>
+    )}
   </>
 );
 ```

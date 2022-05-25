@@ -15,7 +15,9 @@ export function loadingState<T>(value?: T): LoadingState<T> {
   };
 }
 
-export function successState<T>(value?: T): SuccessState<T> {
+export function successState(): SuccessState<void>;
+export function successState<T>(value: T): SuccessState<T>;
+export function successState<T>(value?: T): SuccessState<T | void> {
   return {
     state: 'success',
     isLoading: false,

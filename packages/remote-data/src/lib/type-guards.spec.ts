@@ -63,6 +63,7 @@ const testStates = Object.freeze({
   LoadedState: Object.freeze<SuccessState<void>>({
     state: 'success',
     isLoading: false,
+    value: undefined,
   }),
   ErrorState: Object.freeze<ErrorState<void>>({
     state: 'error',
