@@ -2,6 +2,8 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [1.1.2](https://github.com/DmitryEfimenko/ngspot/compare/remote-data-rx-1.1.1...remote-data-rx-1.1.2) (2022-06-15)
+
 ### [1.1.1](https://github.com/DmitryEfimenko/ngspot/compare/remote-data-rx-1.1.0...remote-data-rx-1.1.1) (2022-06-15)
 
 
