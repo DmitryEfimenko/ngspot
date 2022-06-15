@@ -11,7 +11,7 @@
     "react",
     "vue"
   ],
-  "homepage": "https://github.com/DmitryEfimenko/ngspot/packages/remote-data-rx",
+  "homepage": "https://github.com/DmitryEfimenko/ngspot/tree/main/packages/remote-data-rx",
   "peerDependencies": {
     "@ngspot/remote-data": "^1.0.0",
     "rxjs": "*"
