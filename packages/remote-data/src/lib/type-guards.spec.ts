@@ -52,7 +52,7 @@ const testMatrix: TestParams[] = [
 ];
 
 const testStates = Object.freeze({
-  NotAskedState: Object.freeze<NotAskedState>({
+  NotAskedState: Object.freeze<NotAskedState<void>>({
     state: 'notAsked',
     isLoading: false,
   }),

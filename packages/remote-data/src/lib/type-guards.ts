@@ -8,7 +8,7 @@ import {
 
 export function isNotAskedState<T>(
   data: RemoteData<T> | undefined | null
-): data is NotAskedState {
+): data is NotAskedState<T> {
   return data?.state === 'notAsked';
 }
 

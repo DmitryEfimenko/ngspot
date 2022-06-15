@@ -1,9 +1,10 @@
 import { ErrorState, LoadingState, NotAskedState, SuccessState } from './model';
 
-export function notAskedState(): NotAskedState {
+export function notAskedState<T>(value?: T): NotAskedState<T> {
   return {
     state: 'notAsked',
     isLoading: false,
+    value,
   };
 }
 

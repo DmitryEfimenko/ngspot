@@ -1,14 +1,15 @@
 export type RemoteData<T = unknown, E = Error> =
-  | NotAskedState
+  | NotAskedState<T>
   | LoadingState<T>
   | SuccessState<T>
   | ErrorState<T, E>;
 
 export type RemoteDataState = RemoteData['state'];
 
-export interface NotAskedState {
+export interface NotAskedState<T> {
   readonly state: 'notAsked';
   readonly isLoading: false;
+  readonly value?: T;
 }
 
 export interface LoadingState<T = unknown> {
