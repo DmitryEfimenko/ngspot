@@ -18,7 +18,7 @@ import { TrackRemoteDataOpts } from './model';
  */
 export function trackRemoteData<T, E = Error>(
   opts?: TrackRemoteDataOpts<T, E>
-): UnaryFunction<Observable<T>, Observable<RemoteData<T>>> {
+): UnaryFunction<Observable<T>, Observable<RemoteData<T, E>>> {
   return (source$: Observable<T>) => {
     const s$ = source$.pipe(
       tap((res) => {
