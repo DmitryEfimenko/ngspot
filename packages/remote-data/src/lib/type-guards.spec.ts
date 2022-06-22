@@ -1,3 +1,4 @@
+import { notAskedState } from './builders';
 import {
   ErrorState,
   LoadingState,
@@ -91,5 +92,22 @@ describe('type-guards', () => {
         expect(testParams.function(undefined)).toBe(false);
       });
     });
+  });
+});
+
+describe('type-guard: types', () => {
+  it('isNotAskedState should not error', () => {
+    const data = notAskedState() as RemoteData<void, boolean>;
+    isNotAskedState(data);
+  });
+
+  it('isLoadingState should not error', () => {
+    const data = notAskedState() as RemoteData<void, boolean>;
+    isLoadingState(data);
+  });
+
+  it('isSuccessState should not error', () => {
+    const data = notAskedState() as RemoteData<void, boolean>;
+    isSuccessState(data);
   });
 });
