@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [1.2.1](https://github.com/DmitryEfimenko/ngspot/compare/remote-data-1.2.0...remote-data-1.2.1) (2022-06-22)
+
+
+### Bug Fixes
+
+* **remote-data:** 🐞 correct types for guards ([4762843](https://github.com/DmitryEfimenko/ngspot/commit/4762843ef7ced814888f42871d9ac633916b1e44))
+
 ## [1.2.0](https://github.com/DmitryEfimenko/ngspot/compare/remote-data-1.1.0...remote-data-1.2.0) (2022-06-15)
 
 
