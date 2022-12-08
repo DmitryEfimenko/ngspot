@@ -1,6 +1,6 @@
 {
   "name": "@ngspot/ng-superclass",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "keywords": [
     "angular",
     "formcontrol",
@@ -9,15 +9,15 @@
     "control",
     "controlvalueaccessor"
   ],
-  "homepage": "https://github.com/DmitryEfimenko/ngspot/packages/ng-superclass",
+  "homepage": "https://github.com/DmitryEfimenko/ngspot/tree/main/packages/ng-superclass",
   "repository": {
     "type": "git",
     "url": "https://github.com/DmitryEfimenko/ngspot",
     "directory": "packages/ng-superclass"
   },
   "peerDependencies": {
-    "@angular/common": "12 - 13",
-    "@angular/core": "12 - 13"
+    "@angular/common": "12 - 15",
+    "@angular/core": "12 - 15"
   },
   "dependencies": {
     "tslib": "^2.3.0"
