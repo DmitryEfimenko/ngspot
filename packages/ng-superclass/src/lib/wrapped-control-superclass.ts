@@ -1,7 +1,8 @@
-import { Directive, Injector, OnInit } from '@angular/core';
+import { Directive, Injector } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
-import { merge, Observable, of, Subject } from 'rxjs';
-import { shareReplay, startWith, switchMap, tap } from 'rxjs/operators';
+import { merge, Observable, of, ReplaySubject } from 'rxjs';
+import { shareReplay, switchMap, tap } from 'rxjs/operators';
+
 import { FormComponentSuperclass } from './form-component-superclass';
 import { syncOuterAndInnerControls } from './sync-controls/sync-outer-and-inner-controls';
 
@@ -62,21 +63,21 @@ import { syncOuterAndInnerControls } from './sync-controls/sync-outer-and-inner-
  * ```
  */
 @Directive()
-export abstract class WrappedControlSuperclass<OuterType, InnerType = OuterType>
-  extends FormComponentSuperclass<OuterType>
-  implements OnInit
-{
+export abstract class WrappedControlSuperclass<
+  OuterType,
+  InnerType = OuterType
+> extends FormComponentSuperclass<OuterType> {
   /** Bind this to your inner form control to make all the magic happen. */
   abstract control: AbstractControl;
 
-  private incomingValues$$ = new Subject<OuterType>();
+  abstract innerControlValues$: Observable<InnerType>;
+
+  private incomingValues$$ = new ReplaySubject<OuterType>(1);
 
   /**
    * Stream of values that are set on the outer control
    */
   incomingValues$ = this.incomingValues$$.asObservable();
-
-  innerControlValues$: Observable<InnerType> | undefined;
 
   /**
    * Stream that takes all incoming values, optionally applies user-provided
@@ -107,20 +108,11 @@ export abstract class WrappedControlSuperclass<OuterType, InnerType = OuterType>
 
   constructor(injector: Injector) {
     super(injector);
-  }
 
-  ngOnInit() {
-    if (!this.control) {
-      throw new Error('Initialize property control in your subclass');
-    }
-
-    // TODO: find a way to move it to constructor to remove the "| undefined"
-    this.innerControlValues$ = this.control.valueChanges.pipe(
-      startWith(this.control.value)
-    );
-
-    this.subscribeTo(this.outerToInner$);
-    this.subscribeTo(this.innerToOuter$);
+    setTimeout(() => {
+      this.subscribeTo(this.outerToInner$);
+      this.subscribeTo(this.innerToOuter$);
+    });
 
     this.syncOuterAndInnerControls();
   }

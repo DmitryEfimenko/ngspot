@@ -1,4 +1,5 @@
 import { FormControl } from '@angular/forms';
+import { Observable, startWith } from 'rxjs';
 
 import { WrappedControlSuperclass } from './wrapped-control-superclass';
 
@@ -10,4 +11,7 @@ export abstract class WrappedFormControlSuperclass<
   InnerType = OuterType
 > extends WrappedControlSuperclass<OuterType, InnerType> {
   control = new FormControl();
+  innerControlValues$: Observable<InnerType> = this.control.valueChanges.pipe(
+    startWith(this.control.value)
+  );
 }
