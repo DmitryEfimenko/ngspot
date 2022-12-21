@@ -1,4 +1,6 @@
 {
+  "name": "remote-data-rx",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/remote-data-rx/src",
   "projectType": "library",
   "targets": {
@@ -13,7 +15,7 @@
       }
     },
     "publish": {
-      "executor": "@nrwl/workspace:run-commands",
+      "executor": "nx:run-commands",
       "options": {
         "command": "node tools/scripts/publish.mjs remote-data-rx {args.ver} {args.tag}"
       },
@@ -33,7 +35,7 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/packages/remote-data-rx"],
+      "outputs": ["{workspaceRoot}/coverage/packages/remote-data-rx"],
       "options": {
         "jestConfig": "packages/remote-data-rx/jest.config.ts",
         "passWithNoTests": true
@@ -46,5 +48,5 @@
       }
     }
   },
-  "tags": []
+  "tags": ["lib:remote-data"]
 }

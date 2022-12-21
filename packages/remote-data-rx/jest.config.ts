@@ -1,4 +1,5 @@
-module.exports = {
+/* eslint-disable */
+export default {
   displayName: 'remote-data-rx',
   preset: '../../jest.preset.js',
   globals: {

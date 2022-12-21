@@ -13,8 +13,8 @@
             "allow": [],
             "depConstraints": [
               {
-                "sourceTag": "*",
-                "onlyDependOnLibsWithTags": ["*"]
+                "sourceTag": "lib:remote-data",
+                "onlyDependOnLibsWithTags": ["lib:remote-data"]
               }
             ]
           }
