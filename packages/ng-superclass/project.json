@@ -1,11 +1,13 @@
 {
+  "name": "ng-superclass",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
   "sourceRoot": "packages/ng-superclass/src",
   "prefix": "ngspot",
   "targets": {
     "build": {
       "executor": "@nrwl/angular:package",
-      "outputs": ["dist/packages/ng-superclass"],
+      "outputs": ["{workspaceRoot}/dist/packages/ng-superclass"],
       "options": {
         "project": "packages/ng-superclass/ng-package.json"
       },
@@ -21,7 +23,7 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/packages/ng-superclass"],
+      "outputs": ["{workspaceRoot}/coverage/packages/ng-superclass"],
       "options": {
         "jestConfig": "packages/ng-superclass/jest.config.ts",
         "passWithNoTests": true
@@ -37,7 +39,7 @@
       }
     },
     "publish": {
-      "executor": "@nrwl/workspace:run-commands",
+      "executor": "nx:run-commands",
       "options": {
         "command": "node tools/scripts/publish.mjs ng-superclass {args.ver} {args.tag}"
       },

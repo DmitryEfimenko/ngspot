@@ -5,5 +5,6 @@
     "remote-data": "packages/remote-data",
     "remote-data-rx": "packages/remote-data-rx",
     "rxjs": "packages/rxjs"
-  }
+  },
+  "$schema": "./node_modules/nx/schemas/workspace-schema.json"
 }
