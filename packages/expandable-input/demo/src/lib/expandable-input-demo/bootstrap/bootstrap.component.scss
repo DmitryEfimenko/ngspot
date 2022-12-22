@@ -1,0 +1,24 @@
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css");
+
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/maps";
+@import "bootstrap/scss/mixins";
+@import "bootstrap/scss/root";
+@import "bootstrap/scss/buttons";
+@import "bootstrap/scss/forms";
+
+ngs-code-snippets {
+  margin-bottom: 2rem;
+}
+
+:host {
+  --expandable-input-align-items: end;
+  --expandable-input-items-gap: .5rem;
+  --expandable-input-action-icon-bottom: .5rem;
+}
+
+.form-label {
+  // prevents height of the label modifications when it's collapsed
+  white-space: nowrap;
+}

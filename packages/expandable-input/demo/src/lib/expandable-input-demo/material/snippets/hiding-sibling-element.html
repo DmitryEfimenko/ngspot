@@ -1,0 +1,34 @@
+<div class="flex items-baseline" [@gap]="expInp.isOpen">
+  <button
+    type="button"
+    mat-mini-fab
+    [@smoothHorizontalCollapse]="expInp.isOpen"
+  >
+    <mat-icon>pets</mat-icon>
+  </button>
+
+  <ngs-expandable-input #expInp class="flex-1">
+    <mat-form-field ngsExpInput>
+      <mat-label>Search</mat-label>
+      <input type="text" matInput />
+    </mat-form-field>
+
+    <button type="button" mat-mini-fab color="primary" ngsExpIconOpen>
+      <mat-icon>search</mat-icon>
+    </button>
+
+    <button type="button" mat-mini-fab ngsExpIconClose>
+      <mat-icon>close</mat-icon>
+    </button>
+  </ngs-expandable-input>
+
+  <button
+    type="button"
+    mat-raised-button
+    color="primary"
+    style="top: -7px"
+    [@smoothHorizontalCollapse]="expInp.isOpen"
+  >
+    Some Element
+  </button>
+</div>

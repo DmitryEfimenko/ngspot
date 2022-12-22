@@ -1,0 +1,8 @@
+::ng-deep {
+  mat-tab-group.sections > mat-tab-header {
+    position: sticky !important;
+    top: 0;
+    z-index: 10;
+    background: #140f0f;
+  }
+}

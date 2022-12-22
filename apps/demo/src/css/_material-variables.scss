@@ -1,0 +1,25 @@
+// Main colors
+$primary-color: var(--primary-500);
+$primary-lighter-color: var(--primary-200);
+$primary-darker-color: var(--primary-800);
+
+$accent-color: var(--accent-500);
+$accent-lighter-color: var(--accent-200);
+$accent-darker-color: var(--accent-800);
+
+// Dark Theme Text
+$light-text: var(--primary-50);
+$light-primary-text: $light-text;
+$light-accent-text: var(--accent-200);
+$light-dividers: var(--primary-300);
+$light-disabled-text: rgba($light-primary-text, 0.5);
+$light-focused: rgba($light-primary-text, 0.12);
+
+// Background config
+$dark-background: #23241f;
+$dark-bg-lighter-5: lighten($dark-background, 5%);
+$dark-bg-lighter-10: lighten($dark-background, 10%);
+$dark-bg-lighter-20: lighten($dark-background, 20%);
+$dark-bg-lighter-30: lighten($dark-background, 30%);
+$light-bg-alpha-4: rgba(#fafafa, 0.04);
+$light-bg-alpha-12: rgba(#fafafa, 0.3);

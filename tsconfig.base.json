@@ -16,6 +16,13 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@ngspot/common": ["packages/common/src/index.ts"],
+      "@ngspot/expandable-input": [
+        "packages/expandable-input/package/src/index.ts"
+      ],
+      "@ngspot/expandable-input-demo": [
+        "packages/expandable-input/demo/src/index.ts"
+      ],
       "@ngspot/ng-superclass": ["packages/ng-superclass/src/index.ts"],
       "@ngspot/remote-data": ["packages/remote-data/src/index.ts"],
       "@ngspot/remote-data-rx": ["packages/remote-data-rx/src/index.ts"],

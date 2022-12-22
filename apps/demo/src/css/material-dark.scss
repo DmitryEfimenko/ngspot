@@ -1,0 +1,81 @@
+@use 'sass:map';
+@use '@angular/material' as mat;
+@use "palette" as palette;
+@use 'material-variables' as v;
+
+$mat-dark-theme-foreground: (
+  base: v.$light-text,
+  divider: v.$light-dividers,
+  dividers: v.$light-dividers,
+  disabled: v.$light-disabled-text,
+  disabled-button: rgba(v.$light-text, 0.3),
+  disabled-text: v.$light-disabled-text,
+  elevation: black,
+  hint-text: v.$light-disabled-text,
+  secondary-text: v.$light-accent-text,
+  accent-text: v.$light-accent-text,
+  icon: v.$light-text,
+  icons: v.$light-text,
+  text: v.$light-text,
+  slider-min: v.$accent-color,
+  slider-off: rgba(v.$light-text, 0.3),
+  slider-off-active: rgba(v.$light-text, 0.3),
+);
+
+$mat-dark-theme-background: (
+  background: v.$dark-background,
+  status-bar: v.$dark-bg-lighter-20,
+  app-bar: v.$dark-bg-lighter-5,
+  hover: v.$light-bg-alpha-4,
+  card: v.$dark-bg-lighter-5,
+  dialog: v.$dark-bg-lighter-5,
+  tooltip: v.$dark-bg-lighter-20,
+  disabled-button: v.$light-bg-alpha-12,
+  raised-button: v.$dark-bg-lighter-5,
+  focused-button: v.$light-focused,
+  selected-button: v.$dark-bg-lighter-20,
+  selected-disabled-button: v.$dark-bg-lighter-30,
+  disabled-button-toggle: v.$dark-bg-lighter-10,
+  unselected-chip: v.$dark-bg-lighter-20,
+  disabled-list-option: v.$dark-bg-lighter-10,
+);
+
+$theme: mat.define-dark-theme((
+  // colors are the same as in light theme
+  color: (
+    primary: palette.$primary,
+    accent: palette.$accent,
+    warn: palette.$warn,
+  ),
+));
+
+$material-theme-overrides: (
+  'color': (
+    'foreground': $mat-dark-theme-foreground,
+    'background': $mat-dark-theme-background,
+  ),
+);
+
+$theme: map.deep-merge($theme, $material-theme-overrides);
+
+body.dark {
+  // @include mat.core-theme($theme);
+  // @include mat.button-theme($theme);
+  @include mat.all-component-themes($theme);
+
+  color: v.$light-primary-text;
+  background-color: v.$dark-background;
+
+  hr {
+    color: v.$light-dividers;
+  }
+
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active {
+    transition: background-color 5000s ease-in-out 0s;
+    box-shadow: 0 0 0px 1000px #1a1a1a inset;
+    -webkit-text-fill-color: v.$light-text;
+  }
+}

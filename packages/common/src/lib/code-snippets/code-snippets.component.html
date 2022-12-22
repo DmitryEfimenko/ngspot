@@ -1,0 +1,59 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title-group class="items-center">
+      <mat-card-title>
+        <h3 *ngIf="title" class="pl-4">{{ title }}</h3>
+      </mat-card-title>
+
+      <div>
+        <button
+          mat-icon-button
+          matTooltip="Copy link to example"
+          (click)="copyLinkToExample()"
+        >
+          <mat-icon>link</mat-icon>
+        </button>
+
+        <button
+          mat-icon-button
+          (click)="expanded = !expanded"
+          [matTooltip]="expanded ? 'Hide code' : 'Show code'"
+        >
+          <mat-icon>code</mat-icon>
+        </button>
+      </div>
+    </mat-card-title-group>
+  </mat-card-header>
+
+  <mat-card-content>
+    <div class="content-wrapper">
+      <ng-container *ngIf="snippetDescription">
+        <div class="desc-container px-4 pb-4">
+          <ng-container
+            *ngTemplateOutlet="snippetDescription.templateRef"
+          ></ng-container>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="expanded">
+        <div class="hljs code-container">
+          <mat-tab-group dynamicHeight mat-stretch-tabs="false">
+            <ng-container *ngFor="let snippet of _snippets">
+              <mat-tab [label]="snippet.fileName">
+                <pre><code [highlight]="snippet.content" [lineNumbers]="true"></code></pre>
+              </mat-tab>
+            </ng-container>
+          </mat-tab-group>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="snippetResult">
+        <div class="result-container p-4">
+          <ng-container
+            *ngTemplateOutlet="snippetResult.templateRef"
+          ></ng-container>
+        </div>
+      </ng-container>
+    </div>
+  </mat-card-content>
+</mat-card>

@@ -1,0 +1,18 @@
+ngs-code-snippets {
+  margin-bottom: 2rem;
+}
+
+:host {
+  --expandable-input-align-items: baseline;
+  --expandable-input-items-gap: 1rem;
+  --expandable-input-action-icon-right: .5rem;
+  --expandable-input-action-icon-top: .5rem;
+}
+
+ngs-expandable-input {
+  ::ng-deep {
+    .mat-mdc-text-field-wrapper {
+      border-radius: 0 40px 40px 0;
+    }
+  }
+}

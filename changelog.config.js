@@ -14,7 +14,14 @@ module.exports = {
   maxMessageLength: 64,
   minMessageLength: 3,
   questions: ['type', 'scope', 'subject', 'body', 'breaking', 'issues'],
-  scopes: ['core', 'ng-superclass', 'remote-data', 'remote-data-rx', 'rxjs'],
+  scopes: [
+    'ngspot',
+    'ng-superclass',
+    'remote-data',
+    'remote-data-rx',
+    'rxjs',
+    'expandable-input',
+  ],
   types: {
     chore: {
       description: 'Build process or auxiliary tool changes',

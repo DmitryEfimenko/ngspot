@@ -1,0 +1,52 @@
+.app-container {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.is-mobile .toolbar {
+  position: fixed;
+  /* Make sure the toolbar will stay on top of the content as it scrolls past. */
+  z-index: 2;
+}
+
+h1.app-name {
+  margin: 0 0 0 8px;
+}
+
+.sidenav-container {
+  /* When the sidenav is not fixed, stretch the sidenav container to fill the available space. This
+     causes `<mat-sidenav-content>` to act as our scrolling element for desktop layouts. */
+  flex: 1;
+}
+
+.is-mobile .sidenav-container {
+  /* When the sidenav is fixed, don't constrain the height of the sidenav container. This allows the
+     `<body>` to be our scrolling element for mobile layouts. */
+  flex: 1 0 auto;
+}
+
+/*
+give all children elements all the way to the main container height 100%
+so that the container of the main is considered as scroll container and
+sticky table-of-contents works
+*/
+mat-sidenav-content ::ng-deep {
+  > *:not(router-outlet),
+  ngs-routed-tabs,
+  ngs-routed-tabs > mat-tab-group,
+  ngs-routed-tabs > mat-tab-group > .mat-mdc-tab-body-wrapper,
+  ngs-routed-tabs > mat-tab-group > .mat-mdc-tab-body-wrapper > mat-tab-body
+  {
+    height: 100%;
+  }
+}
+
+[mat-icon-button].twitter {
+  // strangely, the twitter icon does not align vertically quite right without it
+  line-height: 39px;
+}

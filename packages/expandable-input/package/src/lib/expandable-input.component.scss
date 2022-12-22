@@ -1,0 +1,66 @@
+:host {
+  transition: right .3s ease-in;
+  top: 0;
+  overflow: hidden;
+}
+
+:host ::ng-deep [ngsexpinput] {
+  width: 100%;
+}
+
+.wrap-all {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: var(--expandable-input-align-items, center);
+  justify-content: center;
+  width: 100%;
+  gap: var(--expandable-input-items-gap);
+}
+
+.input-field {
+  flex: 1 0 0%;
+  box-sizing: border-box;
+  z-index: 1;
+  position: relative;
+  overflow: hidden;
+
+  // assure animation of expanding from the end
+  display: flex;
+  justify-content: end;
+  align-items: baseline;
+
+  &_wrapper {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .icons_icon-action {
+    cursor: pointer;
+    z-index: 2;
+    position: absolute;
+    right: var(--expandable-input-action-icon-right, 0);
+    top: var(--expandable-input-action-icon-top);
+    bottom: var(--expandable-input-action-icon-bottom);
+  }
+}
+
+.icons {
+  display: flex;
+  position: relative;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+  // when icons rotate around 45deg, the overall height is forced tp become bigger
+  // which might trigger scroll to show. Enforce hiding it.
+  overflow: hidden;
+
+  &_icon-close, &_icon-open {
+    z-index: 2;
+    text-align: center;
+    inset: 0;
+  }
+}
