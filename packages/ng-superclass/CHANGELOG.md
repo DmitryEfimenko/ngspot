@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [1.1.0](https://github.com/DmitryEfimenko/ngspot/compare/ng-superclass-1.0.3...ng-superclass-1.1.0) (2022-12-29)
+
+
+### Features
+
+* **ng-superclass:** 🔥 partial compat with mat-form-field ([dbb1a34](https://github.com/DmitryEfimenko/ngspot/commit/dbb1a343eaa0089509f39e4642b5d8c21111dca2)), closes [#1](https://github.com/DmitryEfimenko/ngspot/issues/1)
+
 ### [1.0.4](https://github.com/DmitryEfimenko/ngspot/compare/ng-superclass-1.0.3...ng-superclass-1.0.4) (2022-12-08)
 
 
