@@ -1,3 +1,4 @@
+/* eslint-disable @angular-eslint/directive-class-suffix */
 import { Directive, Injector } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
 import { merge, Observable, of, ReplaySubject } from 'rxjs';
@@ -95,7 +96,9 @@ export abstract class WrappedControlSuperclass<
    */
   private innerToOuter$ = of(null).pipe(
     switchMap(() => this.control.valueChanges),
-    (s) => this.innerToOuter(s),
+    switchMap((val) => {
+      return of(val).pipe((s) => this.innerToOuter(s));
+    }),
     tap((value) => this.emitOutgoingValue(value)),
     shareReplay(1)
   );
@@ -129,7 +132,7 @@ export abstract class WrappedControlSuperclass<
     } else {
       this.control.enable({ emitEvent: false });
     }
-    super.setDisabledState(this.isDisabled);
+    super.setDisabledState(isDisabled);
   }
 
   /**
