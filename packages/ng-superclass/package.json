@@ -1,6 +1,6 @@
 {
   "name": "@ngspot/ng-superclass",
-  "version": "1.0.4",
+  "version": "1.1.0",
   "keywords": [
     "angular",
     "formcontrol",
@@ -17,7 +17,8 @@
   },
   "peerDependencies": {
     "@angular/common": "12 - 15",
-    "@angular/core": "12 - 15"
+    "@angular/core": "12 - 15",
+    "@angular/forms": "12 - 15"
   },
   "dependencies": {
     "tslib": "^2.3.0"
