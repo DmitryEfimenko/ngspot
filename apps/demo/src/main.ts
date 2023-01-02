@@ -1,14 +1,20 @@
-import { importProvidersFrom, Provider } from '@angular/core';
+import {
+  EnvironmentProviders,
+  importProvidersFrom,
+  Provider,
+} from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   provideRouter,
   withEnabledBlockingInitialNavigation,
 } from '@angular/router';
+import { NgxGoogleAnalyticsModule } from 'ngx-google-analytics';
 import { HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
 import { AppComponent } from './app/app.component';
 import { appRoutes } from './app/app.routes';
 import { customIconsProviders } from './app/shared/custom-icons';
+import { environment } from './environments/environment';
 
 const highlightOptions: Provider = {
   provide: HIGHLIGHT_OPTIONS,
@@ -26,11 +32,26 @@ const highlightOptions: Provider = {
   },
 };
 
+const analyticsProviders: Provider[] | EnvironmentProviders[] =
+  environment.stage === 'prod'
+    ? [
+        importProvidersFrom(
+          NgxGoogleAnalyticsModule.forRoot(
+            'G-DQFP38FYZC',
+            [],
+            undefined,
+            environment.stage === 'prod'
+          )
+        ),
+      ]
+    : ([] as Provider[]);
+
 bootstrapApplication(AppComponent, {
   providers: [
     provideRouter(appRoutes, withEnabledBlockingInitialNavigation()),
     importProvidersFrom(BrowserAnimationsModule),
     highlightOptions,
     ...customIconsProviders,
+    ...analyticsProviders,
   ],
 }).catch((err) => console.error(err));

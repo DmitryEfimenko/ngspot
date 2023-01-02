@@ -41,7 +41,13 @@
             }
           ],
           "outputHashing": "all",
-          "baseHref": "/ngspot/"
+          "baseHref": "/ngspot/",
+          "fileReplacements": [
+            {
+              "replace": "apps/demo/src/environments/environment.ts",
+              "with": "apps/demo/src/environments/environment.prod.ts"
+            }
+          ]
         },
         "development": {
           "buildOptimizer": false,

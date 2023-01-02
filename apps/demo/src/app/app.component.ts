@@ -8,6 +8,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
 import { RouterActivatedMatListItemDirective } from '@ngspot/common';
+import { NgxGoogleAnalyticsRouterModule } from 'ngx-google-analytics';
 import { BehaviorSubject, map } from 'rxjs';
 
 import { Project, PROJECTS } from './projects';
@@ -26,6 +27,7 @@ import { Project, PROJECTS } from './projects';
     MatButtonModule,
     MatIconModule,
     RouterActivatedMatListItemDirective,
+    NgxGoogleAnalyticsRouterModule,
   ],
 })
 export class AppComponent {
