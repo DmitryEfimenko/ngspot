@@ -72,6 +72,10 @@ export class RoutedTabsComponent implements AfterViewInit, OnDestroy {
     }
   }
 
+  trackByRouteName(ix: number, tab: RoutedTabDirective) {
+    return tab.routeName;
+  }
+
   /**
    * When route changes, select the corresponding tab as active.
    */

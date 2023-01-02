@@ -27,8 +27,8 @@
 }
 
 .docs-active {
-  font-weight: bold;
-  color: var(--table-of-contents-active);
+  font-weight: var(--table-of-contents-active-font-weight, bold);
+  color: var(--table-of-contents-active-color);
 }
 
 a {

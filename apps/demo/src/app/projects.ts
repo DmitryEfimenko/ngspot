@@ -11,6 +11,6 @@ export const PROJECTS: Project[] = [
     name: 'expandable-input',
     package: () => import('@ngspot/expandable-input-demo'),
     githubLink:
-      'https://github.com/DmitryEfimenko/ngspot/tree/main/packages/expandable-input',
+      'https://github.com/DmitryEfimenko/ngspot/tree/main/packages/expandable-input/package',
   },
 ];

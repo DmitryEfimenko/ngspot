@@ -57,6 +57,10 @@ export class AppComponent {
     this.wireMediaListener();
   }
 
+  trackByName(ix: number, project: Project) {
+    return project.name;
+  }
+
   private wireMediaListener() {
     this.mobileQuery = this.media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => {

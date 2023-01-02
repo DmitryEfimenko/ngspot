@@ -1,5 +1,7 @@
 <nav aria-label="Table of Contents" class="docs-toc-container">
-  <ng-container *ngFor="let link of liveLinks$ | async; let i = index">
+  <ng-container
+    *ngFor="let link of liveLinks$ | async; trackBy: trackById; let i = index"
+  >
     <a
       [href]="_rootUrl + '#' + link.id"
       class="docs-level-{{link.type}} docs-link"

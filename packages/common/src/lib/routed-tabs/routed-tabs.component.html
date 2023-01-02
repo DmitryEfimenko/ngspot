@@ -5,7 +5,7 @@
   class="sections"
   (selectedIndexChange)="updateUrl($event)"
 >
-  <ng-container *ngFor="let tab of routedTabs">
+  <ng-container *ngFor="let tab of routedTabs; trackBy: trackByRouteName">
     <mat-tab [label]="tab.label">
       <ng-template matTabContent>
         <ng-container *ngTemplateOutlet="tab.templateRef"></ng-container>

@@ -6,16 +6,12 @@
   "targets": {
     "build": {
       "executor": "@nrwl/js:tsc",
-      "outputs": [
-        "{options.outputPath}"
-      ],
+      "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/remote-data",
         "main": "packages/remote-data/src/index.ts",
         "tsConfig": "packages/remote-data/tsconfig.lib.json",
-        "assets": [
-          "packages/remote-data/*.md"
-        ]
+        "assets": ["packages/remote-data/*.md"]
       }
     },
     "publish": {
@@ -32,20 +28,14 @@
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
-      "outputs": [
-        "{options.outputFile}"
-      ],
+      "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": [
-          "packages/remote-data/**/*.ts"
-        ]
+        "lintFilePatterns": ["packages/remote-data/**/*.ts"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": [
-        "{workspaceRoot}/coverage/packages/remote-data"
-      ],
+      "outputs": ["{workspaceRoot}/coverage/packages/remote-data"],
       "options": {
         "jestConfig": "packages/remote-data/jest.config.ts",
         "passWithNoTests": true
@@ -58,7 +48,5 @@
       }
     }
   },
-  "tags": [
-    "lib:remote-data"
-  ]
+  "tags": ["lib:remote-data"]
 }

@@ -7,9 +7,7 @@
   "targets": {
     "build": {
       "executor": "@nrwl/angular:package",
-      "outputs": [
-        "{workspaceRoot}/dist/packages/ng-superclass"
-      ],
+      "outputs": ["{workspaceRoot}/dist/packages/ng-superclass"],
       "options": {
         "project": "packages/ng-superclass/ng-package.json"
       },
@@ -25,9 +23,7 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": [
-        "{workspaceRoot}/coverage/packages/ng-superclass"
-      ],
+      "outputs": ["{workspaceRoot}/coverage/packages/ng-superclass"],
       "options": {
         "jestConfig": "packages/ng-superclass/jest.config.ts",
         "passWithNoTests": true

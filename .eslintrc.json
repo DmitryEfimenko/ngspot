@@ -15,6 +15,14 @@
               {
                 "sourceTag": "lib:remote-data",
                 "onlyDependOnLibsWithTags": ["lib:remote-data"]
+              },
+              {
+                "sourceTag": "app:demo",
+                "onlyDependOnLibsWithTags": ["lib:demo", "lib:common"]
+              },
+              {
+                "sourceTag": "lib:demo",
+                "onlyDependOnLibsWithTags": ["lib:common"]
               }
             ]
           }

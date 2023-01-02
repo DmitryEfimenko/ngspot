@@ -16,6 +16,7 @@ module.exports = {
   questions: ['type', 'scope', 'subject', 'body', 'breaking', 'issues'],
   scopes: [
     'ngspot',
+    'demo',
     'ng-superclass',
     'remote-data',
     'remote-data-rx',
