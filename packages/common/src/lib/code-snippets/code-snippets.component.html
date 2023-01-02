@@ -2,7 +2,7 @@
   <mat-card-header>
     <mat-card-title-group class="items-center">
       <mat-card-title>
-        <h3 *ngIf="title" class="pl-4">{{ title }}</h3>
+        <h3 *ngIf="title" class="pl-4 text-primary-500">{{ title }}</h3>
       </mat-card-title>
 
       <div>
@@ -10,6 +10,7 @@
           mat-icon-button
           matTooltip="Copy link to example"
           (click)="copyLinkToExample()"
+          color="primary"
         >
           <mat-icon>link</mat-icon>
         </button>
@@ -18,6 +19,7 @@
           mat-icon-button
           (click)="expanded = !expanded"
           [matTooltip]="expanded ? 'Hide code' : 'Show code'"
+          color="primary"
         >
           <mat-icon>code</mat-icon>
         </button>
@@ -38,7 +40,9 @@
       <ng-container *ngIf="expanded">
         <div class="hljs code-container">
           <mat-tab-group dynamicHeight mat-stretch-tabs="false">
-            <ng-container *ngFor="let snippet of _snippets">
+            <ng-container
+              *ngFor="let snippet of _snippets; trackBy: trackByFileName"
+            >
               <mat-tab [label]="snippet.fileName">
                 <pre><code [highlight]="snippet.content" [lineNumbers]="true"></code></pre>
               </mat-tab>

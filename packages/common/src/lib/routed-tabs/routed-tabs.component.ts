@@ -10,6 +10,7 @@ import {
 } from '@angular/core';
 import { MatTabGroup, MatTabsModule } from '@angular/material/tabs';
 import { ActivatedRoute, Router } from '@angular/router';
+import { GoogleAnalyticsService } from 'ngx-google-analytics';
 import { map, startWith, Subscription, tap } from 'rxjs';
 import { NavigationFocusService } from '../navigation-focus';
 import { filterOutNullish } from '../rxjs';
@@ -41,12 +42,15 @@ export class RoutedTabsComponent implements AfterViewInit, OnDestroy {
 
   isFirstSync = true;
 
+  private baseTitle: string;
+
   @ViewChild(MatTabGroup, { static: true }) tabs: MatTabGroup;
 
   constructor(
     private navigationFocusService: NavigationFocusService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private ga: GoogleAnalyticsService
   ) {}
 
   ngAfterViewInit() {
@@ -72,6 +76,10 @@ export class RoutedTabsComponent implements AfterViewInit, OnDestroy {
     }
   }
 
+  trackByRouteName(ix: number, tab: RoutedTabDirective) {
+    return tab.routeName;
+  }
+
   /**
    * When route changes, select the corresponding tab as active.
    */
@@ -92,6 +100,12 @@ export class RoutedTabsComponent implements AfterViewInit, OnDestroy {
           }
           if (ix > -1) {
             this.tabs.selectedIndex = ix;
+
+            const sectionName = this.routedTabs.get(ix)?.label;
+            if (sectionName) {
+              this.ga.event('routed_tab_click', 'navigation', sectionName);
+            }
+
             setTimeout(() => {
               this.isFirstSync = false;
             }, 500);

@@ -9,7 +9,9 @@ html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 :root {
-  --table-of-contents-active: var(--primary-500);
+  --table-of-contents-active-color: var(--primary-500);
+  --table-of-contents-active-font-weight: 500;
+  --code-snippets-border-color: var(--accent-500);
 }
 
 /* custom scrollbar */
@@ -29,5 +31,5 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: var(--primary-500);
+  background-color: var(--primary-300); 
 }

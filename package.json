@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "license": "MIT",
   "engines": {
-    "node": ">=18.10.0"
+    "node": ">=18.10.0",
+    "npm": ">=8.19.0"
   },
   "scripts": {
     "nx": "nx",
@@ -14,7 +15,7 @@
     "test": "npm run affected:test",
     "build:all": "nx run-many --target=build --all",
     "build:demo": "nx run demo:build:production",
-    "publish:demo": "npm run build:demo && npx gh-pages -d dist/apps/demo",
+    "publish:demo": "nx run demo:deploy",
     "test:all": "nx run-many --target=test --all",
     "format": "nx format:write",
     "update": "nx migrate latest",
@@ -43,6 +44,7 @@
     "@types/trusted-types": "^2.0.2",
     "bootstrap": "^5.2.3",
     "highlight.js": "^11.7.0",
+    "ngx-google-analytics": "^14.0.1",
     "ngx-highlightjs": "^7.0.1",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
@@ -76,6 +78,7 @@
     "@types/node": "18.11.17",
     "@typescript-eslint/eslint-plugin": "5.36.1",
     "@typescript-eslint/parser": "5.36.1",
+    "angular-cli-ghpages": "^1.0.5",
     "cypress": "^9.1.0",
     "eslint": "8.15.0",
     "eslint-config-prettier": "8.1.0",

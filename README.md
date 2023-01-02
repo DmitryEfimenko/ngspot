@@ -61,6 +61,15 @@ After the lib is generated:
 
 Libraries are shareable across libraries and applications. They can be imported from `@ngspot/mylib`.
 
+## To add a new library via schematic
+
+Example with `@angular/material`. Instead of running `ng add @angular/material`, do the following:
+
+```
+npm i @angular/material [-D]
+npm run nx -- g @angular/material:ng-add --project=demo
+```
+
 ## Development server
 
 Run `nx serve my-app` for a dev server. Navigate to http://localhost:4200/. The app will automatically reload if you change any of the source files.

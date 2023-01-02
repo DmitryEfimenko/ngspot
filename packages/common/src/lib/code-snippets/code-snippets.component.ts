@@ -73,13 +73,18 @@ export class CodeSnippetsComponent {
   copyLinkToExample() {
     const fragment =
       this.titleContainerRef.nativeElement.querySelector('h3')?.id;
+
     if (fragment) {
       const { origin, pathname } = this.document.location;
       const url = `${origin}${pathname}#${fragment}`;
       navigator.clipboard.writeText(url).then(() => {
-        this.snackBar.open('Copied');
+        this.snackBar.open('Copied', undefined, { duration: 3000 });
       });
     }
+  }
+
+  trackByFileName(ix: number, snippet: Snippet) {
+    return snippet.fileName;
   }
 }
 

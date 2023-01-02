@@ -86,7 +86,7 @@ export class TableOfContentsComponent implements AfterViewInit, OnDestroy {
    */
   @Input() contentContainer: string;
 
-  _rootUrl = this.location.path(false);
+  _rootUrl = document.location.pathname;
 
   private _urlFragment = '';
   private locationCleanupFn: VoidFunction;
@@ -130,8 +130,8 @@ export class TableOfContentsComponent implements AfterViewInit, OnDestroy {
     private _ngZone: NgZone,
     private location: Location
   ) {
-    this.locationCleanupFn = this.location.onUrlChange((url) => {
-      const rootUrl = url.split('#')[0];
+    this.locationCleanupFn = this.location.onUrlChange(() => {
+      const rootUrl = document.location.pathname;
       if (rootUrl !== this._rootUrl) {
         this._rootUrl = rootUrl;
       }
@@ -166,6 +166,10 @@ export class TableOfContentsComponent implements AfterViewInit, OnDestroy {
 
   updateScrollPosition(): void {
     this._document.getElementById(this._urlFragment)?.scrollIntoView();
+  }
+
+  trackById(ix: number, link: Link) {
+    return link.id;
   }
 
   private defineScrollAndContentContainers() {
@@ -290,6 +294,11 @@ export class TableOfContentsComponent implements AfterViewInit, OnDestroy {
               return currentLink;
             }
           });
+
+          // if all links are somewhere below, none of them will be active.
+          // in this case, on the page load change won't be detected, but
+          // we still need to emit links so that they render.
+          hasChanged = updatedLinks.every((x) => !x.active) || hasChanged;
 
           return { links: updatedLinks, hasChanged };
         }),

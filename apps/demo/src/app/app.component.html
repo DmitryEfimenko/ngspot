@@ -8,11 +8,15 @@
       <mat-icon>menu</mat-icon>
     </button>
 
-    <h1 class="app-name">@ngspot/*</h1>
+    <h1
+      class="ml-2 flex items-center gap-4"
+      [ngClass]="{ mobile: mobileQuery.matches }"
+    >
+      <img src="assets/favicons/android-icon-48x48.png" alt="logo" />
+      <span>@ngspot/*</span>
+    </h1>
 
-    <span class="flex-auto flex justify-center">
-      <img src="/assets/favicons/android-icon-48x48.png" alt="logo" />
-    </span>
+    <span class="flex-auto"></span>
 
     <a
       mat-icon-button
@@ -45,7 +49,7 @@
       [fixedTopGap]="mobileQuery.matches ? 48 : 56"
     >
       <mat-nav-list>
-        <ng-container *ngFor="let project of projects">
+        <ng-container *ngFor="let project of projects; trackBy: trackByName">
           <a
             mat-list-item
             [routerLink]="[project.name]"

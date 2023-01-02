@@ -41,7 +41,13 @@
             }
           ],
           "outputHashing": "all",
-          "baseHref": "https://DmitryEfimenko.github.io/ngspot/"
+          "baseHref": "/ngspot/",
+          "fileReplacements": [
+            {
+              "replace": "apps/demo/src/environments/environment.ts",
+              "with": "apps/demo/src/environments/environment.prod.ts"
+            }
+          ]
         },
         "development": {
           "buildOptimizer": false,
@@ -49,7 +55,8 @@
           "vendorChunk": true,
           "extractLicenses": false,
           "sourceMap": true,
-          "namedChunks": true
+          "namedChunks": true,
+          "baseHref": "/ngspot/"
         }
       },
       "defaultConfiguration": "production"
@@ -86,7 +93,14 @@
         "jestConfig": "apps/demo/jest.config.ts",
         "passWithNoTests": true
       }
+    },
+    "deploy": {
+      "executor": "angular-cli-ghpages:deploy",
+      "options": {
+        "baseHref": "/ngspot/",
+        "cname": "undefined"
+      }
     }
   },
-  "tags": []
+  "tags": ["app:demo"]
 }
