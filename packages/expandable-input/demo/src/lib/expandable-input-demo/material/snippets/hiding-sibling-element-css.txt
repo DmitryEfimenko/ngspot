@@ -1,0 +1,25 @@
+:host {
+  --expandable-input-align-items: baseline;
+  --expandable-input-items-gap: 1rem;
+}
+
+ngs-expandable-input {
+  ::ng-deep {
+    .mat-mdc-text-field-wrapper {
+      border-radius: 0 40px 40px 0;
+    }
+  }
+}
+
+// TailwindCss-like utilities
+.flex {
+  display: flex;
+}
+
+.items-baseline {
+  align-items: baseline;
+}
+
+.flex-1 {
+  flex: 1 1 0%;
+}

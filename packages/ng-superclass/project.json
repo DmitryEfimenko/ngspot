@@ -7,7 +7,9 @@
   "targets": {
     "build": {
       "executor": "@nrwl/angular:package",
-      "outputs": ["{workspaceRoot}/dist/packages/ng-superclass"],
+      "outputs": [
+        "{workspaceRoot}/dist/packages/ng-superclass"
+      ],
       "options": {
         "project": "packages/ng-superclass/ng-package.json"
       },
@@ -23,7 +25,9 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/packages/ng-superclass"],
+      "outputs": [
+        "{workspaceRoot}/coverage/packages/ng-superclass"
+      ],
       "options": {
         "jestConfig": "packages/ng-superclass/jest.config.ts",
         "passWithNoTests": true
@@ -41,7 +45,7 @@
     "publish": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "node tools/scripts/publish.mjs ng-superclass {args.ver} {args.tag}"
+        "command": "node tools/scripts/publish.mjs {args.tag} {args.verbose}"
       },
       "dependsOn": [
         {

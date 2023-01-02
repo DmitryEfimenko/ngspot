@@ -1,0 +1,15 @@
+<mat-tab-group
+  mat-stretch-tabs="false"
+  mat-align-tabs="center"
+  [animationDuration]="isFirstSync ? 0 : 500"
+  class="sections"
+  (selectedIndexChange)="updateUrl($event)"
+>
+  <ng-container *ngFor="let tab of routedTabs">
+    <mat-tab [label]="tab.label">
+      <ng-template matTabContent>
+        <ng-container *ngTemplateOutlet="tab.templateRef"></ng-container>
+      </ng-template>
+    </mat-tab>
+  </ng-container>
+</mat-tab-group>

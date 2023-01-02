@@ -1,6 +1,10 @@
 {
   "version": 2,
   "projects": {
+    "common": "packages/common",
+    "demo": "apps/demo",
+    "expandable-input": "packages/expandable-input/package",
+    "expandable-input-demo": "packages/expandable-input/demo",
     "ng-superclass": "packages/ng-superclass",
     "remote-data": "packages/remote-data",
     "remote-data-rx": "packages/remote-data-rx",

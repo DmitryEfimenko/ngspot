@@ -1,0 +1,60 @@
+<div class="wrap-all">
+  <div class="input-field">
+    <div
+      class="input-field_wrapper"
+      [@slideInOut]="{
+        value: isOpen,
+        params: { duration: animationDuration, easing: animationEasing }
+      }"
+      [ngsFocusable]="isOpen"
+      ngsFocusableSelector="input"
+    >
+      <ng-content select="[ngsExpInput]"></ng-content>
+    </div>
+
+    <div
+      *ngIf="iconAction && isOpen"
+      class="icons_icon-action"
+      #iconActionWrapper
+      [ngsFocusable]="isOpen"
+      [@rotateActionIcon]="{
+        value: isOpen,
+        params: { duration: animationDuration, easing: animationEasing }
+      }"
+      ngsFocusableSelector="button"
+    >
+      <ng-content select="[ngsExpIconAction]"></ng-content>
+    </div>
+  </div>
+
+  <span
+    class="icons"
+    [class.icons--active]="isOpen"
+    [@swapIcons]="{
+      value: isOpen,
+      params: { duration: animationDuration, easing: animationEasing }
+    }"
+  >
+    <span
+      *ngIf="isOpen"
+      class="icons_icon-close"
+      (click)="close()"
+      #iconCloseWrapper
+      [ngsFocusable]="isOpen"
+      ngsFocusableSelector="button"
+    >
+      <ng-content select="[ngsExpIconClose]"></ng-content>
+    </span>
+
+    <span
+      *ngIf="!isOpen"
+      class="icons_icon-open"
+      (click)="open()"
+      #iconOpenWrapper
+      [ngsFocusable]="!isOpen"
+      ngsFocusableSelector="button"
+    >
+      <ng-content select="[ngsExpIconOpen]"></ng-content>
+    </span>
+  </span>
+</div>

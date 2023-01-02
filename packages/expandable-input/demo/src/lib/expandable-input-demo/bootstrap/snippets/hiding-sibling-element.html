@@ -1,0 +1,40 @@
+<div class="flex items-end" [@gap]="expInp.isOpen">
+  <button
+    type="button"
+    class="btn btn-light m-2"
+    [@smoothHorizontalCollapse]="expInp.isOpen"
+  >
+    <i class="bi bi-incognito"></i>
+  </button>
+
+  <ngs-expandable-input #expInp class="flex-1">
+    <div ngsExpInput>
+      <label for="exampleFormControlInput1" class="form-label">
+        Email address
+      </label>
+
+      <input
+        type="email"
+        class="form-control mb-2"
+        id="exampleFormControlInput1"
+        placeholder="name@example.com"
+      />
+    </div>
+
+    <button type="button" class="btn btn-primary m-2" ngsExpIconOpen>
+      <i class="bi bi-search"></i>
+    </button>
+
+    <button type="button" class="btn btn-light m-2" ngsExpIconClose>
+      <i class="bi bi-x"></i>
+    </button>
+  </ngs-expandable-input>
+
+  <button
+    type="button"
+    class="btn btn-primary mb-2"
+    [@smoothHorizontalCollapse]="expInp.isOpen"
+  >
+    Some Element
+  </button>
+</div>

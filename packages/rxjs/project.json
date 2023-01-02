@@ -6,18 +6,22 @@
   "targets": {
     "build": {
       "executor": "@nrwl/js:tsc",
-      "outputs": ["{options.outputPath}"],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "outputPath": "dist/packages/rxjs",
         "main": "packages/rxjs/src/index.ts",
         "tsConfig": "packages/rxjs/tsconfig.lib.json",
-        "assets": ["packages/rxjs/*.md"]
+        "assets": [
+          "packages/rxjs/*.md"
+        ]
       }
     },
     "publish": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "node tools/scripts/publish.mjs rxjs {args.ver} {args.tag}"
+        "command": "node tools/scripts/publish.mjs {args.tag} {args.verbose}"
       },
       "dependsOn": [
         {
@@ -28,14 +32,20 @@
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
-      "outputs": ["{options.outputFile}"],
+      "outputs": [
+        "{options.outputFile}"
+      ],
       "options": {
-        "lintFilePatterns": ["packages/rxjs/**/*.ts"]
+        "lintFilePatterns": [
+          "packages/rxjs/**/*.ts"
+        ]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/packages/rxjs"],
+      "outputs": [
+        "{workspaceRoot}/coverage/packages/rxjs"
+      ],
       "options": {
         "jestConfig": "packages/rxjs/jest.config.ts",
         "passWithNoTests": true

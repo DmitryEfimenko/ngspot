@@ -1,0 +1,10 @@
+:host {
+  display: block;
+  padding: 1rem 2rem;
+}
+
+::ng-deep {
+  code {
+    color: #f92672;
+  }
+}

@@ -1,0 +1,13 @@
+<div style="display: flex; align-items: center" [@gap]="expInp.isOpen">
+  <i [@smoothHorizontalCollapse]="expInp.isOpen">😼</i>
+
+  <ngs-expandable-input #expInp style="flex: 1 0 auto">
+    <input type="text" ngsExpInput />
+    <i ngsExpIconOpen>🔍</i>
+    <i ngsExpIconClose>✖️</i>
+  </ngs-expandable-input>
+
+  <button type="button" [@smoothHorizontalCollapse]="expInp.isOpen">
+    Some Element
+  </button>
+</div>

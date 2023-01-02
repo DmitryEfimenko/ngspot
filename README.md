@@ -5,6 +5,14 @@
   <span style="font-size: larger;">A collection of Angular packages.</span>
 </p>
 
+## Packages
+
+- [@ngspot/expandable-input](https://github.com/DmitryEfimenko/ngspot/tree/main/packages/expandable-input/package) ([Demo](https://dmitryefimenko.github.io/ngspot/expandable-input))
+- [@ngspot/ngx-errors](toMoveInThisRepo)
+- [@ngspot/remote-data](https://github.com/DmitryEfimenko/ngspot/tree/main/packages/remote-data)
+- [@ngspot/remote-data-rx](https://github.com/DmitryEfimenko/ngspot/tree/main/packages/remote-data-rx)
+- [@ngspot/ng-superclass](https://github.com/DmitryEfimenko/ngspot/tree/main/packages/ng-superclass)
+
 ## Development
 
 This project was generated using [Nx](https://nx.dev).
@@ -13,18 +21,20 @@ This project was generated using [Nx](https://nx.dev).
 
 One time config: `git config --global push.followTags true`
 
-1. Develop
-1. Write specs
-1. Run `npm run test`
-1. Run `git add .`
-1. Run `npm run c` and choose fix or feature
-1. Run `nx run <lib>:version --dryRun true`
-1. Make sure that CHANGELOG looks right and run the command without --dryRun option
-1. Run `npm run build:all`
-1. Run `nx publish <lib> --ver=<required-version> --tag=latest`
-1. Push changes `git push`
+> `<project>` in the commands below is a string found in `workspace.json` file
 
-🔎 **Smart, Fast and Extensible Build System**
+1. Develop
+1. Write tests
+1. Run `npm run test`
+1. Run `git add ./packages/<project-dir>`
+1. Run `npm run c` and choose fix or feature
+1. Run `npm run nx -- version <project> --dryRun true`. If releasing for the first time, consider adding an override flag at the end of the command: `--releaseAs=major` (or `minor`, or `patch`)
+
+1. Make sure that CHANGELOG looks right and run the command without --dryRun option
+1. Run `npm run nx -- build <project>`
+1. Run `npm run nx -- publish <project> --tag=latest [--verbose=true]`
+1. Push changes `git push`
+1. Repeat for each `<package-worked-on>`
 
 ## Generate a publishable library
 
@@ -41,6 +51,11 @@ nx g @nrwl/js:lib my-lib --publishable --importPath="@ngspot/my-lib"
 ```
 nx g @nrwl/angular:library [optional-scope/]my-lib --publishable --importPath="@ngspot/my-lib" --changeDetection="OnPush" --prefix="ngs" --standalone --style="scss"
 ```
+
+After the lib is generated:
+
+- if publishable lib was created, update `project.json` file and add `targets`: `publish` and `version`. See `project.json` file from the existing libs as example.
+- add `CHANGELOG.md` file
 
 > You can also use any of the plugins above to generate libraries as well.
 

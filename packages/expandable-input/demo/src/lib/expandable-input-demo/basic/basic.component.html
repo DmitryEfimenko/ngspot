@@ -1,0 +1,63 @@
+<h2 class="mb-4">Basic examples</h2>
+<p class="mb-4">
+  <code>ngs-expandable-input</code> components do not assume any styles. They
+  can be used as is or as a starting point to create app-specific components.
+  Material and Bootstrap components are examples of such components. Click on
+  the corresponding tabs above to see examples of such implementations.
+</p>
+
+<ngs-code-snippets title="Without action button" [snippets]="snippets['basic']">
+  <ng-container *ngsSnippetResult>
+    <ngs-expandable-input>
+      <input type="text" ngsExpInput />
+      <i ngsExpIconOpen>🔍</i>
+      <i ngsExpIconClose>✖️</i>
+    </ngs-expandable-input>
+  </ng-container>
+</ngs-code-snippets>
+
+<ngs-code-snippets
+  title="With action button"
+  [snippets]="snippets['withAction']"
+  expanded="false"
+>
+  <ng-container *ngsSnippetResult>
+    <ngs-expandable-input>
+      <input type="text" ngsExpInput />
+      <i ngsExpIconOpen>🔍</i>
+      <i ngsExpIconAction>🚀</i>
+      <i ngsExpIconClose>✖️</i>
+    </ngs-expandable-input>
+  </ng-container>
+</ngs-code-snippets>
+
+<ngs-code-snippets
+  title="Hiding sibling element"
+  [snippets]="snippets['hidingSibling']"
+  expanded="false"
+>
+  <p *ngsSnippetDescription>
+    This is rather a unique situation, but you might encounter it too. One of
+    the common usages of the expandable input is a "search" input. You might
+    have other navigation elements/buttons present next to the expandable input
+    and you might want to hide these elements when expandable input expands.
+    This library provides couple utility animations that aid in achieving
+    desired effect. See example below.
+  </p>
+
+  <ng-container *ngsSnippetResult>
+    <div style="display: flex; align-items: center" [@gap]="expInp.isOpen">
+      <i [@smoothHorizontalCollapse]="expInp.isOpen">😼</i>
+
+      <ngs-expandable-input #expInp style="flex: 1 0 auto">
+        <input type="text" ngsExpInput />
+        <i ngsExpIconOpen>🔍</i>
+        <i ngsExpIconClose>✖️</i>
+      </ngs-expandable-input>
+
+      <button type="button" [@smoothHorizontalCollapse]="expInp.isOpen">
+        Some Element
+      </button>
+    </div>
+  </ng-container>
+</ngs-code-snippets>

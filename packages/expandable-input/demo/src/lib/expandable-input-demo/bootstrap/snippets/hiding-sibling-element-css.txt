@@ -1,0 +1,49 @@
+:host {
+  --expandable-input-align-items: baseline;
+  --expandable-input-items-gap: 1rem;
+}
+
+ngs-expandable-input {
+  ::ng-deep {
+    .mat-mdc-text-field-wrapper {
+      border-radius: 0 40px 40px 0;
+    }
+  }
+}
+
+// TailwindCss-like utilities
+:host {
+  --expandable-input-align-items: end;
+  --expandable-input-items-gap: .5rem;
+}
+
+.form-label {
+  // prevents height of the label modifications when it's collapsed
+  white-space: nowrap;
+}
+
+// TailwindCss-like utilities
+m-2 {
+  // we apply this class to open/close button-icons. These buttons are not completely
+  // round. So when they rotate the corners get cut off since the parent element
+  // has `overflow: hidden`. So we give these buttons a bit more space on the outside
+  // so that the corners do not cut off when buttons rotate
+  margin: .5rem;
+}
+
+mb-2 {
+  // we apply this to an input element to align with changes made to open/close buttons
+  margin-bottom: .5rem;
+}
+
+.flex {
+  display: flex;
+}
+
+.items-end {
+  align-items: end;
+}
+
+.flex-1 {
+  flex: 1 1 0%;
+}
