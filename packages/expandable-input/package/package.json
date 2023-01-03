@@ -1,9 +1,23 @@
 {
   "name": "@ngspot/expandable-input",
+  "description": "Expandable input",
   "version": "1.0.0",
+  "author": {
+    "name": "Dmitry Efimenko",
+    "email": "dmitrief@gmail.com"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DmitryEfimenko/ngspot/packages/expandable-input/packagehttps://github.com/DmitryEfimenko/ngspot/tree/main/packages/expandable-input/package"
+  },
+  "bugs": {
+    "url": "https://github.com/DmitryEfimenko/ngspot/issues"
+  },
   "peerDependencies": {
     "@angular/common": "^15.0.0",
-    "@angular/core": "^15.0.0"
+    "@angular/core": "^15.0.0",
+    "@angular/animations": "^15.0.0"
   },
   "dependencies": {
     "tslib": "^2.3.0"
