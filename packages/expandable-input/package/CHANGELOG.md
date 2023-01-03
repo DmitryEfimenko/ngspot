@@ -2,6 +2,8 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [1.0.1](https://github.com/DmitryEfimenko/ngspot/compare/expandable-input-1.0.0...expandable-input-1.0.1) (2023-01-03)
+
 ## 1.0.0 (2022-12-28)
 
 ### Features
