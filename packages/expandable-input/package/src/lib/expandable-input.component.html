@@ -1,6 +1,7 @@
 <div class="wrap-all">
   <div class="input-field">
     <div
+      #inputElWrapper
       class="input-field_wrapper"
       [@slideInOut]="{
         value: isOpen,
@@ -9,11 +10,13 @@
       [ngsFocusable]="isOpen"
       ngsFocusableSelector="input"
     >
-      <ng-content select="[ngsExpInput]"></ng-content>
+      <ng-container
+        [ngTemplateOutlet]="expInputDirective.templateRef"
+      ></ng-container>
     </div>
 
     <div
-      *ngIf="iconAction && isOpen"
+      *ngIf="expIconActionDirective && isOpen"
       class="icons_icon-action"
       #iconActionWrapper
       [ngsFocusable]="isOpen"
@@ -23,7 +26,9 @@
       }"
       ngsFocusableSelector="button"
     >
-      <ng-content select="[ngsExpIconAction]"></ng-content>
+      <ng-container
+        [ngTemplateOutlet]="expIconActionDirective.templateRef"
+      ></ng-container>
     </div>
   </div>
 
@@ -39,22 +44,24 @@
       *ngIf="isOpen"
       class="icons_icon-close"
       (click)="close()"
-      #iconCloseWrapper
       [ngsFocusable]="isOpen"
       ngsFocusableSelector="button"
     >
-      <ng-content select="[ngsExpIconClose]"></ng-content>
+      <ng-container
+        [ngTemplateOutlet]="iconCloseDirective.templateRef"
+      ></ng-container>
     </span>
 
     <span
       *ngIf="!isOpen"
       class="icons_icon-open"
       (click)="open()"
-      #iconOpenWrapper
       [ngsFocusable]="!isOpen"
       ngsFocusableSelector="button"
     >
-      <ng-content select="[ngsExpIconOpen]"></ng-content>
+      <ng-container
+        [ngTemplateOutlet]="iconOpenDirective.templateRef"
+      ></ng-container>
     </span>
   </span>
 </div>

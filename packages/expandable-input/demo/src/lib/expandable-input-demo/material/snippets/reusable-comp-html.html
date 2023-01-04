@@ -1,0 +1,14 @@
+<ngs-expandable-input
+  [group]="group"
+  [blurInputOnEsc]="blurInputOnEsc"
+  [openOnKey]="openOnKey"
+  [animationDuration]="animationDuration"
+  [animationEasing]="animationEasing"
+  (opened)="opened.next($event)"
+  (closed)="closed.next($event)"
+>
+  <ng-content select="[materialExpInput]" *ngsExpInput></ng-content>
+  <ng-content select="[materialExpIconOpen]" *ngsExpIconOpen></ng-content>
+  <ng-content select="[materialExpIconClose]" *ngsExpIconClose></ng-content>
+  <ng-content select="[materialExpIconAction]" *ngsExpIconAction></ng-content>
+</ngs-expandable-input>

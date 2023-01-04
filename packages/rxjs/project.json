@@ -48,5 +48,5 @@
       }
     }
   },
-  "tags": []
+  "tags": ["lib", "lib:rxjs"]
 }

@@ -1,0 +1,16 @@
+import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+  ExpandableInputBase,
+  EXPANDABLE_INPUT_DIRECTIVES,
+} from '@ngspot/expandable-input';
+
+@Component({
+  selector: 'app-material-expandable-input',
+  templateUrl: './material-expandable-input.component.html',
+  styleUrls: ['./material-expandable-input.component.scss'],
+  standalone: true,
+  imports: [CommonModule, EXPANDABLE_INPUT_DIRECTIVES],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class MaterialExpandableInputComponent extends ExpandableInputBase {}

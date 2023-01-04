@@ -9,9 +9,9 @@
 <ngs-code-snippets title="Without action button" [snippets]="snippets['basic']">
   <ng-container *ngsSnippetResult>
     <ngs-expandable-input>
-      <input type="text" ngsExpInput />
-      <i ngsExpIconOpen>🔍</i>
-      <i ngsExpIconClose>✖️</i>
+      <input type="text" *ngsExpInput />
+      <i *ngsExpIconOpen>🔍</i>
+      <i *ngsExpIconClose>✖️</i>
     </ngs-expandable-input>
   </ng-container>
 </ngs-code-snippets>
@@ -23,10 +23,10 @@
 >
   <ng-container *ngsSnippetResult>
     <ngs-expandable-input>
-      <input type="text" ngsExpInput />
-      <i ngsExpIconOpen>🔍</i>
-      <i ngsExpIconAction>🚀</i>
-      <i ngsExpIconClose>✖️</i>
+      <input type="text" *ngsExpInput />
+      <i *ngsExpIconOpen>🔍</i>
+      <i *ngsExpIconAction>🚀</i>
+      <i *ngsExpIconClose>✖️</i>
     </ngs-expandable-input>
   </ng-container>
 </ngs-code-snippets>
@@ -50,9 +50,9 @@
       <i [@smoothHorizontalCollapse]="expInp.isOpen">😼</i>
 
       <ngs-expandable-input #expInp style="flex: 1 0 auto">
-        <input type="text" ngsExpInput />
-        <i ngsExpIconOpen>🔍</i>
-        <i ngsExpIconClose>✖️</i>
+        <input type="text" *ngsExpInput />
+        <i *ngsExpIconOpen>🔍</i>
+        <i *ngsExpIconClose>✖️</i>
       </ngs-expandable-input>
 
       <button type="button" [@smoothHorizontalCollapse]="expInp.isOpen">

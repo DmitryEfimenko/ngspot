@@ -13,7 +13,7 @@
             "allow": [],
             "depConstraints": [
               {
-                "sourceTag": "lib:remote-data",
+                "sourceTag": "lib:remote-data-rx",
                 "onlyDependOnLibsWithTags": ["lib:remote-data"]
               },
               {
@@ -22,7 +22,7 @@
               },
               {
                 "sourceTag": "lib:demo",
-                "onlyDependOnLibsWithTags": ["lib:common"]
+                "onlyDependOnLibsWithTags": ["lib:common", "lib"]
               }
             ]
           }

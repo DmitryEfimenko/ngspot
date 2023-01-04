@@ -1,4 +1,4 @@
-import { Directive } from '@angular/core';
+import { Directive, inject, TemplateRef } from '@angular/core';
 
 /**
  * Directive that targets an element that will be expanded/collapsed.
@@ -8,4 +8,6 @@ import { Directive } from '@angular/core';
   selector: '[ngsExpInput]',
   standalone: true,
 })
-export class ExpInputDirective {}
+export class ExpInputDirective {
+  templateRef = inject(TemplateRef);
+}

@@ -28,11 +28,11 @@ One time config: `git config --global push.followTags true`
 1. Run `npm run test`
 1. Run `git add ./packages/<project-dir>`
 1. Run `npm run c` and choose fix or feature
-1. Run `npm run nx -- version <project> --dryRun true`. If releasing for the first time, consider adding an override flag at the end of the command: `--releaseAs=major` (or `minor`, or `patch`)
+1. Run `npm run nx -- -- version <project> --dryRun true`. If releasing for the first time, consider adding an override flag at the end of the command: `--releaseAs=major` (or `minor`, or `patch`)
 
 1. Make sure that CHANGELOG looks right and run the command without --dryRun option
-1. Run `npm run nx -- build <project>`
-1. Run `npm run nx -- publish <project> --tag=latest [--verbose=true]`
+1. Run `npm run nx -- -- build <project>`
+1. Run `npm run nx -- -- publish <project> --tag=latest [--verbose=true]`
 1. Push changes `git push`
 1. Repeat for each `<package-worked-on>`
 

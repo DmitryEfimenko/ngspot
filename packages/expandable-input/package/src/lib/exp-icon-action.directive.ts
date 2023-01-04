@@ -1,7 +1,9 @@
-import { Directive } from '@angular/core';
+import { Directive, inject, TemplateRef } from '@angular/core';
 
 @Directive({
   selector: '[ngsExpIconAction]',
   standalone: true,
 })
-export class ExpIconActionDirective {}
+export class ExpIconActionDirective {
+  templateRef = inject(TemplateRef);
+}
