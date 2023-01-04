@@ -95,6 +95,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 @ngspot/common
 
 @ngspot/expandable-input
+MIT
 
 @ngspot/expandable-input-demo
 
