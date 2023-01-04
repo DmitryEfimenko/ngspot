@@ -23,17 +23,18 @@ One time config: `git config --global push.followTags true`
 
 > `<project>` in the commands below is a string found in `workspace.json` file
 
+1. Switch to a feature branch: `git checkout -b feat/myfeature`
 1. Develop
 1. Write tests
 1. Run `npm run test`
 1. Run `git add ./packages/<project-dir>`
 1. Run `npm run c` and choose fix or feature
 1. Run `npm run nx -- -- version <project> --dryRun true`. If releasing for the first time, consider adding an override flag at the end of the command: `--releaseAs=major` (or `minor`, or `patch`)
-
 1. Make sure that CHANGELOG looks right and run the command without --dryRun option
 1. Run `npm run nx -- -- build <project>`
+1. Push feature branch, create a PR and have it merged: `git push`
+1. Switch to main branch: `git checkout main`
 1. Run `npm run nx -- -- publish <project> --tag=latest [--verbose=true]`
-1. Push changes `git push`
 1. Repeat for each `<package-worked-on>`
 
 ## Generate a publishable library
