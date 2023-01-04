@@ -48,5 +48,5 @@
       }
     }
   },
-  "tags": ["lib:remote-data"]
+  "tags": ["lib", "lib:remote-data-rx"]
 }

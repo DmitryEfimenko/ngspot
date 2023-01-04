@@ -8,9 +8,9 @@ import { EXPANDABLE_INPUT_DIRECTIVES } from './expandable-input.module';
   selector: 'ngs-test',
   template: `
     <ngs-expandable-input>
-      <input type="text" ngsExpInput />
-      <i ngsExpIconOpen>🔍</i>
-      <i ngsExpIconClose>✖️</i>
+      <input type="text" *ngsExpInput />
+      <i *ngsExpIconOpen>🔍</i>
+      <i *ngsExpIconClose>✖️</i>
     </ngs-expandable-input>
   `,
   standalone: true,
@@ -27,9 +27,9 @@ describe(ExpandableInputComponent.name, () => {
   function setup() {
     const template = `
     <ngs-expandable-input>
-      <input type="text" ngsExpInput />
-      <i ngsExpIconOpen>🔍</i>
-      <i ngsExpIconClose>✖️</i>
+      <input type="text" *ngsExpInput />
+      <i *ngsExpIconOpen>🔍</i>
+      <i *ngsExpIconClose>✖️</i>
     </ngs-expandable-input>`;
     const spectator = createHostComponent(template);
 

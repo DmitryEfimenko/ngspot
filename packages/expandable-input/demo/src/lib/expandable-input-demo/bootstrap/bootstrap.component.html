@@ -10,7 +10,7 @@
 <ngs-code-snippets title="Without action button" [snippets]="snippets['basic']">
   <ng-container *ngsSnippetResult>
     <ngs-expandable-input>
-      <div ngsExpInput>
+      <div *ngsExpInput>
         <label for="exampleFormControlInput1" class="form-label">
           Email address
         </label>
@@ -23,11 +23,11 @@
         />
       </div>
 
-      <button type="button" class="btn btn-primary m-2" ngsExpIconOpen>
+      <button type="button" class="btn btn-primary m-2" *ngsExpIconOpen>
         <i class="bi bi-search"></i>
       </button>
 
-      <button type="button" class="btn btn-light m-2" ngsExpIconClose>
+      <button type="button" class="btn btn-light m-2" *ngsExpIconClose>
         <i class="bi bi-x"></i>
       </button>
     </ngs-expandable-input>
@@ -41,7 +41,7 @@
 >
   <ng-container *ngsSnippetResult>
     <ngs-expandable-input>
-      <div ngsExpInput>
+      <div *ngsExpInput>
         <label for="exampleFormControlInput2" class="form-label">
           Email address
         </label>
@@ -54,15 +54,15 @@
         />
       </div>
 
-      <button type="button" class="btn btn-primary m-2" ngsExpIconOpen>
+      <button type="button" class="btn btn-primary m-2" *ngsExpIconOpen>
         <i class="bi bi-search"></i>
       </button>
 
-      <button type="button" class="btn btn-primary" ngsExpIconAction>
+      <button type="button" class="btn btn-primary" *ngsExpIconAction>
         <i class="bi bi-airplane-engines"></i>
       </button>
 
-      <button type="button" class="btn btn-light m-2" ngsExpIconClose>
+      <button type="button" class="btn btn-light m-2" *ngsExpIconClose>
         <i class="bi bi-x"></i>
       </button>
     </ngs-expandable-input>
@@ -94,7 +94,7 @@
       </button>
 
       <ngs-expandable-input #expInp class="flex-1">
-        <div ngsExpInput>
+        <div *ngsExpInput>
           <label for="exampleFormControlInput1" class="form-label">
             Email address
           </label>
@@ -107,11 +107,11 @@
           />
         </div>
 
-        <button type="button" class="btn btn-primary m-2" ngsExpIconOpen>
+        <button type="button" class="btn btn-primary m-2" *ngsExpIconOpen>
           <i class="bi bi-search"></i>
         </button>
 
-        <button type="button" class="btn btn-light m-2" ngsExpIconClose>
+        <button type="button" class="btn btn-light m-2" *ngsExpIconClose>
           <i class="bi bi-x"></i>
         </button>
       </ngs-expandable-input>

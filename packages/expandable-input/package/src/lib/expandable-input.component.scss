@@ -4,10 +4,6 @@
   overflow: hidden;
 }
 
-:host ::ng-deep [ngsexpinput] {
-  width: 100%;
-}
-
 .wrap-all {
   position: relative;
   display: flex;
@@ -35,6 +31,10 @@
     align-items: center;
     width: 100%;
     overflow: hidden;
+
+    & > ::ng-deep * {
+      width: 100%;
+    }
   }
 
   .icons_icon-action {
@@ -57,6 +57,8 @@
   // when icons rotate around 45deg, the overall height is forced tp become bigger
   // which might trigger scroll to show. Enforce hiding it.
   overflow: hidden;
+  top: var(--expandable-input-trigger-icons-top);
+  bottom: var(--expandable-input-trigger-icons-bottom);
 
   &_icon-close, &_icon-open {
     z-index: 2;

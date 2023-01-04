@@ -8,16 +8,16 @@
   </button>
 
   <ngs-expandable-input #expInp class="flex-1">
-    <mat-form-field ngsExpInput>
+    <mat-form-field *ngsExpInput>
       <mat-label>Search</mat-label>
       <input type="text" matInput />
     </mat-form-field>
 
-    <button type="button" mat-mini-fab color="primary" ngsExpIconOpen>
+    <button type="button" mat-mini-fab color="primary" *ngsExpIconOpen>
       <mat-icon>search</mat-icon>
     </button>
 
-    <button type="button" mat-mini-fab ngsExpIconClose>
+    <button type="button" mat-mini-fab *ngsExpIconClose>
       <mat-icon>close</mat-icon>
     </button>
   </ngs-expandable-input>

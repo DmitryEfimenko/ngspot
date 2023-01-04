@@ -1,28 +1,59 @@
 <h2 class="mb-4">Examples using Material components</h2>
-<p class="mb-4">
-  This is an example of expandable input using
-  <a href="https://material.angular.io/" target="_blank">Angular Material</a>
-  for the input and icon buttons. Small amount of CSS adjustments needed to make
-  things align and have good amount of spacing. In your application you would
-  probably wrap this code into a custom component.
-</p>
 
 <ngs-code-snippets title="Without action button" [snippets]="snippets['basic']">
+  <div *ngsSnippetDescription>
+    <p class="mb-2">
+      This is an example of expandable input using
+      <a href="https://material.angular.io/" target="_blank">
+        Angular Material
+      </a>
+      for the input and icon buttons. Small amount of CSS adjustments needed to
+      make things align and have good amount of spacing.
+    </p>
+    <p>
+      In your application you would probably want to create a reusable component
+      that encapsulates all customization that you've done to make component
+      work well with your design system. See second example for that.
+    </p>
+  </div>
+
   <ng-container *ngsSnippetResult>
     <ngs-expandable-input>
-      <mat-form-field ngsExpInput>
+      <mat-form-field *ngsExpInput>
         <mat-label>Search</mat-label>
         <input type="text" matInput />
       </mat-form-field>
 
-      <button type="button" mat-mini-fab color="primary" ngsExpIconOpen>
+      <button type="button" mat-mini-fab color="primary" *ngsExpIconOpen>
         <mat-icon>search</mat-icon>
       </button>
 
-      <button type="button" mat-mini-fab ngsExpIconClose>
+      <button type="button" mat-mini-fab *ngsExpIconClose>
         <mat-icon>close</mat-icon>
       </button>
     </ngs-expandable-input>
+  </ng-container>
+</ngs-code-snippets>
+
+<ngs-code-snippets
+  title="As a reusable component"
+  [snippets]="snippets['reusable']"
+  expanded="false"
+>
+  <ng-container *ngsSnippetResult>
+    <ngs-material-expandable-input>
+      <mat-form-field materialExpInput>
+        <input matInput placeholder="Search" />
+      </mat-form-field>
+
+      <button materialExpIconOpen mat-mini-fab color="primary">
+        <mat-icon matRipple>search</mat-icon>
+      </button>
+
+      <button materialExpIconClose mat-mini-fab>
+        <mat-icon matRipple>close</mat-icon>
+      </button>
+    </ngs-material-expandable-input>
   </ng-container>
 </ngs-code-snippets>
 
@@ -33,20 +64,20 @@
 >
   <ng-container *ngsSnippetResult>
     <ngs-expandable-input>
-      <mat-form-field ngsExpInput>
+      <mat-form-field *ngsExpInput>
         <mat-label>Search</mat-label>
         <input type="text" matInput />
       </mat-form-field>
 
-      <button type="button" mat-mini-fab color="primary" ngsExpIconOpen>
+      <button type="button" mat-mini-fab color="primary" *ngsExpIconOpen>
         <mat-icon>search</mat-icon>
       </button>
 
-      <button type="button" mat-mini-fab color="primary" ngsExpIconAction>
+      <button type="button" mat-mini-fab color="primary" *ngsExpIconAction>
         <mat-icon>build</mat-icon>
       </button>
 
-      <button type="button" mat-mini-fab ngsExpIconClose>
+      <button type="button" mat-mini-fab *ngsExpIconClose>
         <mat-icon>close</mat-icon>
       </button>
     </ngs-expandable-input>
@@ -78,16 +109,16 @@
       </button>
 
       <ngs-expandable-input #expInp class="flex-1">
-        <mat-form-field ngsExpInput>
+        <mat-form-field *ngsExpInput>
           <mat-label>Search</mat-label>
           <input type="text" matInput />
         </mat-form-field>
 
-        <button type="button" mat-mini-fab color="primary" ngsExpIconOpen>
+        <button type="button" mat-mini-fab color="primary" *ngsExpIconOpen>
           <mat-icon>search</mat-icon>
         </button>
 
-        <button type="button" mat-mini-fab ngsExpIconClose>
+        <button type="button" mat-mini-fab *ngsExpIconClose>
           <mat-icon>close</mat-icon>
         </button>
       </ngs-expandable-input>

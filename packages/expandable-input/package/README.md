@@ -73,9 +73,26 @@ Component provides the following Inputs and Outputs:
 @Output() closed = new EventEmitter<void>();
 ```
 
+All of these Inputs and Outputs belong to the `ExpandableInputBase` class, which comes very handy in the extensibility story of this library.
+
+### Extensibility - Creating your own custom components
+
+Using this library as-is isn't a primary use-case. Most likely your application is using some sort of a design system (for example material). This library is designed in such a way that it's easy to create a custom reusable component with your design system in mind.
+There are only a few things your custom component must do:
+
+- Component class should extend from `ExpandableInputBase` class so that it inherits all the Inputs and Outputs that `<ngs-expandable-input>` component has.
+- Component's template should use `<ngs-expandable-input>` component inside of it and bind all Inputs and Outputs to it.
+- Use content projection with your choice of selectors that target corresponding elements for the input and the icons.
+
+See full code example of the custom Material component [here](https://dmitryefimenko.github.io/ngspot/expandable-input/material#as_a_reusable_component).
+
 ### CSS
 
 Under the hood the library uses a few CSS variables. Using these variables should be enough for most use-cases. See how these variables are used when using this library with [Angular Material](https://dmitryefimenko.github.io/ngspot/expandable-input/material) components or with [Bootstrap](https://dmitryefimenko.github.io/ngspot/expandable-input/bootstrap) components.
+
+---
+
+The input element and the "trigger" element are placed within a `display: flex` container. `--expandable-input-align-items` variable controls `align-items` property of that container. `--expandable-input-items-gap` variable controls the `gap` property of that container.
 
 ```css
 :host {
@@ -84,9 +101,20 @@ Under the hood the library uses a few CSS variables. Using these variables shoul
 }
 ```
 
-The input element and the "trigger" element are placed within a `display: flex` container. `--expandable-input-align-items` variable controls `align-items` property of that container. `--expandable-input-items-gap` variable controls the `gap` property of that container.
+---
+
+In addition, the element containing "trigger" elements can be controlled via adjusting its top or bottom properties.
+
+```css
+:host {
+  --expandable-input-trigger-icons-top: 0.5rem;
+  --expandable-input-trigger-icons-bottom: 0.5rem;
+}
+```
 
 ---
+
+The action button element has `position: absolute` applied to it. These variables allow you to adjust the corresponding `right`, `top`, or `bottom` CSS properties.
 
 ```css
 :host {
@@ -95,8 +123,6 @@ The input element and the "trigger" element are placed within a `display: flex` 
   --expandable-input-action-icon-bottom: 0.5rem;
 }
 ```
-
-The action button element has `position: absolute` applied to it. These variables allow you to adjust the corresponding `right`, `top`, or `bottom` CSS properties.
 
 ## Animating sibling elements
 
@@ -142,9 +168,9 @@ export class ExpandableInputDemoComponent {}
   <i [@smoothHorizontalCollapse]="expInp.isOpen">😼</i>
 
   <ngs-expandable-input #expInp style="flex: 1 0 auto">
-    <input type="text" ngsExpInput />
-    <i ngsExpIconOpen>🔍</i>
-    <i ngsExpIconClose>✖️</i>
+    <input type="text" *ngsExpInput />
+    <i *ngsExpIconOpen>🔍</i>
+    <i *ngsExpIconClose>✖️</i>
   </ngs-expandable-input>
 
   <button type="button" [@smoothHorizontalCollapse]="expInp.isOpen">

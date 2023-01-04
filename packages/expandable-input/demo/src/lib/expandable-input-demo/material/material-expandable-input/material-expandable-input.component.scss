@@ -1,0 +1,12 @@
+:host {
+  --expandable-input-trigger-icons-top: .6rem;
+  --expandable-input-items-gap: 1rem;
+}
+
+ngs-expandable-input {
+  ::ng-deep {
+    .mat-mdc-text-field-wrapper {
+      border-radius: 0 40px 40px 0;
+    }
+  }
+}

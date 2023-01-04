@@ -1,28 +1,24 @@
 /* eslint-disable @angular-eslint/no-host-metadata-property */
 import { CommonModule, DOCUMENT } from '@angular/common';
 import {
-  AfterViewInit,
+  AfterContentInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   ContentChild,
   ElementRef,
-  EventEmitter,
   HostListener,
-  Inject,
-  Input,
+  inject,
   OnDestroy,
   OnInit,
-  Output,
   ViewChild,
 } from '@angular/core';
 import { ExpIconActionDirective } from './exp-icon-action.directive';
 import { ExpIconCloseDirective } from './exp-icon-close.directive';
 import { ExpIconOpenDirective } from './exp-icon-open.directive';
 import { ExpInputDirective } from './exp-input.directive';
+import { ExpandableInputBase } from './expandable-input-base';
 import {
-  ANIMATION_DURATION,
-  ANIMATION_EASING,
   rotateActionIcon,
   slideInOut,
   swapIcons,
@@ -39,9 +35,9 @@ export class ExpInputError extends Error {
 /**
  * Example usage:
  * <ngs-expandable-input>
- *   <input type="text" ngsExpInput />
- *   <i ngsExpIconOpen>open</i>
- *   <i ngsExpIconClose>close</i>
+ *   <input type="text" *ngsExpInput />
+ *   <i *ngsExpIconOpen>open</i>
+ *   <i *ngsExpIconClose>close</i>
  * </ngs-expandable-input>
  */
 @Component({
@@ -54,68 +50,33 @@ export class ExpInputError extends Error {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ExpandableInputComponent
-  implements OnInit, AfterViewInit, OnDestroy
+  extends ExpandableInputBase
+  implements OnInit, AfterContentInit, OnDestroy
 {
-  /**
-   * If multiple components use the same value for "group" input, only one
-   * component with that group value can be expanded at a time
-   */
-  @Input() group: string | undefined;
+  private inputsManager = inject(InputsManagerService);
+  private cdr = inject(ChangeDetectorRef);
+  private document = inject(DOCUMENT);
 
-  /**
-   * When true, input looses focus if Esc is pressed
-   */
-  @Input() blurInputOnEsc = true;
+  @ContentChild(ExpInputDirective, { static: true })
+  protected expInputDirective: ExpInputDirective;
 
-  /**
-   * When set to KeyboardEvent.key, input will expand when that key is pressed
-   */
-  @Input() openOnKey: string | undefined;
+  @ContentChild(ExpIconOpenDirective, { static: true })
+  protected iconOpenDirective: ExpIconOpenDirective;
 
-  /**
-   * How long it takes for input to expand
-   */
-  @Input() animationDuration = `${ANIMATION_DURATION}ms`;
+  @ContentChild(ExpIconCloseDirective, { static: true })
+  protected iconCloseDirective: ExpIconCloseDirective;
 
-  /**
-   * The easing function for input expansion animation
-   */
-  @Input() animationEasing = ANIMATION_EASING;
+  @ContentChild(ExpIconActionDirective, { static: true })
+  protected expIconActionDirective: ExpIconActionDirective;
 
-  @Output() opened = new EventEmitter<void>();
-
-  @Output() closed = new EventEmitter<void>();
+  @ViewChild('inputElWrapper', { static: true })
+  inputElWrapper: ElementRef<HTMLElement>;
 
   isOpen = false;
 
-  @ContentChild(ExpInputDirective, { read: ElementRef, static: false })
-  set inputElRef(val: ElementRef<HTMLElement>) {
-    if (val) {
-      this.inputEl =
-        val.nativeElement.tagName.toLowerCase() === 'input'
-          ? val.nativeElement
-          : val.nativeElement.querySelector('input');
-    }
+  get inputEl() {
+    return this.inputElWrapper.nativeElement.querySelector('input');
   }
-  inputEl: HTMLElement | null;
-
-  @ContentChild(ExpIconOpenDirective, { read: ElementRef, static: false })
-  iconOpen: ElementRef;
-
-  @ContentChild(ExpIconCloseDirective, { read: ElementRef, static: false })
-  iconClose: ElementRef;
-
-  @ContentChild(ExpIconActionDirective, { read: ElementRef, static: false })
-  iconAction: ElementRef;
-
-  @ViewChild('iconOpenWrapper', { static: false })
-  iconOpenWrapper: ElementRef;
-
-  @ViewChild('iconCloseWrapper', { static: false })
-  iconCloseWrapper: ElementRef;
-
-  @ViewChild('iconActionWrapper', { static: false })
-  iconActionWrapper: ElementRef;
 
   @HostListener('document:keyup.escape')
   onEsc() {
@@ -134,17 +95,11 @@ export class ExpandableInputComponent
     }
   }
 
-  constructor(
-    private inputsManager: InputsManagerService,
-    private cdr: ChangeDetectorRef,
-    @Inject(DOCUMENT) private document: any
-  ) {}
-
   ngOnInit() {
     this.inputsManager.registerComponent(this);
   }
 
-  ngAfterViewInit() {
+  ngAfterContentInit() {
     this.sanityCheck();
   }
 
@@ -166,9 +121,7 @@ export class ExpandableInputComponent
   }
 
   private focusOnInput() {
-    if (this.inputEl) {
-      this.inputEl.focus();
-    }
+    this.inputEl?.focus();
   }
 
   private blurOnInput() {
@@ -176,15 +129,13 @@ export class ExpandableInputComponent
       // input might have other keyup.escape handler associated with it
       // setTimeout to push blur call at the end of the event loop
       setTimeout(() => {
-        if (this.inputEl) {
-          this.inputEl.blur();
-        }
+        this.inputEl?.blur();
       });
     }
   }
 
   private isInputFocused() {
-    const el: HTMLElement = this.document.activeElement;
+    const el = this.document.activeElement;
     if (!el) {
       return false;
     }
@@ -195,21 +146,21 @@ export class ExpandableInputComponent
   }
 
   private sanityCheck() {
-    if (!this.inputEl) {
+    if (!this.expInputDirective) {
       throw new ExpInputError(
-        'You need to include an element with attribute ngsExpInput'
+        'You need to include an element with *ngsExpInput structural directive'
       );
     }
 
-    if (!this.iconOpen) {
+    if (!this.iconOpenDirective) {
       throw new ExpInputError(
-        'You need to include an element with attribute ngsExpIconOpen'
+        'You need to include an element with *ngsExpIconOpen structural directive'
       );
     }
 
-    if (!this.iconClose) {
+    if (!this.iconCloseDirective) {
       throw new ExpInputError(
-        'You need to include an element with attribute ngsExpIconClose'
+        'You need to include an element with *ngsExpIconClose structural directive'
       );
     }
   }

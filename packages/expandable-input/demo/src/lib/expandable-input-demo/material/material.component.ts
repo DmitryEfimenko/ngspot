@@ -12,19 +12,30 @@ import {
   gap,
   smoothHorizontalCollapse,
 } from '@ngspot/expandable-input';
+import { MaterialExpandableInputComponent } from './material-expandable-input/material-expandable-input.component';
 
-const basicHtml = require('raw-loader!./snippets/basic-html.html').default;
-const basicCss = require('raw-loader!./snippets/basic-css.txt').default;
-const withActionHtml =
-  require('raw-loader!./snippets/with-action-button-html.html').default;
-const withActionCss =
-  require('raw-loader!./snippets/with-action-button-css.txt').default;
-const hidingSiblingHtml =
-  require('raw-loader!./snippets/hiding-sibling-element.html').default;
-const hidingSiblingTs =
-  require('raw-loader!./snippets/hiding-sibling-element-ts.txt').default;
-const hidingSiblingCss =
-  require('raw-loader!./snippets/hiding-sibling-element-css.txt').default;
+const basic = {
+  html: require('raw-loader!./snippets/basic-html.html').default,
+  css: require('raw-loader!./snippets/basic-css.txt').default,
+};
+
+const reusable = {
+  consume: require('raw-loader!./snippets/reusable-consume-html.html').default,
+  compHtml: require('raw-loader!./snippets/reusable-comp-html.html').default,
+  compTs: require('raw-loader!./snippets/reusable-comp-ts.txt').default,
+  compCss: require('raw-loader!./snippets/reusable-comp-css.txt').default,
+};
+
+const withAction = {
+  html: require('raw-loader!./snippets/with-action-button-html.html').default,
+  css: require('raw-loader!./snippets/with-action-button-css.txt').default,
+};
+
+const hidingSibling = {
+  html: require('raw-loader!./snippets/hiding-sibling-element.html').default,
+  ts: require('raw-loader!./snippets/hiding-sibling-element-ts.txt').default,
+  css: require('raw-loader!./snippets/hiding-sibling-element-css.txt').default,
+};
 
 @Component({
   selector: 'ngs-expandable-input-material-demo',
@@ -37,6 +48,7 @@ const hidingSiblingCss =
     MatButtonModule,
     EXPANDABLE_INPUT_DIRECTIVES,
     CODE_SNIPPETS_DIRECTIVES,
+    MaterialExpandableInputComponent,
   ],
   templateUrl: './material.component.html',
   styleUrls: ['./material.component.scss'],
@@ -56,17 +68,32 @@ const hidingSiblingCss =
 export class NgsExpandableMaterialDemoComponent {
   snippets: Record<string, Snippet | Snippet[]> = {
     basic: [
-      { fileName: 'HTML', content: basicHtml },
-      { fileName: 'SCSS', content: basicCss },
+      { fileName: 'HTML', content: basic.html },
+      { fileName: 'SCSS', content: basic.css },
+    ],
+    reusable: [
+      { fileName: 'HTML', content: reusable.consume },
+      {
+        fileName: 'material-expandable-input.component.ts',
+        content: reusable.compTs,
+      },
+      {
+        fileName: 'material-expandable-input.component.html',
+        content: reusable.compHtml,
+      },
+      {
+        fileName: 'material-expandable-input.component.scss',
+        content: reusable.compCss,
+      },
     ],
     withAction: [
-      { fileName: 'HTML', content: withActionHtml },
-      { fileName: 'SCSS', content: withActionCss },
+      { fileName: 'HTML', content: withAction.html },
+      { fileName: 'SCSS', content: withAction.css },
     ],
     hidingSibling: [
-      { fileName: 'HTML', content: hidingSiblingHtml },
-      { fileName: 'TS', content: hidingSiblingTs },
-      { fileName: 'SCSS', content: hidingSiblingCss },
+      { fileName: 'HTML', content: hidingSibling.html },
+      { fileName: 'TS', content: hidingSibling.ts },
+      { fileName: 'SCSS', content: hidingSibling.css },
     ],
   };
 }

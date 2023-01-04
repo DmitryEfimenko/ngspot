@@ -57,5 +57,5 @@
       }
     }
   },
-  "tags": []
+  "tags": ["lib", "lib:ng-superclass"]
 }
