@@ -2,6 +2,8 @@
 @use '@angular/material' as mat;
 @use "palette" as palette;
 @use 'material-variables' as v;
+@use 'code-snippets.theme' as codeSnippets;
+@use 'routed-tabs.theme' as routedTabs;
 
 $mat-dark-theme-foreground: (
   base: v.$light-text,
@@ -10,7 +12,7 @@ $mat-dark-theme-foreground: (
   disabled: v.$light-disabled-text,
   disabled-button: rgba(v.$light-text, 0.3),
   disabled-text: v.$light-disabled-text,
-  elevation: black,
+  elevation: white,
   hint-text: v.$light-disabled-text,
   secondary-text: v.$light-accent-text,
   accent-text: v.$light-accent-text,
@@ -40,8 +42,8 @@ $mat-dark-theme-background: (
   disabled-list-option: v.$dark-bg-lighter-10,
 );
 
+// colors are the same as in light theme
 $theme: mat.define-dark-theme((
-  // colors are the same as in light theme
   color: (
     primary: palette.$primary,
     accent: palette.$accent,
@@ -58,10 +60,12 @@ $material-theme-overrides: (
 
 $theme: map.deep-merge($theme, $material-theme-overrides);
 
-body.dark {
+ngs-root.dark {
   // @include mat.core-theme($theme);
   // @include mat.button-theme($theme);
-  @include mat.all-component-themes($theme);
+  @include mat.all-component-colors($theme);
+  @include codeSnippets.theme($theme);
+  @include routedTabs.theme($theme);
 
   color: v.$light-primary-text;
   background-color: v.$dark-background;

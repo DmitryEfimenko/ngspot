@@ -4,14 +4,11 @@
 
 h3 {
   margin: 0;
-  
 }
 
 pre {
   margin: 0;
 }
-
-
 
 mat-card-title-group {
   border-top: .5px solid var(--code-snippets-border-color, grey);
@@ -31,12 +28,6 @@ mat-card-title-group {
 
 .result-container, .code-container {
   border-top: .5px solid var(--code-snippets-border-color, grey);
-}
-
-::ng-deep {
-  mat-tab-header {
-    border-bottom: 1px solid rgba(255,255,255,.12);
-  }
 }
 
 ::ng-deep {
@@ -64,8 +55,6 @@ mat-card-title-group {
   td.hljs-ln-numbers {
     user-select: none;
     text-align: center;
-    color: #cccccc6b;
-    border-right: 1px solid #cccccc1c;
     vertical-align: top;
     padding-right: 10px !important;
     padding-left: 10px !important;

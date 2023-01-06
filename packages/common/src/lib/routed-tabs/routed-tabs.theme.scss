@@ -1,0 +1,29 @@
+@use 'sass:map';
+@use '@angular/material' as mat;
+
+@mixin color($theme) {
+  $color-config: mat.get-color-config($theme);
+  $background: map.get($color-config, background);
+  $is-dark: map.get($color-config, 'is-dark');
+
+  ngs-routed-tabs > mat-tab-group.sections > mat-tab-header {
+    background: mat.get-color-from-palette($background, app-bar);
+  }
+}
+
+@mixin typography($theme) {
+  // TODO?
+}
+
+@mixin theme($theme) {
+  $color-config: mat.get-color-config($theme);
+
+  @if $color-config != null {
+    @include color($theme);
+  }
+
+  $typography-config: mat.get-typography-config($theme);
+  @if $typography-config != null {
+    @include typography($theme);
+  }
+}

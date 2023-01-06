@@ -8,14 +8,23 @@ $accent-lighter-color: var(--accent-200);
 $accent-darker-color: var(--accent-800);
 
 // Dark Theme Text
-$light-text: var(--primary-50);
+$light-text: white;
 $light-primary-text: $light-text;
 $light-accent-text: var(--accent-200);
 $light-dividers: var(--primary-300);
 $light-disabled-text: rgba($light-primary-text, 0.5);
 $light-focused: rgba($light-primary-text, 0.12);
 
-// Background config
+// Dark Theme Text
+$dark-text: black;
+$dark-primary-text: $dark-text;
+$dark-accent-text: var(--accent-200);
+$dark-dividers: var(--primary-300);
+$dark-disabled-text: rgba($dark-primary-text, 0.5);
+$dark-focused: rgba($dark-primary-text, 0.12);
+
+
+// Dark Background config
 $dark-background: #181817;
 $dark-bg-lighter-5: lighten($dark-background, 5%);
 $dark-bg-lighter-10: lighten($dark-background, 10%);
@@ -23,3 +32,12 @@ $dark-bg-lighter-20: lighten($dark-background, 20%);
 $dark-bg-lighter-30: lighten($dark-background, 30%);
 $light-bg-alpha-4: rgba(#fafafa, 0.04);
 $light-bg-alpha-12: rgba(#fafafa, 0.3);
+
+// Dark Background config
+$light-background: #ffffff;
+$light-bg-darker-5: darken($light-background, 5%);
+$light-bg-darker-10: darken($light-background, 10%);
+$light-bg-darker-20: darken($light-background, 20%);
+$light-bg-darker-30: darken($light-background, 30%);
+$dark-bg-alpha-4: rgba($light-background, 0.04);
+$dark-bg-alpha-12: rgba($light-background, 0.3);

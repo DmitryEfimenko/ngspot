@@ -1,6 +1,6 @@
 import { MediaMatcher } from '@angular/cdk/layout';
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, HostBinding } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
@@ -9,6 +9,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
 import { RouterActivatedMatListItemDirective } from '@ngspot/common';
 import { NgxGoogleAnalyticsRouterModule } from 'ngx-google-analytics';
+import { HighlightLoader } from 'ngx-highlightjs';
 import { BehaviorSubject, map } from 'rxjs';
 
 import { Project, PROJECTS } from './projects';
@@ -52,11 +53,26 @@ export class AppComponent {
     map((project) => project?.githubLink)
   );
 
+  @HostBinding('class.dark')
+  isDarkTheme = true;
+
   constructor(
     private changeDetectorRef: ChangeDetectorRef,
-    private media: MediaMatcher
+    private media: MediaMatcher,
+    private hljsLoader: HighlightLoader
   ) {
     this.wireMediaListener();
+    this.setTheme();
+  }
+
+  toggleTheme() {
+    this.isDarkTheme = !this.isDarkTheme;
+    this.setTheme();
+  }
+
+  private setTheme() {
+    const theme = this.isDarkTheme ? 'monokai-sublime' : 'vs';
+    this.hljsLoader.setTheme(`assets/highlightjs/${theme}.css`);
   }
 
   trackByName(ix: number, project: Project) {
