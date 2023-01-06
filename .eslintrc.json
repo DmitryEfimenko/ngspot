@@ -18,7 +18,11 @@
               },
               {
                 "sourceTag": "app:demo",
-                "onlyDependOnLibsWithTags": ["lib:demo", "lib:common"]
+                "onlyDependOnLibsWithTags": [
+                  "lib:demo",
+                  "lib:common",
+                  "lib:ng-superclass"
+                ]
               },
               {
                 "sourceTag": "lib:demo",

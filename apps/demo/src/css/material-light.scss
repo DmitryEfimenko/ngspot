@@ -1,0 +1,85 @@
+@use 'sass:map';
+@use '@angular/material' as mat;
+@use "palette" as palette;
+@use 'material-variables' as v;
+@use 'code-snippets.theme' as codeSnippets;
+@use 'routed-tabs.theme' as routedTabs;
+
+$mat-light-theme-foreground: (
+  base: v.$dark-text,
+  divider: v.$dark-dividers,
+  dividers: v.$dark-dividers,
+  disabled: v.$dark-disabled-text,
+  disabled-button: rgba(v.$dark-text, 0.3),
+  disabled-text: v.$dark-disabled-text,
+  elevation: black,
+  hint-text: v.$dark-disabled-text,
+  secondary-text: v.$dark-accent-text,
+  accent-text: v.$dark-accent-text,
+  icon: v.$dark-text,
+  icons: v.$dark-text,
+  text: v.$dark-text,
+  slider-min: v.$accent-color,
+  slider-off: rgba(v.$dark-text, 0.3),
+  slider-off-active: rgba(v.$dark-text, 0.3),
+);
+
+$mat-light-theme-background: (
+  background: v.$light-background,
+  status-bar: v.$light-bg-darker-20,
+  app-bar: v.$light-bg-darker-5,
+  hover: v.$dark-bg-alpha-4,
+  card: v.$light-bg-darker-5,
+  dialog: v.$light-bg-darker-5,
+  tooltip: v.$dark-bg-lighter-20, 
+  disabled-button: v.$dark-bg-alpha-12,
+  raised-button: v.$light-bg-darker-5,
+  focused-button: v.$dark-focused,
+  selected-button: v.$light-bg-darker-20,
+  selected-disabled-button: v.$light-bg-darker-30,
+  disabled-button-toggle: v.$light-bg-darker-10,
+  unselected-chip: v.$light-bg-darker-20,
+  disabled-list-option: v.$light-bg-darker-10,
+);
+
+// colors are the same as in light theme
+$theme: mat.define-light-theme((
+  color: (
+    primary: palette.$primary,
+    accent: palette.$accent,
+    warn: palette.$warn,
+  ),
+));
+
+$material-theme-overrides: (
+  'color': (
+    'foreground': $mat-light-theme-foreground,
+    'background': $mat-light-theme-background,
+  ),
+);
+
+$theme: map.deep-merge($theme, $material-theme-overrides);
+
+body {
+  // @include mat.core-theme($theme);
+  // @include mat.button-theme($theme);
+  @include mat.all-component-themes($theme);
+  @include codeSnippets.theme($theme);
+  @include routedTabs.theme($theme);
+
+  color: v.$dark-primary-text;
+  background-color: v.$light-background;
+
+  hr {
+    color: v.$dark-dividers;
+  }
+
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active {
+    transition: background-color 5000s ease-in-out 0s;
+    box-shadow: 0 0 0px 1000px #1a1a1a inset;
+    -webkit-text-fill-color: v.$dark-text;
+  }
+}

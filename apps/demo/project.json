@@ -24,6 +24,12 @@
           }
         ],
         "styles": ["apps/demo/src/css/styles.scss"],
+        "stylePreprocessorOptions": {
+          "includePaths": [
+            "packages/common/src/lib/code-snippets",
+            "packages/common/src/lib/routed-tabs"
+          ]
+        },
         "scripts": []
       },
       "configurations": {

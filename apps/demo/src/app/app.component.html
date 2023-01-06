@@ -18,6 +18,15 @@
 
     <span class="flex-auto"></span>
 
+    <button
+      mat-icon-button
+      type="button"
+      (click)="toggleTheme()"
+      [title]="isDarkTheme ? 'Switch to light mode' : 'Switch to dark mode'"
+    >
+      <mat-icon>{{ isDarkTheme ? 'light_mode' : 'dark_mode' }}</mat-icon>
+    </button>
+
     <a
       mat-icon-button
       [href]="twitterLink$ | async"
