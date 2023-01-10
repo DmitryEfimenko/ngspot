@@ -68,8 +68,32 @@ Component provides the following Inputs and Outputs:
  */
 @Input() animationEasing = 'cubic-bezier(.4, 0, .2, 1)';
 
+/**
+ * A set of enter and leave AnimationMetadata applied to icon "open".
+ * See example of usage: https://dmitryefimenko.github.io/ngspot/expandable-input/material#as_a_reusable_component
+ */
+@Input() iconOpenAnimation = iconOpenAnimation;
+
+/**
+ * A set of enter and leave AnimationMetadata applied to icon "close".
+ * See example of usage: https://dmitryefimenko.github.io/ngspot/expandable-input/material#as_a_reusable_component
+ */
+@Input() iconCloseAnimation = iconCloseAnimation;
+
+/**
+ * A set of enter and leave AnimationMetadata applied to icon "action".
+ * See example of usage: https://dmitryefimenko.github.io/ngspot/expandable-input/material#as_a_reusable_component
+ */
+@Input() iconActionAnimation = iconCloseAnimation;
+
+/**
+ * Event emitted when input shows
+ */
 @Output() opened = new EventEmitter<void>();
 
+/**
+ * Event emitted when input hides
+ */
 @Output() closed = new EventEmitter<void>();
 ```
 
@@ -128,7 +152,7 @@ The action button element has `position: absolute` applied to it. These variable
 
 One of the common usages of the expandable input is a "search" input. You might have other navigation elements/buttons present next to the expandable input and you might want to hide these elements when expandable input expands.
 
-This library provides couple utility animations that aid in achieving desired effect: `gap` and `smoothHorizontalCollapse`
+This library provides couple utility animations that aid in achieving desired effect: `animateCssProperty` and `smoothHorizontalCollapse`. These two animation utilities are designed to work together due to some aspects of collapse timing.
 
 See example below.
 
@@ -138,7 +162,7 @@ import {
   ANIMATION_DURATION,
   ANIMATION_EASING,
   EXPANDABLE_INPUT_DIRECTIVES,
-  gap,
+  animateCssProperty,
   smoothHorizontalCollapse,
 } from '@ngspot/expandable-input';
 
@@ -153,8 +177,10 @@ import {
       durationMs: ANIMATION_DURATION,
       easing: ANIMATION_EASING,
     }),
-    gap({
-      gapAmount: '1rem',
+    animateCssProperty({
+      propName: 'gap',
+      falseValue: '1rem',
+      trueValue: '0',
       durationMs: ANIMATION_DURATION,
       easing: ANIMATION_EASING,
     }),

@@ -11,6 +11,7 @@ ngs-code-snippets {
 
 ngs-expandable-input {
   ::ng-deep {
+    // pretty round input at the end
     .mat-mdc-text-field-wrapper {
       border-radius: 0 40px 40px 0;
     }

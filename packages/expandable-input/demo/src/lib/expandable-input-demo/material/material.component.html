@@ -1,6 +1,10 @@
 <h2 class="mb-4">Examples using Material components</h2>
 
-<ngs-code-snippets title="Without action button" [snippets]="snippets['basic']">
+<ngs-code-snippets
+  title="Without action button"
+  [snippets]="snippets['basic']"
+  expanded="true"
+>
   <div *ngsSnippetDescription>
     <p class="mb-2">
       This is an example of expandable input using
@@ -10,10 +14,18 @@
       for the input and icon buttons. Small amount of CSS adjustments needed to
       make things align and have good amount of spacing.
     </p>
+    <p class="mb-2">
+      Note, there's a bit of a weird behavior with a shadow of the button. It's
+      especially visible on a light theme. The shadow rotates together with the
+      button. This is how browsers work today. It's not an issue with the
+      library. However, that's not the desired behavior. See an example with
+      reusable component which shows how to fix it.
+    </p>
     <p>
       In your application you would probably want to create a reusable component
       that encapsulates all customization that you've done to make component
-      work well with your design system. See second example for that.
+      work well with your design system. See example with reusable component
+      below.
     </p>
   </div>
 
@@ -40,17 +52,25 @@
   [snippets]="snippets['reusable']"
   expanded="false"
 >
+  <div *ngsSnippetDescription>
+    The example below shows how to create a reusable component based on the
+    expandable-input. It also showcases the use of
+    <code>[iconOpenAnimation]</code>, <code>[iconCloseAnimation]</code>, and
+    <code>[iconActionAnimation]</code> inputs to get around the issue with
+    rotating shadow seen in the example above.
+  </div>
+
   <ng-container *ngsSnippetResult>
     <ngs-material-expandable-input>
-      <mat-form-field materialExpInput>
+      <mat-form-field *ngsExpInput>
         <input matInput placeholder="Search" />
       </mat-form-field>
 
-      <button materialExpIconOpen mat-mini-fab color="primary">
+      <button *ngsExpIconOpen mat-mini-fab color="primary">
         <mat-icon matRipple>search</mat-icon>
       </button>
 
-      <button materialExpIconClose mat-mini-fab>
+      <button *ngsExpIconClose mat-mini-fab>
         <mat-icon matRipple>close</mat-icon>
       </button>
     </ngs-material-expandable-input>
@@ -63,7 +83,11 @@
   expanded="false"
 >
   <ng-container *ngsSnippetResult>
-    <ngs-expandable-input>
+    <ngs-expandable-input
+      [iconOpenAnimation]="iconOpenAnimation"
+      [iconCloseAnimation]="iconCloseAnimation"
+      [iconActionAnimation]="iconCloseAnimation"
+    >
       <mat-form-field *ngsExpInput>
         <mat-label>Search</mat-label>
         <input type="text" matInput />
@@ -108,7 +132,12 @@
         <mat-icon>pets</mat-icon>
       </button>
 
-      <ngs-expandable-input #expInp class="flex-1">
+      <ngs-expandable-input
+        #expInp
+        class="flex-1"
+        [iconOpenAnimation]="iconOpenAnimation"
+        [iconCloseAnimation]="iconCloseAnimation"
+      >
         <mat-form-field *ngsExpInput>
           <mat-label>Search</mat-label>
           <input type="text" matInput />
