@@ -1,20 +1,33 @@
-import { TestBed } from '@angular/core/testing';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
+import { createComponentFactory } from '@ngneat/spectator';
+import { MockBuilder } from 'ng-mocks';
+import { HighlightLoader } from 'ngx-highlightjs';
+
 import { AppComponent } from './app.component';
+import { customIconsProviders } from './shared/custom-icons';
 import { FakeMediaMatcherProvider } from './test-utils';
 
 describe(AppComponent.name, () => {
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [NoopAnimationsModule, AppComponent, RouterTestingModule],
-      providers: [FakeMediaMatcherProvider],
-    }).compileComponents();
+  const deps = MockBuilder([RouterTestingModule])
+    .provide(FakeMediaMatcherProvider)
+    .provide(customIconsProviders)
+    .mock(HighlightLoader)
+    .build();
+
+  const createComponent = createComponentFactory({
+    component: AppComponent,
+    disableAnimations: true,
+    ...deps,
   });
 
+  function setup() {
+    const spectator = createComponent();
+
+    return { spectator };
+  }
+
   it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
+    const { spectator } = setup();
+    expect(spectator.component).toBeTruthy();
   });
 });

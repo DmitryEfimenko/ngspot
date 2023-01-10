@@ -8,6 +8,7 @@
 
   ngs-routed-tabs > mat-tab-group.sections > mat-tab-header {
     background: mat.get-color-from-palette($background, app-bar);
+    @include mat.elevation(4);
   }
 }
 

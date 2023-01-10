@@ -5,6 +5,8 @@ import {
   EXPANDABLE_INPUT_DIRECTIVES,
 } from '@ngspot/expandable-input';
 
+import { iconCloseAnimation, iconOpenAnimation } from '../icon-animations';
+
 @Component({
   selector: 'app-material-expandable-input',
   templateUrl: './material-expandable-input.component.html',
@@ -13,4 +15,7 @@ import {
   imports: [CommonModule, EXPANDABLE_INPUT_DIRECTIVES],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MaterialExpandableInputComponent extends ExpandableInputBase {}
+export class MaterialExpandableInputComponent extends ExpandableInputBase {
+  override iconOpenAnimation = iconOpenAnimation;
+  override iconCloseAnimation = iconCloseAnimation;
+}

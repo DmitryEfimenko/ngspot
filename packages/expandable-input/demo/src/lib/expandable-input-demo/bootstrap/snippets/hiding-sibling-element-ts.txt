@@ -3,7 +3,7 @@ import {
   ANIMATION_DURATION,
   ANIMATION_EASING,
   EXPANDABLE_INPUT_DIRECTIVES,
-  gap,
+  animateCssProperty,
   smoothHorizontalCollapse,
 } from '@ngspot/expandable-input';
 
@@ -18,8 +18,10 @@ import {
       durationMs: ANIMATION_DURATION,
       easing: ANIMATION_EASING,
     }),
-    gap({
-      gapAmount: '1rem',
+    animateCssProperty({
+      propName: 'gap',
+      falseValue: '1rem',
+      trueValue: '0',
       durationMs: ANIMATION_DURATION,
       easing: ANIMATION_EASING,
     }),

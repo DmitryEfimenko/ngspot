@@ -4,11 +4,37 @@
   [openOnKey]="openOnKey"
   [animationDuration]="animationDuration"
   [animationEasing]="animationEasing"
+  [iconOpenAnimation]="iconOpenAnimation"
+  [iconCloseAnimation]="iconCloseAnimation"
+  [iconActionAnimation]="iconCloseAnimation"
   (opened)="opened.next($event)"
   (closed)="closed.next($event)"
 >
-  <ng-content select="[materialExpInput]" *ngsExpInput></ng-content>
-  <ng-content select="[materialExpIconOpen]" *ngsExpIconOpen></ng-content>
-  <ng-content select="[materialExpIconClose]" *ngsExpIconClose></ng-content>
-  <ng-content select="[materialExpIconAction]" *ngsExpIconAction></ng-content>
+  <ng-container *ngIf="expInputDirective">
+    <ng-container
+      [ngTemplateOutlet]="expInputDirective.templateRef"
+      *ngsExpInput
+    ></ng-container>
+  </ng-container>
+
+  <ng-container *ngIf="iconOpenDirective">
+    <ng-container
+      [ngTemplateOutlet]="iconOpenDirective.templateRef"
+      *ngsExpIconOpen
+    ></ng-container>
+  </ng-container>
+
+  <ng-container *ngIf="iconCloseDirective">
+    <ng-container
+      [ngTemplateOutlet]="iconCloseDirective.templateRef"
+      *ngsExpIconClose
+    ></ng-container>
+  </ng-container>
+
+  <ng-container *ngIf="expIconActionDirective">
+    <ng-container
+      [ngTemplateOutlet]="expIconActionDirective.templateRef"
+      *ngsExpIconAction
+    ></ng-container>
+  </ng-container>
 </ngs-expandable-input>

@@ -1,4 +1,6 @@
 /** @type {import('tailwindcss').Config} */
+const { fontFamily } = require('tailwindcss/defaultTheme');
+
 module.exports = {
   content: [
     './apps/demo/src/**/*.{html,ts}',
@@ -6,6 +8,10 @@ module.exports = {
     './packages/**/demo/**/*.{html,ts}',
   ],
   theme: {
+    fontFamily: {
+      ...fontFamily,
+      sans: ['Roboto', 'Helvetica Neue', 'sans-serif', ...fontFamily.sans],
+    },
     colors: {
       primary: {
         50: 'var(--primary-50)',

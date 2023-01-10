@@ -3,10 +3,10 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { CODE_SNIPPETS_DIRECTIVES, Snippet } from '@ngspot/common';
 import {
+  animateCssProperty,
   ANIMATION_DURATION,
   ANIMATION_EASING,
   EXPANDABLE_INPUT_DIRECTIVES,
-  gap,
   smoothHorizontalCollapse,
 } from '@ngspot/expandable-input';
 
@@ -35,8 +35,10 @@ const hidingSiblingTs =
       durationMs: ANIMATION_DURATION,
       easing: ANIMATION_EASING,
     }),
-    gap({
-      gapAmount: '1rem',
+    animateCssProperty({
+      propName: 'gap',
+      falseValue: '1rem',
+      trueValue: '0',
       durationMs: ANIMATION_DURATION,
       easing: ANIMATION_EASING,
     }),

@@ -6,12 +6,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { CODE_SNIPPETS_DIRECTIVES, Snippet } from '@ngspot/common';
 import {
+  animateCssProperty,
   ANIMATION_DURATION,
   ANIMATION_EASING,
   EXPANDABLE_INPUT_DIRECTIVES,
-  gap,
   smoothHorizontalCollapse,
 } from '@ngspot/expandable-input';
+import { iconCloseAnimation, iconOpenAnimation } from './icon-animations';
 import { MaterialExpandableInputComponent } from './material-expandable-input/material-expandable-input.component';
 
 const basic = {
@@ -24,6 +25,7 @@ const reusable = {
   compHtml: require('raw-loader!./snippets/reusable-comp-html.html').default,
   compTs: require('raw-loader!./snippets/reusable-comp-ts.txt').default,
   compCss: require('raw-loader!./snippets/reusable-comp-css.txt').default,
+  animations: require('raw-loader!./snippets/reusable-animations.txt').default,
 };
 
 const withAction = {
@@ -58,14 +60,19 @@ const hidingSibling = {
       durationMs: ANIMATION_DURATION,
       easing: ANIMATION_EASING,
     }),
-    gap({
-      gapAmount: '1rem',
+    animateCssProperty({
+      propName: 'gap',
+      falseValue: '1rem',
+      trueValue: '0',
       durationMs: ANIMATION_DURATION,
       easing: ANIMATION_EASING,
     }),
   ],
 })
 export class NgsExpandableMaterialDemoComponent {
+  iconOpenAnimation = iconOpenAnimation;
+  iconCloseAnimation = iconCloseAnimation;
+
   snippets: Record<string, Snippet | Snippet[]> = {
     basic: [
       { fileName: 'HTML', content: basic.html },
@@ -80,6 +87,10 @@ export class NgsExpandableMaterialDemoComponent {
       {
         fileName: 'material-expandable-input.component.html',
         content: reusable.compHtml,
+      },
+      {
+        fileName: 'icon-animations.ts',
+        content: reusable.animations,
       },
       {
         fileName: 'material-expandable-input.component.scss',

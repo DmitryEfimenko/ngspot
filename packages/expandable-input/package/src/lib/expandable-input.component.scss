@@ -1,7 +1,6 @@
 :host {
   transition: right .3s ease-in;
   top: 0;
-  overflow: hidden;
 }
 
 .wrap-all {
@@ -19,7 +18,6 @@
   box-sizing: border-box;
   z-index: 1;
   position: relative;
-  overflow: hidden;
 
   // assure animation of expanding from the end
   display: flex;
@@ -30,7 +28,7 @@
     display: flex;
     align-items: center;
     width: 100%;
-    overflow: hidden;
+    height: 100%;
 
     & > ::ng-deep * {
       width: 100%;
@@ -56,7 +54,6 @@
   cursor: pointer;
   // when icons rotate around 45deg, the overall height is forced tp become bigger
   // which might trigger scroll to show. Enforce hiding it.
-  overflow: hidden;
   top: var(--expandable-input-trigger-icons-top);
   bottom: var(--expandable-input-trigger-icons-bottom);
 
