@@ -2,6 +2,17 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [3.0.0](https://github.com/DmitryEfimenko/ngspot/compare/expandable-input-2.0.0...expandable-input-3.0.0) (2023-01-10)
+
+
+### ⚠ BREAKING CHANGES
+
+* **expandable-input:** 🧨 animation gap is replaced with animation animateCssProperty
+
+### Features
+
+* **expandable-input:** 🔥 improve extensibility story ([a4f8113](https://github.com/DmitryEfimenko/ngspot/commit/a4f8113256ff909fa859d41ce98dda494c0ff337))
+
 ## [2.0.0](https://github.com/DmitryEfimenko/ngspot/compare/expandable-input-1.0.0...expandable-input-2.0.0) (2023-01-04)
 
 
