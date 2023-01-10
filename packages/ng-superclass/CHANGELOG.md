@@ -2,6 +2,18 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [1.2.0](https://github.com/DmitryEfimenko/ngspot/compare/ng-superclass-1.1.0...ng-superclass-1.2.0) (2023-01-10)
+
+
+### Features
+
+* **expandable-input:** 🔥 version 1.0 ([#5](https://github.com/DmitryEfimenko/ngspot/issues/5)) ([2d8cdde](https://github.com/DmitryEfimenko/ngspot/commit/2d8cddef490418bedf180fd9994e3c145dba1deb))
+
+
+### Bug Fixes
+
+* **demo:** 🐞 incorrect baseHref in table of contents ([aba3844](https://github.com/DmitryEfimenko/ngspot/commit/aba384421216d71f16d5403e3af6ed508f3ba37a))
+
 ## [1.1.0](https://github.com/DmitryEfimenko/ngspot/compare/ng-superclass-1.0.3...ng-superclass-1.1.0) (2022-12-29)
 
 
