@@ -1,0 +1,9 @@
+<h2>Counter</h2>
+
+<ngs-code-snippets title="Counter" [snippets]="snippets['counter']">
+  <ng-container *ngsSnippetResult>
+    <ngs-counter [(ngModel)]="count"></ngs-counter>
+
+    <pre ngsHighlightContent class="mt-2">value: {{ count | json }}</pre>
+  </ng-container>
+</ngs-code-snippets>

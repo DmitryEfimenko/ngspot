@@ -17,30 +17,7 @@ interface Obj {
 }
 
 describe('@Share()', () => {
-  let classUnderTest: TestClass;
-  let call1Args: Obj;
-  let call2Args: Obj;
-  let call1Res: Obj;
-  let call2Res: Obj;
-  let when: ((...args: any[]) => boolean) | undefined;
-
-  function setCall1Args(arg1: string, arg2: number) {
-    call1Args = { arg1, arg2 };
-  }
-
-  function setCall2Args(arg1: string, arg2: number) {
-    call2Args = { arg1, arg2 };
-  }
-
-  Given(() => {
-    call1Args = undefined as any;
-    call2Args = undefined as any;
-    call1Res = undefined as any;
-    call2Res = undefined as any;
-    when = undefined;
-  });
-
-  When(() => {
+  function setup(when?: (...args: any[]) => boolean) {
     class TestClassConcrete extends TestClass {
       hitCount = 0;
 
@@ -52,93 +29,107 @@ describe('@Share()', () => {
         );
       }
     }
-    classUnderTest = new TestClassConcrete();
-  });
+    const classUnderTest = new TestClassConcrete();
+
+    return { classUnderTest };
+  }
+
+  function setCall1Args(arg1: string, arg2: number) {
+    return { arg1, arg2 };
+  }
+
+  function setCall2Args(arg1: string, arg2: number) {
+    return { arg1, arg2 };
+  }
 
   describe('GIVEN: second subscribe before first one flushes', () => {
-    When(() => {
+    function act(classUnderTest: TestClass, call1Args: Obj, call2Args: Obj) {
       const call1 = new VirtualTimeScheduler();
       const call2 = new VirtualTimeScheduler();
+
       classUnderTest
         .testMethod(call1Args.arg1, call1Args.arg2, call1)
         .subscribe();
+
       classUnderTest
         .testMethod(call2Args.arg1, call2Args.arg2, call2)
         .subscribe();
+
       call1.flush();
       call2.flush();
-    });
+    }
 
     describe('GIVEN: two subs with the same args', () => {
-      Given(() => {
-        setCall1Args('1', 1);
-        setCall2Args('1', 1);
-      });
+      it('Observable should have been called once', () => {
+        const { classUnderTest } = setup();
 
-      Then('Observable should have been called once', () => {
+        act(classUnderTest, setCall1Args('1', 1), setCall2Args('1', 1));
+
         expect(classUnderTest.hitCount).toBe(1);
-        expect(call1Res).toBe(call2Res);
       });
 
       describe('GIVEN: when condition returns true', () => {
-        Given(() => {
-          when = (arg1: string, arg2: number) => {
+        it('Observable should have been called once', () => {
+          const when = (arg1: string, arg2: number) => {
             return arg1 === '1' && arg2 === 1;
           };
-        });
 
-        Then('Observable should have been called once', () => {
+          const { classUnderTest } = setup(when);
+
+          act(classUnderTest, setCall1Args('1', 1), setCall2Args('1', 1));
+
           expect(classUnderTest.hitCount).toBe(1);
         });
       });
 
       describe('GIVEN: when condition returns false', () => {
-        Given(() => {
-          when = (arg1: string, arg2: number) => {
+        it('Observable should have been called twice', () => {
+          const when = (arg1: string, arg2: number) => {
             return arg1 === '1' && arg2 === 2;
           };
-        });
 
-        Then('Observable should have been called twice', () => {
+          const { classUnderTest } = setup(when);
+
+          act(classUnderTest, setCall1Args('1', 1), setCall2Args('1', 1));
+
           expect(classUnderTest.hitCount).toBe(2);
-          expect(call1Res).toBe(call2Res);
         });
       });
     });
 
     describe('GIVEN: two subs with different args', () => {
-      Given(() => {
-        setCall1Args('1', 1);
-        setCall2Args('2', 1);
-      });
+      it('Observable should have been called twice', () => {
+        const { classUnderTest } = setup();
 
-      Then('Observable should have been called twice', () => {
+        act(classUnderTest, setCall1Args('1', 1), setCall2Args('2', 1));
+
         expect(classUnderTest.hitCount).toBe(2);
       });
     });
   });
 
   describe('GIVEN: second subscribe after first one flushes', () => {
-    When(() => {
+    function act(classUnderTest: TestClass, call1Args: Obj, call2Args: Obj) {
       const call1 = new VirtualTimeScheduler();
       const call2 = new VirtualTimeScheduler();
+
       classUnderTest
         .testMethod(call1Args.arg1, call1Args.arg2, call1)
         .subscribe();
       call1.flush();
+
       classUnderTest
         .testMethod(call2Args.arg1, call2Args.arg2, call2)
         .subscribe();
       call2.flush();
-    });
+    }
 
     describe('GIVEN: two subs with the same args', () => {
-      Given(() => {
-        setCall1Args('1', 1);
-        setCall2Args('1', 1);
-      });
+      it('Observable should have been called once', () => {
+        const { classUnderTest } = setup();
 
-      Then('Observable should have been called once', () => {
+        act(classUnderTest, setCall1Args('1', 1), setCall2Args('1', 1));
+
         expect(classUnderTest.hitCount).toBe(2);
       });
     });
@@ -146,17 +137,11 @@ describe('@Share()', () => {
 });
 
 describe('@Share when using two instances of class', () => {
-  let classUnderTest1: TestClass;
-  let classUnderTest2: TestClass;
-  let hitCount: number;
+  function setup() {
+    const res = {
+      hitCount: 0,
+    };
 
-  Given(() => {
-    classUnderTest1 = null as any;
-    classUnderTest2 = null as any;
-    hitCount = 0;
-  });
-
-  When(() => {
     class TestClass2Concrete extends TestClass {
       hitCount = 0;
 
@@ -164,16 +149,20 @@ describe('@Share when using two instances of class', () => {
       testMethod(arg1: string, arg2: number, scheduler: VirtualTimeScheduler) {
         return of<Obj>({ arg1, arg2 }).pipe(
           delay(1, scheduler),
-          tap(() => hitCount++)
+          tap(() => res.hitCount++)
         );
       }
     }
 
-    classUnderTest1 = new TestClass2Concrete();
-    classUnderTest2 = new TestClass2Concrete();
-  });
+    const classUnderTest1 = new TestClass2Concrete();
+    const classUnderTest2 = new TestClass2Concrete();
 
-  Then(() => {
+    return { classUnderTest1, classUnderTest2, res };
+  }
+
+  it('should call twice', () => {
+    const { classUnderTest1, classUnderTest2, res } = setup();
+
     const call1 = new VirtualTimeScheduler();
     const call2 = new VirtualTimeScheduler();
     classUnderTest1.testMethod('1', 2, call1).subscribe();
@@ -181,6 +170,6 @@ describe('@Share when using two instances of class', () => {
     call1.flush();
     call2.flush();
 
-    expect(hitCount).toBe(2);
+    expect(res.hitCount).toBe(2);
   });
 });

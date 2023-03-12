@@ -1,0 +1,10 @@
+@Component({
+  selector: 'app-consumer',
+  template: `
+    <app-counter [(ngModel)]="count" />
+    <pre>value: {{ count | json }}</pre>
+  `,
+})
+export class AppComponent {
+  count = 0
+}

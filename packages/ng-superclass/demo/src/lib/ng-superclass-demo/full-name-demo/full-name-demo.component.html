@@ -1,0 +1,16 @@
+<h2>Full name</h2>
+
+<ngs-code-snippets
+  title="Full name"
+  [snippets]="snippets['fullName']"
+  [expanded]="false"
+>
+  <ng-container *ngsSnippetResult>
+    <ngs-full-name [(ngModel)]="name" #valueControl="ngModel"></ngs-full-name>
+
+    <pre ngsHighlightContent class="mt-2">
+value: {{ name | json }},
+errors: {{ valueControl.errors | json }}
+    </pre>
+  </ng-container>
+</ngs-code-snippets>

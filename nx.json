@@ -1,12 +1,4 @@
 {
-  "extends": "nx/presets/core.json",
-  "npmScope": "ngspot",
-  "affected": {
-    "defaultBase": "main"
-  },
-  "cli": {
-    "defaultCollection": "@nrwl/angular"
-  },
   "tasksRunnerOptions": {
     "default": {
       "runner": "@nrwl/nx-cloud",
@@ -15,6 +7,14 @@
         "accessToken": "Y2FmYWYyM2MtYTE4YS00M2I4LTk4ZDgtZWQ0ZWRjMzVjYjNifHJlYWQtd3JpdGU="
       }
     }
+  },
+  "extends": "nx/presets/core.json",
+  "npmScope": "ngspot",
+  "affected": {
+    "defaultBase": "main"
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/angular"
   },
   "generators": {
     "@nrwl/angular:application": {

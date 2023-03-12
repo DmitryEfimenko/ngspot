@@ -18,6 +18,7 @@ module.exports = {
     'ngspot',
     'demo',
     'ng-superclass',
+    'ng-superclass-material',
     'remote-data',
     'remote-data-rx',
     'rxjs',

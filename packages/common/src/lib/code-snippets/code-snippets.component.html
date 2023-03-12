@@ -20,6 +20,7 @@
           (click)="expanded = !expanded"
           [matTooltip]="expanded ? 'Hide code' : 'Show code'"
           color="primary"
+          [disabled]="(_snippets?.length ?? 0) === 0"
         >
           <mat-icon>code</mat-icon>
         </button>
@@ -44,7 +45,7 @@
               *ngFor="let snippet of _snippets; trackBy: trackByFileName"
             >
               <mat-tab [label]="snippet.fileName">
-                <pre><code [highlight]="snippet.content" [lineNumbers]="true"></code></pre>
+                <pre><code [highlight]="snippet.content" [languages]="snippet.language ? [snippet.language] : $any(undefined)" [lineNumbers]="true"></code></pre>
               </mat-tab>
             </ng-container>
           </mat-tab-group>
