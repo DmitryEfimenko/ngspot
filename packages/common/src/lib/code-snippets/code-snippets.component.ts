@@ -41,7 +41,7 @@ export class CodeSnippetsComponent {
   private document = inject(DOCUMENT);
   private snackBar = inject(MatSnackBar);
 
-  _snippets: Snippet[];
+  _snippets: Snippet[] | undefined;
 
   @Input() title: string;
 
@@ -91,4 +91,5 @@ export class CodeSnippetsComponent {
 export interface Snippet {
   fileName: string;
   content: string;
+  language?: 'typescript' | 'css' | 'xml';
 }

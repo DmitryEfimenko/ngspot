@@ -13,4 +13,10 @@ export const PROJECTS: Project[] = [
     githubLink:
       'https://github.com/DmitryEfimenko/ngspot/tree/main/packages/expandable-input/package',
   },
+  {
+    name: 'ng-superclass',
+    package: () => import('@ngspot/ng-superclass-demo'),
+    githubLink:
+      'https://github.com/DmitryEfimenko/ngspot/tree/main/packages/ng-superclass/package',
+  },
 ];

@@ -1,0 +1,33 @@
+@Component({
+  selector: 'app-consumer',
+  template: `
+    <div>
+      Variant
+      <label>
+        <input type="radio" [value]="1" name="variant" [(ngModel)]="variant" />
+        1
+      </label>
+
+      <label>
+        <input type="radio" [value]="2" name="variant" [(ngModel)]="variant" />
+        2
+      </label>
+    </div>
+
+    <ngs-nested
+      [(ngModel)]="value"
+      [variant]="variant"
+      #valueControl="ngModel"
+    ></ngs-nested>
+
+    <pre>
+      value: {{ value | json }},
+      errors: {{ valueControl.errors | json }}
+    </pre>
+  `,
+})
+export class AppComponent {
+  variant: 1 | 2 = 1;
+
+  value: string;
+}

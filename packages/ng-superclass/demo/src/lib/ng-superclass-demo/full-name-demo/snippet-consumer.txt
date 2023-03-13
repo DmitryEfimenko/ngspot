@@ -1,0 +1,13 @@
+@Component({
+  selector: 'app-consumer',
+  template: `
+    <app-full-name [(ngModel)]="fullName" #valueControl="ngModel" />
+    <pre>
+      value: {{ fullName | json }},
+      errors: {{ valueControl.errors | json }},
+    </pre>
+  `,
+})
+export class AppComponent {
+  fullName: string;
+}

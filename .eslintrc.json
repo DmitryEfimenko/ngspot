@@ -17,11 +17,16 @@
                 "onlyDependOnLibsWithTags": ["lib:remote-data"]
               },
               {
+                "sourceTag": "lib:ng-superclass-material",
+                "onlyDependOnLibsWithTags": ["lib:ng-superclass"]
+              },
+              {
                 "sourceTag": "app:demo",
                 "onlyDependOnLibsWithTags": [
                   "lib:demo",
                   "lib:common",
-                  "lib:ng-superclass"
+                  "lib:ng-superclass",
+                  "lib:ng-superclass-material"
                 ]
               },
               {

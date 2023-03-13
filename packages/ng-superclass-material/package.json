@@ -1,0 +1,28 @@
+{
+  "name": "@ngspot/ng-superclass-material",
+  "version": "0.0.1",
+  "keywords": [
+    "angular",
+    "material",
+    "formcontrol",
+    "formgroup",
+    "formarray",
+    "control",
+    "controlvalueaccessor"
+  ],
+  "homepage": "https://github.com/DmitryEfimenko/ngspot/tree/main/packages/ng-superclass-material",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DmitryEfimenko/ngspot",
+    "directory": "packages/ng-superclass"
+  },
+  "peerDependencies": {
+    "@angular/common": ">=15",
+    "@angular/core": ">=15"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "author": "Dmitry Efimenko",
+  "license": "MIT"
+}

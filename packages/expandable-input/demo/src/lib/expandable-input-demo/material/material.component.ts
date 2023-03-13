@@ -75,36 +75,40 @@ export class NgsExpandableMaterialDemoComponent {
 
   snippets: Record<string, Snippet | Snippet[]> = {
     basic: [
-      { fileName: 'HTML', content: basic.html },
-      { fileName: 'SCSS', content: basic.css },
+      { fileName: 'HTML', content: basic.html, language: 'xml' },
+      { fileName: 'SCSS', content: basic.css, language: 'css' },
     ],
     reusable: [
-      { fileName: 'HTML', content: reusable.consume },
+      { fileName: 'HTML', content: reusable.consume, language: 'xml' },
       {
         fileName: 'material-expandable-input.component.ts',
         content: reusable.compTs,
+        language: 'typescript',
       },
       {
         fileName: 'material-expandable-input.component.html',
         content: reusable.compHtml,
+        language: 'xml',
       },
       {
         fileName: 'icon-animations.ts',
         content: reusable.animations,
+        language: 'typescript',
       },
       {
         fileName: 'material-expandable-input.component.scss',
         content: reusable.compCss,
+        language: 'css',
       },
     ],
     withAction: [
-      { fileName: 'HTML', content: withAction.html },
-      { fileName: 'SCSS', content: withAction.css },
+      { fileName: 'HTML', content: withAction.html, language: 'xml' },
+      { fileName: 'SCSS', content: withAction.css, language: 'css' },
     ],
     hidingSibling: [
-      { fileName: 'HTML', content: hidingSibling.html },
-      { fileName: 'TS', content: hidingSibling.ts },
-      { fileName: 'SCSS', content: hidingSibling.css },
+      { fileName: 'HTML', content: hidingSibling.html, language: 'xml' },
+      { fileName: 'TS', content: hidingSibling.ts, language: 'typescript' },
+      { fileName: 'SCSS', content: hidingSibling.css, language: 'css' },
     ],
   };
 }

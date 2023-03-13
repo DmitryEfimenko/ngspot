@@ -1,0 +1,33 @@
+<h2>Nested</h2>
+
+<ngs-code-snippets
+  title="Nested"
+  [snippets]="snippets['nested']"
+  [expanded]="false"
+>
+  <ng-container *ngsSnippetResult>
+    <div>
+      Variant
+      <label>
+        <input type="radio" [value]="1" name="variant" [(ngModel)]="variant" />
+        1
+      </label>
+
+      <label>
+        <input type="radio" [value]="2" name="variant" [(ngModel)]="variant" />
+        2
+      </label>
+    </div>
+
+    <ngs-nested
+      [(ngModel)]="value"
+      [variant]="variant"
+      #valueControl="ngModel"
+    ></ngs-nested>
+
+    <pre ngsHighlightContent class="mt-2">
+value: {{ value | json }},
+errors: {{ valueControl.errors | json }}
+    </pre>
+  </ng-container>
+</ngs-code-snippets>

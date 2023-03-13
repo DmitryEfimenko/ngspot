@@ -192,7 +192,7 @@ export class TableOfContentsComponent implements AfterViewInit, OnDestroy {
 
     const contentContainer = this.contentContainer
       ? this._document.querySelector<HTMLElement>(this.contentContainer)
-      : (scrollContainer.firstChild as HTMLElement);
+      : scrollContainer;
 
     if (!contentContainer) {
       throw new Error(

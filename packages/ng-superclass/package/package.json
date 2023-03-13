@@ -1,0 +1,30 @@
+{
+  "name": "@ngspot/ng-superclass",
+  "version": "1.2.0",
+  "keywords": [
+    "angular",
+    "formControl",
+    "formGroup",
+    "formArray",
+    "control",
+    "controlValueAccessor"
+  ],
+  "homepage": "https://github.com/DmitryEfimenko/ngspot/tree/main/packages/ng-superclass",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DmitryEfimenko/ngspot",
+    "directory": "packages/ng-superclass"
+  },
+  "peerDependencies": {
+    "@angular/common": ">=15",
+    "@angular/core": ">=15",
+    "@angular/forms": ">=15",
+    "@angular/cdk": ">=15",
+    "rxjs": ">=7"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "author": "Dmitry Efimenko",
+  "license": "MIT"
+}
