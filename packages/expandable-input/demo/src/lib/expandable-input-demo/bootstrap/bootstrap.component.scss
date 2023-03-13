@@ -13,7 +13,7 @@ ngs-code-snippets {
 }
 
 :host {
-  --expandable-input-align-items: end;
+  --expandable-input-align-items: flex-end;
   --expandable-input-items-gap: .5rem;
   --expandable-input-action-icon-bottom: .5rem;
 }

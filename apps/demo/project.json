@@ -37,8 +37,7 @@
           "budgets": [
             {
               "type": "initial",
-              "maximumWarning": "500kb",
-              "maximumError": "1mb"
+              "maximumError": "822kb"
             },
             {
               "type": "anyComponentStyle",
@@ -63,6 +62,30 @@
           "sourceMap": true,
           "namedChunks": true,
           "baseHref": "/ngspot/"
+        },
+        "stats": {
+          "outputHashing": "none",
+          "sourceMap": {
+            "styles": true,
+            "scripts": true,
+            "vendor": true
+          },
+          "namedChunks": true,
+          "extractLicenses": false,
+          "statsJson": true,
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "1mb",
+              "maximumError": "2mb"
+            }
+          ],
+          "fileReplacements": [
+            {
+              "replace": "apps/demo/src/environments/environment.ts",
+              "with": "apps/demo/src/environments/environment.prod.ts"
+            }
+          ]
         }
       },
       "defaultConfiguration": "production"
