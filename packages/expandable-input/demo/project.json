@@ -11,6 +11,7 @@
       "options": {
         "project": "packages/expandable-input/demo/ng-package.json"
       },
+      "dependsOn": ["^build"],
       "configurations": {
         "production": {
           "tsConfig": "packages/expandable-input/demo/tsconfig.lib.prod.json"
