@@ -2,6 +2,20 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [2.0.0](https://github.com/DmitryEfimenko/ngspot/compare/ng-superclass-1.1.0...ng-superclass-2.0.0) (2023-03-13)
+
+### Features
+
+- **ng-superclass:** 🔥 improve FormComponentSuperclass ([#13](https://github.com/DmitryEfimenko/ngspot/issues/13)) ([2d415b3](https://github.com/DmitryEfimenko/ngspot/commit/2d415b3f49f08ec3a0b126beeb61336a3dc7e611))
+
+### ⚠ BREAKING CHANGES
+
+- **ng-superclass:** 🧨
+
+- Removed `WrappedFormControlSuperclass` and `WrappedFormControlSuperclass`.
+- Changes in `FormComponentSuperclass`:
+  - `emitOutgoingValue` method is now private. To sync the inner state to the outer, use `this.viewModel.setValue()` method. For more info, see project [README.md](https://github.com/DmitryEfimenko/ngspot/blob/main/packages/ng-superclass/package/README.md)
+
 ## [1.2.0](https://github.com/DmitryEfimenko/ngspot/compare/ng-superclass-1.1.0...ng-superclass-1.2.0) (2023-01-10)
 
 ### Bug Fixes
