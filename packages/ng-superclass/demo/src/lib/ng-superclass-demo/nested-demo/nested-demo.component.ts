@@ -3,9 +3,9 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
   CODE_SNIPPETS_DIRECTIVES,
-  HighlightContentDirective,
   Snippet,
-} from '@ngspot/common';
+} from '@ngspot/common/code-snippets';
+import { HighlightContentDirective } from '@ngspot/common/highlight-content';
 import { NestedComponent } from '@ngspot/ng-superclass';
 
 const consumerTs = require('raw-loader!./snippet-consumer.txt').default;

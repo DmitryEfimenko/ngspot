@@ -1,7 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
-import { CODE_SNIPPETS_DIRECTIVES, Snippet } from '@ngspot/common';
+import {
+  CODE_SNIPPETS_DIRECTIVES,
+  Snippet,
+} from '@ngspot/common/code-snippets';
 import {
   animateCssProperty,
   ANIMATION_DURATION,

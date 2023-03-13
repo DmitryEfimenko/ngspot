@@ -4,7 +4,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { CODE_SNIPPETS_DIRECTIVES, Snippet } from '@ngspot/common';
+import {
+  CODE_SNIPPETS_DIRECTIVES,
+  Snippet,
+} from '@ngspot/common/code-snippets';
 import {
   animateCssProperty,
   ANIMATION_DURATION,

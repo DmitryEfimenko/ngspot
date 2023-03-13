@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { DEMO_MAIN_CONTENT_DECLARATIONS } from '@ngspot/common';
-import { NgsExpandableBasicDemoComponent } from './basic/basic.component';
+import { DEMO_MAIN_CONTENT_DECLARATIONS } from '@ngspot/common/demo-main-content';
+import { ROUTED_TABS_DECLARATIONS } from '@ngspot/common/routed-tabs';
 
-import { ROUTED_TABS_DECLARATIONS } from '@ngspot/common';
+import { NgsExpandableBasicDemoComponent } from './basic/basic.component';
 import { NgsExpandableBootstrapDemoComponent } from './bootstrap/bootstrap.component';
 import { NgsExpandableMaterialDemoComponent } from './material/material.component';
 

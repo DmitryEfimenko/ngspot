@@ -16,7 +16,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@ngspot/common": ["packages/common/src/index.ts"],
+      "@ngspot/common/*": ["packages/common/src/*"],
       "@ngspot/expandable-input": [
         "packages/expandable-input/package/src/index.ts"
       ],

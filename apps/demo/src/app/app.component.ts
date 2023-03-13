@@ -7,7 +7,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
-import { RouterActivatedMatListItemDirective } from '@ngspot/common';
+import { RouterActivatedMatListItemDirective } from '@ngspot/common/router-activated-mat-list-item';
 import { NgxGoogleAnalyticsRouterModule } from 'ngx-google-analytics';
 import { HighlightLoader } from 'ngx-highlightjs';
 import { BehaviorSubject, map } from 'rxjs';
