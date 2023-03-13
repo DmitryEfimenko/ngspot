@@ -147,7 +147,7 @@ The property `ngControl.control` is a direct reference to the control bound to t
 
 ##### Usage:
 
-![forward control](https://github.com/DmitryEfimenko/DmitryEfimenko/ngspot/tree/main/packages/ng-superclass/package/assets/forward-control.jpg?raw=true)
+![forward control](https://github.com/DmitryEfimenko/ngspot/blob/main/packages/ng-superclass/package/assets/forward-control.jpg?raw=true)
 
 #### 2. using `viewModel`
 
@@ -177,7 +177,7 @@ Its' template consists of a single button that displays number of clicks. Each t
 
 However, because the inner model type might be different from the outer model type, there is an optional step in the middle that the value goes through to convert outer type to the inner type and wise-versa. The counter example does not require any conversions. Both, the outer type and the inner type are `number`:
 
-![use viewModel](https://github.com/DmitryEfimenko/DmitryEfimenko/ngspot/tree/main/packages/ng-superclass/package/assets/view-model.jpg?raw=true)
+![use viewModel](https://github.com/DmitryEfimenko/ngspot/blob/main/packages/ng-superclass/package/assets/view-model.jpg?raw=true)
 
 See the [demo of this component](https://dmitryefimenko.github.io/ngspot/ng-superclass#counter).
 
@@ -239,7 +239,7 @@ export class FullNameReactiveComponent extends FormComponentSuperclass<
 
 The data flow approximately looks like this:
 
-![data flow](https://github.com/DmitryEfimenko/DmitryEfimenko/ngspot/tree/main/packages/ng-superclass/package/assets/data-flow.jpg?raw=true)
+![data flow](https://github.com/DmitryEfimenko/ngspot/blob/main/packages/ng-superclass/package/assets/data-flow.jpg?raw=true)
 
 Notice, that both `outerToInner` and `innerToOuter` operate with observables. This is important since it enables all kinds async behaviors. You could even chose to set the viewModel, but due to some condition forbid the value from synching to the consumer:
 
