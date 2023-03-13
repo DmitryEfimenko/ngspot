@@ -11,7 +11,8 @@
 - [@ngspot/ngx-errors](toMoveInThisRepo)
 - [@ngspot/remote-data](https://github.com/DmitryEfimenko/ngspot/tree/main/packages/remote-data)
 - [@ngspot/remote-data-rx](https://github.com/DmitryEfimenko/ngspot/tree/main/packages/remote-data-rx)
-- [@ngspot/ng-superclass](https://github.com/DmitryEfimenko/ngspot/tree/main/packages/ng-superclass)
+- [@ngspot/ng-superclass](https://github.com/DmitryEfimenko/ngspot/tree/main/packages/ng-superclass/package)
+- [@ngspot/ng-superclass-material](https://github.com/DmitryEfimenko/ngspot/tree/main/packages/ng-superclass-material)
 
 ## Development
 

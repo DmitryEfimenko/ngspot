@@ -7,11 +7,13 @@
  * You might need to authenticate with NPM before running this script.
  */
 
-import { readCachedProjectGraph } from '@nrwl/devkit';
+import nrwlDevkit from '@nrwl/devkit';
 import chalk from 'chalk';
 import { execSync } from 'child_process';
 import fs from 'fs';
 import path from 'path';
+
+const { readCachedProjectGraph } = nrwlDevkit;
 
 // Executing publish script: node path/to/publish.mjs --tag {tag}
 // Default "tag" to "next" so we won't publish the "latest" tag by accident.
@@ -42,7 +44,9 @@ const project = getProject(name);
 const projectRoot = getProjectRoot(project);
 const version = getVersion(projectRoot);
 const outputPath = getOutputPath(project, projectRoot);
-updateDistPackageJsonVersion(outputPath);
+
+process.chdir(outputPath);
+// updateDistPackageJsonVersion(outputPath);
 execSync(`npm publish --access public --tag ${tag}`);
 
 function getProject(name) {
@@ -130,7 +134,6 @@ function getOutputPath(project, projectRoot) {
 
 function updateDistPackageJsonVersion(outputPath) {
   // Updating the version in "package.json" before publishing
-  process.chdir(outputPath);
   try {
     const json = JSON.parse(fs.readFileSync(`package.json`).toString());
     json.version = version;
