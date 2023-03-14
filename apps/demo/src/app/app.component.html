@@ -1,9 +1,9 @@
 <div class="app-container" [class.is-mobile]="mobileQuery.matches">
   <mat-toolbar color="accent">
     <button
+      *ngIf="mobileQuery.matches"
       mat-icon-button
       (click)="sideNav.toggle()"
-      *ngIf="mobileQuery.matches"
     >
       <mat-icon>menu</mat-icon>
     </button>
@@ -21,29 +21,29 @@
     <button
       mat-icon-button
       type="button"
-      (click)="toggleTheme()"
       [title]="isDarkTheme ? 'Switch to light mode' : 'Switch to dark mode'"
+      (click)="toggleTheme()"
     >
       <mat-icon>{{ isDarkTheme ? 'light_mode' : 'dark_mode' }}</mat-icon>
     </button>
 
     <a
       mat-icon-button
-      [href]="twitterLink$ | async"
       title="Share on Twitter"
       aria-label="Share on Twitter"
       class="twitter"
       target="_blank"
+      [href]="twitterLink$ | async"
     >
       <mat-icon svgIcon="logos:twitter"></mat-icon>
     </a>
 
     <a
       mat-icon-button
-      [href]="githubLink$ | async"
       title="GitHub"
       aria-label="Github"
       target="_blank"
+      [href]="githubLink$ | async"
     >
       <mat-icon svgIcon="logos:github"></mat-icon>
     </a>
@@ -61,8 +61,8 @@
         <ng-container *ngFor="let project of projects; trackBy: trackByName">
           <a
             mat-list-item
-            [routerLink]="[project.name]"
             routerLinkActive="active"
+            [routerLink]="[project.name]"
             (isActiveChange)="activeProject$$.next(project)"
           >
             {{ project.name }}

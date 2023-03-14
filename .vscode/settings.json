@@ -1,0 +1,26 @@
+{
+  "css.lint.duplicateProperties": "warning",
+  "css.lint.ieHack": "warning",
+  "css.lint.zeroUnits": "warning",
+  "scss.lint.duplicateProperties": "warning",
+  "scss.lint.ieHack": "warning",
+  "scss.lint.zeroUnits": "warning",
+  "javascript.format.insertSpaceAfterConstructor": true,
+  "javascript.preferences.quoteStyle": "single",
+  "typescript.format.insertSpaceAfterConstructor": true,
+  "typescript.preferences.quoteStyle": "single",
+  "files.trimTrailingWhitespace": true,
+  "files.trimFinalNewlines": true,
+  "editor.detectIndentation": false,
+  "editor.tabSize": 2,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true,
+    "source.organizeImports": false
+  },
+  "eslint.enable": true,
+  "eslint.validate": ["javascript", "typescript"],
+  "typescript.tsdk": "node_modules\\typescript\\lib",
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
+}

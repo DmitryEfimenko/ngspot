@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
+
 import {
   CODE_SNIPPETS_DIRECTIVES,
   Snippet,
@@ -14,12 +15,12 @@ import {
 } from '@ngspot/expandable-input';
 
 const basic = require('raw-loader!./snippets/basic.html').default;
-const withAction =
-  require('raw-loader!./snippets/with-action-button.html').default;
 const hidingSiblingHtml =
   require('raw-loader!./snippets/hiding-sibling-element-html.html').default;
 const hidingSiblingTs =
   require('raw-loader!./snippets/hiding-sibling-element-ts.txt').default;
+const withAction =
+  require('raw-loader!./snippets/with-action-button.html').default;
 
 @Component({
   selector: 'ngs-expandable-input-basic-demo',

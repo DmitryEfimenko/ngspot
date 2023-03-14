@@ -7,6 +7,7 @@ import {
   Provider,
 } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
+
 import { CustomIconRegistry, SVG_ICONS } from './custom-icon-registry';
 import { svg } from './security';
 

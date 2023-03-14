@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+
 import { TableOfContentsComponent } from '../table-of-contents/table-of-contents';
 
 @Component({

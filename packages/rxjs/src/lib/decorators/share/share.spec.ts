@@ -1,6 +1,7 @@
 import { Observable, of, VirtualTimeScheduler } from 'rxjs';
 import { delay, tap } from 'rxjs/operators';
-import { Share } from './share';
+
+import { MethodReturning, Share } from './share';
 
 abstract class TestClass {
   abstract hitCount: number;
@@ -8,7 +9,7 @@ abstract class TestClass {
     arg1: string,
     arg2: number,
     scheduler: VirtualTimeScheduler
-  ): Observable<any>;
+  ): Observable<unknown>;
 }
 
 interface Obj {
@@ -17,7 +18,7 @@ interface Obj {
 }
 
 describe('@Share()', () => {
-  function setup(when?: (...args: any[]) => boolean) {
+  function setup(when?: MethodReturning<boolean>) {
     class TestClassConcrete extends TestClass {
       hitCount = 0;
 

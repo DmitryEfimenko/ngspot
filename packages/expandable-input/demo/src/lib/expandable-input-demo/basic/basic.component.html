@@ -9,7 +9,7 @@
 <ngs-code-snippets title="Without action button" [snippets]="snippets['basic']">
   <ng-container *ngsSnippetResult>
     <ngs-expandable-input>
-      <input type="text" *ngsExpInput />
+      <input *ngsExpInput type="text" />
       <i *ngsExpIconOpen>🔍</i>
       <i *ngsExpIconClose>✖️</i>
     </ngs-expandable-input>
@@ -18,12 +18,12 @@
 
 <ngs-code-snippets
   title="With action button"
-  [snippets]="snippets['withAction']"
   expanded="false"
+  [snippets]="snippets['withAction']"
 >
   <ng-container *ngsSnippetResult>
     <ngs-expandable-input>
-      <input type="text" *ngsExpInput />
+      <input *ngsExpInput type="text" />
       <i *ngsExpIconOpen>🔍</i>
       <i *ngsExpIconAction>🚀</i>
       <i *ngsExpIconClose>✖️</i>
@@ -33,8 +33,8 @@
 
 <ngs-code-snippets
   title="Hiding sibling element"
-  [snippets]="snippets['hidingSibling']"
   expanded="false"
+  [snippets]="snippets['hidingSibling']"
 >
   <p *ngsSnippetDescription>
     This is rather a unique situation, but you might encounter it too. One of
@@ -50,7 +50,7 @@
       <i [@smoothHorizontalCollapse]="expInp.isOpen">😼</i>
 
       <ngs-expandable-input #expInp style="flex: 1 0 auto">
-        <input type="text" *ngsExpInput />
+        <input *ngsExpInput type="text" />
         <i *ngsExpIconOpen>🔍</i>
         <i *ngsExpIconClose>✖️</i>
       </ngs-expandable-input>

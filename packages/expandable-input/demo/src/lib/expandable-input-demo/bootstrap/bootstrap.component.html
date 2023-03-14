@@ -23,11 +23,11 @@
         />
       </div>
 
-      <button type="button" class="btn btn-primary m-2" *ngsExpIconOpen>
+      <button *ngsExpIconOpen type="button" class="btn btn-primary m-2">
         <i class="bi bi-search"></i>
       </button>
 
-      <button type="button" class="btn btn-light m-2" *ngsExpIconClose>
+      <button *ngsExpIconClose type="button" class="btn btn-light m-2">
         <i class="bi bi-x"></i>
       </button>
     </ngs-expandable-input>
@@ -36,8 +36,8 @@
 
 <ngs-code-snippets
   title="With action button"
-  [snippets]="snippets['withAction']"
   expanded="false"
+  [snippets]="snippets['withAction']"
 >
   <ng-container *ngsSnippetResult>
     <ngs-expandable-input>
@@ -54,15 +54,15 @@
         />
       </div>
 
-      <button type="button" class="btn btn-primary m-2" *ngsExpIconOpen>
+      <button *ngsExpIconOpen type="button" class="btn btn-primary m-2">
         <i class="bi bi-search"></i>
       </button>
 
-      <button type="button" class="btn btn-primary" *ngsExpIconAction>
+      <button *ngsExpIconAction type="button" class="btn btn-primary">
         <i class="bi bi-airplane-engines"></i>
       </button>
 
-      <button type="button" class="btn btn-light m-2" *ngsExpIconClose>
+      <button *ngsExpIconClose type="button" class="btn btn-light m-2">
         <i class="bi bi-x"></i>
       </button>
     </ngs-expandable-input>
@@ -71,8 +71,8 @@
 
 <ngs-code-snippets
   title="Hiding sibling element"
-  [snippets]="snippets['hidingSibling']"
   expanded="false"
+  [snippets]="snippets['hidingSibling']"
 >
   <p *ngsSnippetDescription>
     This is rather a unique situation, but you might encounter it too. One of
@@ -107,11 +107,11 @@
           />
         </div>
 
-        <button type="button" class="btn btn-primary m-2" *ngsExpIconOpen>
+        <button *ngsExpIconOpen type="button" class="btn btn-primary m-2">
           <i class="bi bi-search"></i>
         </button>
 
-        <button type="button" class="btn btn-light m-2" *ngsExpIconClose>
+        <button *ngsExpIconClose type="button" class="btn btn-light m-2">
           <i class="bi bi-x"></i>
         </button>
       </ngs-expandable-input>

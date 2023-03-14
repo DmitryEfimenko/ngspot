@@ -12,6 +12,7 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
+
 import { ExpandableInputBase } from './expandable-input-base';
 import { slideInOut } from './expandable-input.animations';
 import { FocusableDirective } from './focusable.directive';

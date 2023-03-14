@@ -4,6 +4,7 @@ import {
   FormControl,
   ReactiveFormsModule,
 } from '@angular/forms';
+
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -13,7 +14,7 @@ import { FormComponentSuperclass } from '../form-component-superclass';
   selector: 'ngs-local-date',
   standalone: true,
   imports: [ReactiveFormsModule],
-  template: ` <input [formControl]="viewModel" type="datetime-local" /> `,
+  template: ` <input type="datetime-local" [formControl]="viewModel" /> `,
 })
 export class LocalDateComponent extends FormComponentSuperclass<Date, string> {
   override viewModel = new FormControl<string>('', { nonNullable: true });

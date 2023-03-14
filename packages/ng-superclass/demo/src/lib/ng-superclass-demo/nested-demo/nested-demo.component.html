@@ -9,20 +9,20 @@
     <div>
       Variant
       <label>
-        <input type="radio" [value]="1" name="variant" [(ngModel)]="variant" />
+        <input type="radio" name="variant" [value]="1" [(ngModel)]="variant" />
         1
       </label>
 
       <label>
-        <input type="radio" [value]="2" name="variant" [(ngModel)]="variant" />
+        <input type="radio" name="variant" [value]="2" [(ngModel)]="variant" />
         2
       </label>
     </div>
 
     <ngs-nested
-      [(ngModel)]="value"
-      [variant]="variant"
       #valueControl="ngModel"
+      [variant]="variant"
+      [(ngModel)]="value"
     ></ngs-nested>
 
     <pre ngsHighlightContent class="mt-2">

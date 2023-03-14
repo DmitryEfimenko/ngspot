@@ -6,7 +6,7 @@
   [expanded]="false"
 >
   <ng-container *ngsSnippetResult>
-    <ngs-full-name [(ngModel)]="name" #valueControl="ngModel"></ngs-full-name>
+    <ngs-full-name #valueControl="ngModel" [(ngModel)]="name"></ngs-full-name>
 
     <pre ngsHighlightContent class="mt-2">
 value: {{ name | json }},

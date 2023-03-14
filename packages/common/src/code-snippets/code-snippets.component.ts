@@ -15,9 +15,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { HighlightModule } from 'ngx-highlightjs';
-import { SnippetDescriptionDirective } from './snippet-description.directive';
 
+import { HighlightModule } from 'ngx-highlightjs';
+
+import { SnippetDescriptionDirective } from './snippet-description.directive';
 import { SnippetResultDirective } from './snippet-result.directive';
 
 @Component({

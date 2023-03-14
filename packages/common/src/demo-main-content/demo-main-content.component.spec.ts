@@ -2,6 +2,7 @@ import { createComponentFactory } from '@ngneat/spectator';
 import { MockBuilder } from 'ng-mocks';
 
 import { TableOfContentsComponent } from '../table-of-contents/table-of-contents';
+
 import { DemoMainContentComponent } from './demo-main-content.component';
 
 describe(DemoMainContentComponent.name, () => {

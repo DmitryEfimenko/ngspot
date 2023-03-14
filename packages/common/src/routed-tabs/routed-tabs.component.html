@@ -1,8 +1,8 @@
 <mat-tab-group
   mat-stretch-tabs="false"
   mat-align-tabs="center"
-  [animationDuration]="isFirstSync ? 0 : 500"
   class="sections"
+  [animationDuration]="isFirstSync ? 0 : 500"
   (selectedIndexChange)="updateUrl($event)"
 >
   <ng-container *ngFor="let tab of routedTabs; trackBy: trackByRouteName">

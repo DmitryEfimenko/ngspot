@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Observable } from 'rxjs';
 import { share, tap } from 'rxjs/operators';
 
@@ -21,6 +22,7 @@ export function Share(opts: ShareOptions = {}) {
     const cachePropName = Symbol('cacheProp');
 
     descriptor.value = function (this: any) {
+      // eslint-disable-next-line @typescript-eslint/no-this-alias
       const context = this;
 
       if (!context[cachePropName]) {
@@ -28,6 +30,7 @@ export function Share(opts: ShareOptions = {}) {
       }
 
       const cache = context[cachePropName];
+      // eslint-disable-next-line prefer-rest-params
       const args = arguments;
       const key = `${String(propertyKey)}-${JSON.stringify([...args])}`;
 

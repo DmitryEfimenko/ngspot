@@ -1,7 +1,18 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { AbstractControl, FormControl, FormsModule } from '@angular/forms';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  ViewChild,
+} from '@angular/core';
+import {
+  AbstractControl,
+  FormControl,
+  FormsModule,
+  NgModel,
+} from '@angular/forms';
+
+import { merge, Observable } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 
 import { FormComponentSuperclass } from '../form-component-superclass';
 
@@ -19,16 +30,18 @@ type InnerType = {
   template: `
     <div>
       <input
-        [(ngModel)]="viewModel.value.val1"
-        (ngModelChange)="inputUpdated()"
-        (blur)="onTouched()"
+        #input1="ngModel"
         name="inp1"
+        (blur)="onTouched()"
+        (keyup)="updateViewModel()"
+        [(ngModel)]="val1"
       />
       <input
-        [(ngModel)]="viewModel.value.val2"
-        (ngModelChange)="inputUpdated()"
-        (blur)="onTouched()"
+        #input2="ngModel"
         name="inp2"
+        (blur)="onTouched()"
+        (keyup)="updateViewModel()"
+        [(ngModel)]="val2"
       />
     </div>
   `,
@@ -37,6 +50,12 @@ export class TwoInputsTemplateDrivenComponent extends FormComponentSuperclass<
   OuterType,
   InnerType
 > {
+  @ViewChild('input1') input1: NgModel;
+  @ViewChild('input2') input2: NgModel;
+
+  val1 = '';
+  val2 = '';
+
   override viewModel = new FormControl<InnerType>(
     { val1: '', val2: '' },
     { nonNullable: true }
@@ -49,12 +68,18 @@ export class TwoInputsTemplateDrivenComponent extends FormComponentSuperclass<
           val1: outer?.substring(0, 3) ?? '',
           val2: outer?.substring(3, outer.length) ?? '',
         };
+        this.val1 = inner.val1;
+        this.val2 = inner.val2;
         return inner;
       })
     );
 
   override innerToOuter = (innerValues$: Observable<InnerType>) =>
-    innerValues$.pipe(map((inner) => inner.val1 + inner.val2));
+    innerValues$.pipe(
+      map((inner) => {
+        return inner.val1 + inner.val2;
+      })
+    );
 
   override validate(control: AbstractControl) {
     if (control.value?.length < 3) {
@@ -63,8 +88,10 @@ export class TwoInputsTemplateDrivenComponent extends FormComponentSuperclass<
     return null;
   }
 
-  inputUpdated() {
-    this.viewModel.setValue(this.viewModel.value);
-    this.onTouched();
+  updateViewModel() {
+    this.viewModel.setValue({
+      val1: this.input1.control.value,
+      val2: this.input2.control.value,
+    });
   }
 }

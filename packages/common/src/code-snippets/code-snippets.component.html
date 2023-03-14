@@ -9,18 +9,18 @@
         <button
           mat-icon-button
           matTooltip="Copy link to example"
-          (click)="copyLinkToExample()"
           color="primary"
+          (click)="copyLinkToExample()"
         >
           <mat-icon>link</mat-icon>
         </button>
 
         <button
           mat-icon-button
-          (click)="expanded = !expanded"
-          [matTooltip]="expanded ? 'Hide code' : 'Show code'"
           color="primary"
+          [matTooltip]="expanded ? 'Hide code' : 'Show code'"
           [disabled]="(_snippets?.length ?? 0) === 0"
+          (click)="expanded = !expanded"
         >
           <mat-icon>code</mat-icon>
         </button>

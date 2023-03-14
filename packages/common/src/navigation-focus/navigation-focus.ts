@@ -1,4 +1,5 @@
 import { Directive, ElementRef, HostBinding, OnDestroy } from '@angular/core';
+
 import { NavigationFocusService } from './navigation-focus.service';
 
 let uid = 0;

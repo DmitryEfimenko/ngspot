@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+
 import { createHostFactory } from '@ngneat/spectator';
 
 import { ExpandableInputComponent } from './expandable-input.component';
@@ -8,7 +9,7 @@ import { EXPANDABLE_INPUT_DIRECTIVES } from './expandable-input.module';
   selector: 'ngs-test',
   template: `
     <ngs-expandable-input>
-      <input type="text" *ngsExpInput />
+      <input *ngsExpInput type="text" />
       <i *ngsExpIconOpen>🔍</i>
       <i *ngsExpIconClose>✖️</i>
     </ngs-expandable-input>

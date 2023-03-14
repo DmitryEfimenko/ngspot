@@ -12,29 +12,29 @@
 >
   <ng-container *ngIf="expInputDirective">
     <ng-container
-      [ngTemplateOutlet]="expInputDirective.templateRef"
       *ngsExpInput
+      [ngTemplateOutlet]="expInputDirective.templateRef"
     ></ng-container>
   </ng-container>
 
   <ng-container *ngIf="iconOpenDirective">
     <ng-container
-      [ngTemplateOutlet]="iconOpenDirective.templateRef"
       *ngsExpIconOpen
+      [ngTemplateOutlet]="iconOpenDirective.templateRef"
     ></ng-container>
   </ng-container>
 
   <ng-container *ngIf="iconCloseDirective">
     <ng-container
-      [ngTemplateOutlet]="iconCloseDirective.templateRef"
       *ngsExpIconClose
+      [ngTemplateOutlet]="iconCloseDirective.templateRef"
     ></ng-container>
   </ng-container>
 
   <ng-container *ngIf="expIconActionDirective">
     <ng-container
-      [ngTemplateOutlet]="expIconActionDirective.templateRef"
       *ngsExpIconAction
+      [ngTemplateOutlet]="expIconActionDirective.templateRef"
     ></ng-container>
   </ng-container>
 </ngs-expandable-input>

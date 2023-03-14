@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+
 import { DEMO_MAIN_CONTENT_DECLARATIONS } from '@ngspot/common/demo-main-content';
 import { ROUTED_TABS_DECLARATIONS } from '@ngspot/common/routed-tabs';
 

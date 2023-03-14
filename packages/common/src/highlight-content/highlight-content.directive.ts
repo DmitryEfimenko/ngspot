@@ -5,9 +5,11 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
+
 import hljs from 'highlight.js';
 import { HighlightJS } from 'ngx-highlightjs';
 import { delay, map, Subscription, switchMap, tap } from 'rxjs';
+
 import { mutationObserver } from '../rxjs';
 
 @Directive({

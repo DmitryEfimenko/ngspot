@@ -9,8 +9,10 @@ import {
   provideRouter,
   withEnabledBlockingInitialNavigation,
 } from '@angular/router';
+
 import { NgxGoogleAnalyticsModule } from 'ngx-google-analytics';
 import { HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
+
 import { AppComponent } from './app/app.component';
 import { appRoutes } from './app/app.routes';
 import { customIconsProviders } from './app/shared/custom-icons';

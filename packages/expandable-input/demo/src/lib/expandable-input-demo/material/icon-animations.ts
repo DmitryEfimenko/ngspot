@@ -6,6 +6,7 @@ import {
   sequence,
   style,
 } from '@angular/animations';
+
 import {
   ANIMATION_TIMINGS,
   IconAnimationMetadata,

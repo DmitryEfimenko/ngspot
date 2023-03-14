@@ -1,5 +1,6 @@
 import { RemoteData } from '@ngspot/remote-data';
 import { Subject } from 'rxjs';
+
 import { PreviousValueCache } from './builders';
 
 export interface TrackRemoteDataOpts<T, E = Error> {

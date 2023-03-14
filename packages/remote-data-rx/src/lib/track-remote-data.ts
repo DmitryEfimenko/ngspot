@@ -6,6 +6,7 @@ import {
 } from '@ngspot/remote-data';
 import { Observable, of, UnaryFunction } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
+
 import { deferredStartWith } from './deferredStartWith';
 import { TrackRemoteDataOpts } from './model';
 
@@ -32,7 +33,7 @@ export function trackRemoteData<T, E = Error>(
           opts?.keepPreviousValue ? opts.keepPreviousValue.cache : undefined
         );
       }),
-      catchError((err: any) => of(errorState<any, T>(err)))
+      catchError((err: E) => of(errorState<E, T>(err)))
     );
 
     const subject = opts?.subject;

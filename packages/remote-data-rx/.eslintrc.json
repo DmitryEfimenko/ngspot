@@ -4,7 +4,14 @@
   "overrides": [
     {
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
-      "rules": {}
+      "rules": {
+        "@nrwl/nx/enforce-module-boundaries": [
+          "error",
+          {
+            "allow": ["@ngspot/remote-data"]
+          }
+        ]
+      }
     },
     {
       "files": ["*.ts", "*.tsx"],

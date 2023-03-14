@@ -2,8 +2,8 @@
 
 <ngs-code-snippets
   title="Without action button"
-  [snippets]="snippets['basic']"
   expanded="true"
+  [snippets]="snippets['basic']"
 >
   <div *ngsSnippetDescription>
     <p class="mb-2">
@@ -36,11 +36,11 @@
         <input type="text" matInput />
       </mat-form-field>
 
-      <button type="button" mat-mini-fab color="primary" *ngsExpIconOpen>
+      <button *ngsExpIconOpen type="button" mat-mini-fab color="primary">
         <mat-icon>search</mat-icon>
       </button>
 
-      <button type="button" mat-mini-fab *ngsExpIconClose>
+      <button *ngsExpIconClose type="button" mat-mini-fab>
         <mat-icon>close</mat-icon>
       </button>
     </ngs-expandable-input>
@@ -49,8 +49,8 @@
 
 <ngs-code-snippets
   title="As a reusable component"
-  [snippets]="snippets['reusable']"
   expanded="false"
+  [snippets]="snippets['reusable']"
 >
   <div *ngsSnippetDescription>
     The example below shows how to create a reusable component based on the
@@ -79,8 +79,8 @@
 
 <ngs-code-snippets
   title="With action button"
-  [snippets]="snippets['withAction']"
   expanded="false"
+  [snippets]="snippets['withAction']"
 >
   <ng-container *ngsSnippetResult>
     <ngs-expandable-input
@@ -93,15 +93,15 @@
         <input type="text" matInput />
       </mat-form-field>
 
-      <button type="button" mat-mini-fab color="primary" *ngsExpIconOpen>
+      <button *ngsExpIconOpen type="button" mat-mini-fab color="primary">
         <mat-icon>search</mat-icon>
       </button>
 
-      <button type="button" mat-mini-fab color="primary" *ngsExpIconAction>
+      <button *ngsExpIconAction type="button" mat-mini-fab color="primary">
         <mat-icon>build</mat-icon>
       </button>
 
-      <button type="button" mat-mini-fab *ngsExpIconClose>
+      <button *ngsExpIconClose type="button" mat-mini-fab>
         <mat-icon>close</mat-icon>
       </button>
     </ngs-expandable-input>
@@ -110,8 +110,8 @@
 
 <ngs-code-snippets
   title="Hiding sibling element"
-  [snippets]="snippets['hidingSibling']"
   expanded="false"
+  [snippets]="snippets['hidingSibling']"
 >
   <p *ngsSnippetDescription>
     This is rather a unique situation, but you might encounter it too. One of
@@ -143,11 +143,11 @@
           <input type="text" matInput />
         </mat-form-field>
 
-        <button type="button" mat-mini-fab color="primary" *ngsExpIconOpen>
+        <button *ngsExpIconOpen type="button" mat-mini-fab color="primary">
           <mat-icon>search</mat-icon>
         </button>
 
-        <button type="button" mat-mini-fab *ngsExpIconClose>
+        <button *ngsExpIconClose type="button" mat-mini-fab>
           <mat-icon>close</mat-icon>
         </button>
       </ngs-expandable-input>

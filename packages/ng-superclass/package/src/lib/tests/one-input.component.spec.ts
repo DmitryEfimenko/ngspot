@@ -5,6 +5,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+
 import { createHostFactory } from '@ngneat/spectator';
 import { tap } from 'rxjs/operators';
 
@@ -18,7 +19,7 @@ describe(OneInputComponent.name, () => {
       imports: [ReactiveFormsModule, FormsModule],
     });
 
-    async function setup<T extends { [key: string]: any }>(
+    async function setup<T extends { [key: string]: T[typeof key] }>(
       template: string,
       hostProps: T
     ) {

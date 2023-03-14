@@ -7,6 +7,7 @@ import {
   successState,
 } from '@ngspot/remote-data';
 import { Observable, Subject, switchMap } from 'rxjs';
+
 import { PreviousValueCache, trackingRemoteDataSubject } from './builders';
 import { trackRemoteData } from './track-remote-data';
 

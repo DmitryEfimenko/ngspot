@@ -3,12 +3,12 @@
     <div
       #inputElWrapper
       class="input-field_wrapper"
+      ngsFocusableSelector="input"
       [@slideInOut]="{
         value: isOpen,
         params: { duration: animationDuration, easing: animationEasing }
       }"
       [ngsFocusable]="isOpen"
-      ngsFocusableSelector="input"
     >
       <ng-container
         [ngTemplateOutlet]="expInputDirective.templateRef"
@@ -23,10 +23,10 @@
         enterOptions: animationOptions;
         leaveOptions: animationOptions
       "
-      class="icons_icon-action"
       #iconActionWrapper
-      [ngsFocusable]="isOpen"
+      class="icons_icon-action"
       ngsFocusableSelector="button"
+      [ngsFocusable]="isOpen"
     >
       <ng-container
         [ngTemplateOutlet]="expIconActionDirective.templateRef"
@@ -44,9 +44,9 @@
         leaveOptions: animationOptions
       "
       class="icons_icon-close"
-      (click)="close()"
-      [ngsFocusable]="isOpen"
       ngsFocusableSelector="button"
+      [ngsFocusable]="isOpen"
+      (click)="close()"
     >
       <ng-container
         [ngTemplateOutlet]="iconCloseDirective.templateRef"
@@ -62,9 +62,9 @@
         leaveOptions: animationOptions
       "
       class="icons_icon-open"
-      (click)="open()"
-      [ngsFocusable]="!isOpen"
       ngsFocusableSelector="button"
+      [ngsFocusable]="!isOpen"
+      (click)="open()"
     >
       <ng-container
         [ngTemplateOutlet]="iconOpenDirective.templateRef"

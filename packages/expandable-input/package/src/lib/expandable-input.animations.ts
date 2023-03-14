@@ -6,6 +6,7 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
+
 import { IconAnimationMetadata } from './model';
 
 export const ANIMATION_DURATION = 300;

@@ -1,6 +1,8 @@
 import { AbstractControl } from '@angular/forms';
+
 import { Observable, Subject } from 'rxjs';
 import { distinctUntilChanged } from 'rxjs/operators';
+
 import { ArgumentsType, MethodNames, TypeOfClassMethod } from '../typings';
 
 export type AbstractControlMethods =

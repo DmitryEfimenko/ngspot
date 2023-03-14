@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
+
 import {
   CODE_SNIPPETS_DIRECTIVES,
   Snippet,
@@ -13,18 +14,18 @@ import {
   smoothHorizontalCollapse,
 } from '@ngspot/expandable-input';
 
-const basicHtml = require('raw-loader!./snippets/basic-html.html').default;
 const basicCss = require('raw-loader!./snippets/basic-css.txt').default;
-const withActionHtml =
-  require('raw-loader!./snippets/with-action-button-html.html').default;
-const withActionCss =
-  require('raw-loader!./snippets/with-action-button-css.txt').default;
-const hidingSiblingHtml =
-  require('raw-loader!./snippets/hiding-sibling-element.html').default;
-const hidingSiblingTs =
-  require('raw-loader!./snippets/hiding-sibling-element-ts.txt').default;
+const basicHtml = require('raw-loader!./snippets/basic-html.html').default;
 const hidingSiblingCss =
   require('raw-loader!./snippets/hiding-sibling-element-css.txt').default;
+const hidingSiblingTs =
+  require('raw-loader!./snippets/hiding-sibling-element-ts.txt').default;
+const hidingSiblingHtml =
+  require('raw-loader!./snippets/hiding-sibling-element.html').default;
+const withActionCss =
+  require('raw-loader!./snippets/with-action-button-css.txt').default;
+const withActionHtml =
+  require('raw-loader!./snippets/with-action-button-html.html').default;
 
 @Component({
   selector: 'ngs-expandable-input-bootstrap-demo',
