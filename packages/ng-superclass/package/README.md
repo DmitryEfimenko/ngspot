@@ -32,8 +32,8 @@ yarn add @ngspot/ng-superclass
 
 This library provides a set of classes that can be used to extend from when writing application components. Each class in this library actually extends from another class in this library in the following order:
 
-> `FormComponentSuperclass`  
-> extends `DirectiveSuperclass`  
+> `FormComponentSuperclass`
+> extends `DirectiveSuperclass`
 > extends `SubscribeSink`
 
 So if extending the component from `FormComponentSuperclass`, the component will inherit the functionality of `DirectiveSuperclass` and `SubscribeSink` classes.
@@ -41,97 +41,6 @@ So if extending the component from `FormComponentSuperclass`, the component will
 Choose the class to extend from based on what is needed.
 
 Now, here is more about the unique functionality of each class:
-
-### **SubscribeSink**
-
-```ts
-@Component({
-  /* ... */
-})
-class MyComponent extends SubscribeSink {}
-```
-
-Class provides two methods:
-
-#### **1. `subscribeTo`**
-
-Use this method for hassle-free subscribing to observables. Under the hood, this class tracks the component destruction lifecycle hook and automatically unsubscribes from the observable when component destroys.
-
-##### Usage:
-
-```ts
-class MyComponent extends SubscribeSink {
-  this.subscribeTo(myObservable$);
-}
-```
-
-#### **2. `createEffect`**
-
-Creating side effects in a reactive Angular components is a common task. This method is just that - a way to create a side effect. Internally, this class will manage the subscription according to the component lifecycle.
-
-##### Usage:
-
-```ts
-@Component({
-  template: ` <button (click)="saveData({ name: 'Dima' })">Submit</button> `,
-})
-class MyComponent extends SubscribeSink {
-  saveData = this.createEffect<MyData>((myData$) =>
-    myData$.pipe(
-      // your choice of flattening operator
-      switchMap((myData) => this.api.saveMyData(myData))
-    )
-  );
-}
-```
-
-### **DirectiveSuperclass**
-
-This class is useful for enabling Reactive programming in Angular components/directives/pipes when needing to track changes to Inputs or to know if changes have run.
-
-#### **1. `getInput$`**
-
-Gets the value of an `@Input()` as an observable stream:
-
-##### Usage:
-
-```ts
-class MyComponent extends DirectiveSuperclass {
-  @Input() color: string;
-
-  color$ = this.getInput$('color');
-}
-```
-
-#### **2. `onChangesRan$`**
-
-An Observable that emits when the component `ngOnChanges` lifecycle hook has run. Late subscriptions are also supported since it uses `BehaviorSubject` under the hood.
-
-##### Usage:
-
-```ts
-class MyComponent extends DirectiveSuperclass {
-  valueAfterChangesRun$ = this.onChangesRan$.pipe(switchMapTo('Dima'));
-}
-```
-
-#### **3. `inputChanges$`**
-
-Emits the set of `@Input()` property names that change during each call to `ngOnChanges()`.
-
-##### Usage:
-
-```ts
-class MyComponent extends DirectiveSuperclass {
-  @Input() color: string;
-
-  valueAfterChangesRun$ = this.inputChanges$.pipe(
-    tap((inputName) => {
-      console.log(`${inputName} changed`);
-    })
-  );
-}
-```
 
 ### **FormComponentSuperclass**
 
@@ -281,6 +190,97 @@ export class CounterComponent extends FormComponentSuperclass<number> {
 ```
 
 It's helpful to understand how the built-in validation works under the hood. Remember, `ngControl.control` is the direct reference to the control bound by the consumer. If `validate` method is provided in the custom control component, it's simply added as a validator to the `ngControl.control`. When component is destroyed, the validator is removed.
+
+### **DirectiveSuperclass**
+
+This class is useful for enabling Reactive programming in Angular components/directives/pipes when needing to track changes to Inputs or to know if changes have run.
+
+#### **1. `getInput$`**
+
+Gets the value of an `@Input()` as an observable stream:
+
+##### Usage:
+
+```ts
+class MyComponent extends DirectiveSuperclass {
+  @Input() color: string;
+
+  color$ = this.getInput$('color');
+}
+```
+
+#### **2. `onChangesRan$`**
+
+An Observable that emits when the component `ngOnChanges` lifecycle hook has run. Late subscriptions are also supported since it uses `BehaviorSubject` under the hood.
+
+##### Usage:
+
+```ts
+class MyComponent extends DirectiveSuperclass {
+  valueAfterChangesRun$ = this.onChangesRan$.pipe(switchMapTo('Dima'));
+}
+```
+
+#### **3. `inputChanges$`**
+
+Emits the set of `@Input()` property names that change during each call to `ngOnChanges()`.
+
+##### Usage:
+
+```ts
+class MyComponent extends DirectiveSuperclass {
+  @Input() color: string;
+
+  valueAfterChangesRun$ = this.inputChanges$.pipe(
+    tap((inputName) => {
+      console.log(`${inputName} changed`);
+    })
+  );
+}
+```
+
+### **SubscribeSink**
+
+```ts
+@Component({
+  /* ... */
+})
+class MyComponent extends SubscribeSink {}
+```
+
+Class provides two methods:
+
+#### **1. `subscribeTo`**
+
+Use this method for hassle-free subscribing to observables. Under the hood, this class tracks the component destruction lifecycle hook and automatically unsubscribes from the observable when component destroys.
+
+##### Usage:
+
+```ts
+class MyComponent extends SubscribeSink {
+  this.subscribeTo(myObservable$);
+}
+```
+
+#### **2. `createEffect`**
+
+Creating side effects in a reactive Angular components is a common task. This method is just that - a way to create a side effect. Internally, this class will manage the subscription according to the component lifecycle.
+
+##### Usage:
+
+```ts
+@Component({
+  template: ` <button (click)="saveData({ name: 'Dima' })">Submit</button> `,
+})
+class MyComponent extends SubscribeSink {
+  saveData = this.createEffect<MyData>((myData$) =>
+    myData$.pipe(
+      // your choice of flattening operator
+      switchMap((myData) => this.api.saveMyData(myData))
+    )
+  );
+}
+```
 
 ## Previous Art
 
