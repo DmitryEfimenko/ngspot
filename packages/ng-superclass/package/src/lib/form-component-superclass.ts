@@ -163,19 +163,19 @@ export abstract class FormComponentSuperclass<OuterType, InnerType = OuterType>
 
   protected hostEl = inject<ElementRef<HTMLElement>>(ElementRef).nativeElement;
 
-  private focusMonitor = inject(FocusMonitor);
+  protected focusMonitor = inject(FocusMonitor);
+
+  protected changeDetectorRef = inject(ChangeDetectorRef);
+
+  protected focusMonitor$: Observable<FocusOrigin>;
 
   /**
    * Built-in validator reference
    */
   private validator: ValidatorFn | undefined;
 
-  protected focusMonitor$: Observable<FocusOrigin>;
-
   private disabled$$ = new BehaviorSubject<boolean>(false);
   disabled$ = this.disabled$$.asObservable();
-
-  protected changeDetectorRef = inject(ChangeDetectorRef);
 
   @HostBinding()
   id = `super-comp-${nextId++}`;

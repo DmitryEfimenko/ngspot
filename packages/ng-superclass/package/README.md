@@ -10,9 +10,9 @@
 ## Features
 
 - ✅ Simple syntax that reduces boilerplate
-- ✅ SubscribeSink - for automatic managing subscriptions
-- ✅ DirectiveSuperclass - for getting stream of @Input values
 - ✅ FormComponentSuperclass - for creating simple or complex custom form controls
+- ✅ DirectiveSuperclass - for getting stream of @Input values
+- ✅ SubscribeSink - for automatic managing subscriptions
 
 ## Installation
 
