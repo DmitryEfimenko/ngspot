@@ -9,7 +9,7 @@
           "error",
           {
             "type": "attribute",
-            "prefix": "ngspot",
+            "prefix": "ngs",
             "style": "camelCase"
           }
         ],
@@ -17,7 +17,7 @@
           "error",
           {
             "type": "element",
-            "prefix": "ngspot",
+            "prefix": "ngs",
             "style": "kebab-case"
           }
         ]

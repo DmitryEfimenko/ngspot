@@ -4,7 +4,10 @@ import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { Directive, DoCheck, HostBinding, inject, Input } from '@angular/core';
 import { FormGroupDirective, NgForm } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
-import { MatFormFieldControl } from '@angular/material/form-field';
+import {
+  MatFormFieldControl,
+  MAT_FORM_FIELD,
+} from '@angular/material/form-field';
 
 import { FormComponentSuperclass } from '@ngspot/ng-superclass';
 
@@ -32,6 +35,7 @@ export abstract class FormComponentMaterialSuperclass<
   implements DoCheck, LimitedMatFormFieldControl<OuterType>
 {
   private defaultErrorStateMatcher = inject(ErrorStateMatcher);
+  formField = inject(MAT_FORM_FIELD, { optional: true });
 
   @Input()
   errorStateMatcher: ErrorStateMatcher;
