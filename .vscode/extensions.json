@@ -1,9 +1,13 @@
 {
   "recommendations": [
+    "angular.ng-template",
     "nrwl.angular-console",
     "esbenp.prettier-vscode",
     "dbaeumer.vscode-eslint",
-    "Orta.vscode-jest",
-    "firsttris.vscode-jest-runner"
+    "infinity1207.angular2-switcher",
+    "streetsidesoftware.code-spell-checker",
+    "eamodio.gitlens",
+    "xabikos.javascriptsnippets",
+    "bradlc.vscode-tailwindcss"
   ]
 }
