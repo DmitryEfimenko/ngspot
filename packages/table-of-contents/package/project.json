@@ -1,0 +1,44 @@
+{
+  "name": "table-of-contents",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "packages/table-of-contents/package/src",
+  "prefix": "ngspot",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/angular:package",
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+      "options": {
+        "project": "packages/table-of-contents/package/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "packages/table-of-contents/package/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "packages/table-of-contents/package/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@angular-devkit/build-angular:karma",
+      "options": {
+        "tsConfig": "packages/table-of-contents/package/tsconfig.spec.json",
+        "karmaConfig": "packages/table-of-contents/package/karma.conf.js",
+        "polyfills": ["zone.js", "zone.js/testing"]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "packages/table-of-contents/package/**/*.ts",
+          "packages/table-of-contents/package/**/*.html"
+        ]
+      }
+    }
+  },
+  "tags": ["lib", "lib:table-of-contents"]
+}

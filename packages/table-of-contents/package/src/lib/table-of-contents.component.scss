@@ -1,0 +1,51 @@
+:host {
+  font-size: 13px;
+  max-width: 11rem;
+  top: 0;
+  box-sizing: border-box;
+  display: inline-flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  // needed to make position sticky work inside of a flex container
+  align-self: flex-start;
+}
+
+.docs-toc-container {
+  width: 100%;
+
+  & + .docs-toc-container {
+    padding-top: 8px;
+  }
+}
+
+.docs-toc-heading {
+  margin: 0;
+  padding: 0;
+  font-size: 13px;
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+.docs-active {
+  font-weight: var(--table-of-contents-active-font-weight, bold);
+  color: var(--table-of-contents-active-color);
+}
+
+a {
+  line-height: 16px;
+  margin: 8px 0 0;
+  position: relative;
+  text-decoration: none;
+  display: block;
+  text-overflow: ellipsis;
+  width: 100%;
+  overflow: hidden;
+}
+
+.docs-level-h3 {
+  margin-left: 12px;
+}
+
+.docs-level-h4 {
+  margin-left: 24px;
+}
