@@ -1,7 +1,14 @@
 import { Provider, Type } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
-import { filter, OperatorFunction, pipe } from 'rxjs';
+import {
+  defer,
+  filter,
+  Observable,
+  OperatorFunction,
+  pipe,
+  startWith,
+} from 'rxjs';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 export function noop() {}
@@ -36,4 +43,15 @@ export function filterOutNullish<T>(): OperatorFunction<
   T
 > {
   return pipe(filter((x): x is T => x != null));
+}
+
+export function conditionalStartWith<T>(
+  condition: () => boolean,
+  cb: () => T
+): OperatorFunction<unknown, T> {
+  return function (source: Observable<any>) {
+    return defer(() => {
+      return condition() ? source.pipe(startWith(cb())) : source;
+    });
+  };
 }

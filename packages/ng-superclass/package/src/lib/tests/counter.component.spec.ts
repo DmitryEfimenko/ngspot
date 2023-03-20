@@ -1,5 +1,10 @@
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormControl,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 
 import { createHostFactory } from '@ngneat/spectator';
 import { tap } from 'rxjs/operators';
@@ -11,7 +16,7 @@ describe(CounterComponent.name, () => {
   describe('GIVEN: with component using viewModel in the template', () => {
     const createHost = createHostFactory<CounterComponent>({
       component: CounterComponent,
-      imports: [ReactiveFormsModule],
+      imports: [ReactiveFormsModule, FormsModule],
     });
 
     async function setup<T extends { [key: string]: any }>(
@@ -20,10 +25,12 @@ describe(CounterComponent.name, () => {
     ) {
       const spectator = createHost<T>(template, { hostProps });
 
+      const setViewModelSpy = spyOn(spectator.component.viewModel, 'setValue');
+
       const loader = TestbedHarnessEnvironment.loader(spectator.fixture);
       const harness = await loader.getHarness(CounterHarness);
 
-      return { spectator, harness };
+      return { spectator, harness, setViewModelSpy };
     }
 
     describe('GIVEN: with reactive forms binding', () => {
@@ -35,6 +42,13 @@ describe(CounterComponent.name, () => {
         });
 
         expect(spectator.component).toBeTruthy();
+      });
+
+      it('should set viewModel only once - to the initial value', async () => {
+        const { setViewModelSpy } = await setup(template, { count: 5 });
+
+        expect(setViewModelSpy).toHaveBeenCalledTimes(1);
+        expect(setViewModelSpy).toHaveBeenCalledWith(5);
       });
 
       it('setting value from the outside should update host value', async () => {
@@ -96,6 +110,31 @@ describe(CounterComponent.name, () => {
         const { harness } = await setup(template, { control });
 
         expect(await harness.value()).toBe('4');
+      });
+
+      fit('should set viewModel only once - to the initial value', async () => {
+        const control = new FormControl(4);
+        const { setViewModelSpy } = await setup(template, { control });
+
+        expect(setViewModelSpy).toHaveBeenCalledTimes(1);
+        expect(setViewModelSpy).toHaveBeenCalledWith(4, jasmine.any(Object));
+      });
+    });
+
+    describe('GIVEN: with template-driven forms', () => {
+      const template = `<ngs-counter [(ngModel)]="count"></ngs-counter>`;
+
+      it('should build', async () => {
+        const { spectator } = await setup(template, { count: 0 });
+
+        expect(spectator.component).toBeTruthy();
+      });
+
+      it('should set viewModel only once - to the initial value', async () => {
+        const { setViewModelSpy } = await setup(template, { count: 5 });
+
+        expect(setViewModelSpy).toHaveBeenCalledTimes(1);
+        expect(setViewModelSpy).toHaveBeenCalledWith(5, jasmine.any(Object));
       });
     });
 

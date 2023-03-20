@@ -45,7 +45,7 @@ import {
 
 import { DirectiveSuperclass } from './directive-superclass';
 import { syncOuterAndInnerControls } from './sync-controls/sync-outer-and-inner-controls';
-import { filterOutNullish } from './utils';
+import { conditionalStartWith, filterOutNullish } from './utils';
 
 let nextId = 1;
 
@@ -276,7 +276,10 @@ export abstract class FormComponentSuperclass<OuterType, InnerType = OuterType>
       if (this.ngControl) {
         this.subscribeTo(
           this.ngControl.control.valueChanges.pipe(
-            startWith(this.ngControl.control.value),
+            conditionalStartWith(
+              () => !(this.ngControl instanceof NgModel),
+              () => this.ngControl.control.value
+            ),
             filter((val) => val !== this._value),
             tap(this.incomingValues$$)
           )
@@ -418,7 +421,11 @@ export abstract class FormComponentSuperclass<OuterType, InnerType = OuterType>
   private monitorFocus() {
     this.focusMonitor$ = this.focusMonitor.monitor(this.hostEl, true).pipe(
       tap((origin) => {
+        const changed = this._focused !== !!origin;
         this._focused = !!origin;
+        if (changed) {
+          this.stateChanges.next();
+        }
       })
     );
 
