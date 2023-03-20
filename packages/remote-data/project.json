@@ -34,11 +34,11 @@
       }
     },
     "test": {
-      "executor": "@nrwl/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/packages/remote-data"],
+      "executor": "@angular-devkit/build-angular:karma",
       "options": {
-        "jestConfig": "packages/remote-data/jest.config.ts",
-        "passWithNoTests": true
+        "tsConfig": "packages/remote-data/tsconfig.spec.json",
+        "karmaConfig": "packages/remote-data/karma.conf.js",
+        "polyfills": ["zone.js", "zone.js/testing"]
       }
     },
     "version": {
