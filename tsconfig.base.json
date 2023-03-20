@@ -32,7 +32,12 @@
       ],
       "@ngspot/remote-data": ["packages/remote-data/src/index.ts"],
       "@ngspot/remote-data-rx": ["packages/remote-data-rx/src/index.ts"],
-      "@ngspot/rxjs": ["packages/rxjs/src/index.ts"]
+      "@ngspot/rxjs": ["packages/rxjs/src/index.ts"],
+      "@ngspot/rxjs/decorators": ["packages/rxjs/decorators/index.ts"],
+      "@ngspot/rxjs/operators": ["packages/rxjs/operators/index.ts"],
+      "@ngspot/table-of-contents": [
+        "packages/table-of-contents/package/src/index.ts"
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]

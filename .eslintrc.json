@@ -29,14 +29,6 @@
             "allow": [],
             "depConstraints": [
               {
-                "sourceTag": "lib:remote-data-rx",
-                "onlyDependOnLibsWithTags": ["lib:remote-data"]
-              },
-              {
-                "sourceTag": "lib:ng-superclass-material",
-                "onlyDependOnLibsWithTags": ["lib:ng-superclass"]
-              },
-              {
                 "sourceTag": "app:demo",
                 "onlyDependOnLibsWithTags": [
                   "lib:demo",
@@ -46,8 +38,27 @@
                 ]
               },
               {
+                "sourceTag": "lib:remote-data-rx",
+                "onlyDependOnLibsWithTags": ["lib:remote-data"]
+              },
+              {
+                "sourceTag": "lib:ng-superclass-material",
+                "onlyDependOnLibsWithTags": ["lib:ng-superclass"]
+              },
+              {
                 "sourceTag": "lib:demo",
                 "onlyDependOnLibsWithTags": ["lib:common", "lib"]
+              },
+              {
+                "sourceTag": "lib:common",
+                "onlyDependOnLibsWithTags": [
+                  "lib:rxjs",
+                  "lib:table-of-contents"
+                ]
+              },
+              {
+                "sourceTag": "lib:table-of-contents",
+                "onlyDependOnLibsWithTags": ["lib:rxjs"]
               }
             ]
           }

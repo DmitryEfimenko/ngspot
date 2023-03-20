@@ -116,11 +116,11 @@
       }
     },
     "test": {
-      "executor": "@nrwl/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "executor": "@angular-devkit/build-angular:karma",
       "options": {
-        "jestConfig": "apps/demo/jest.config.ts",
-        "passWithNoTests": true
+        "tsConfig": "apps/demo/tsconfig.spec.json",
+        "karmaConfig": "apps/demo/karma.conf.js",
+        "polyfills": ["zone.js", "zone.js/testing"]
       }
     },
     "deploy": {

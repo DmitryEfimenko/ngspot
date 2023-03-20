@@ -96,7 +96,7 @@ Run `nx build my-lib` to build the project. The build artifacts will be stored i
 
 ## Running unit tests
 
-Run `nx test my-lib` to execute the unit tests via [Jest](https://jestjs.io).
+Run `nx test my-lib` to execute the unit tests via Karma.
 
 Run `nx affected:test` to execute the unit tests affected by a change.
 

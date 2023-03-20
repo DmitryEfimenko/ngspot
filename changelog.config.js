@@ -23,6 +23,7 @@ module.exports = {
     'remote-data-rx',
     'rxjs',
     'expandable-input',
+    'table-of-contents',
   ],
   types: {
     chore: {
