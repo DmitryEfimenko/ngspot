@@ -1,1 +1,1 @@
-export * from './lib/rxjs';
+export {};

@@ -1,6 +1,7 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
+    "target": "es2022",
     "module": "commonjs",
     "forceConsistentCasingInFileNames": true,
     "strict": true,
@@ -14,6 +15,9 @@
   "references": [
     {
       "path": "./tsconfig.lib.json"
+    },
+    {
+      "path": "./tsconfig.lib.prod.json"
     },
     {
       "path": "./tsconfig.spec.json"

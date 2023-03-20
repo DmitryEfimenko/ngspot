@@ -1,50 +1,45 @@
 {
   "name": "rxjs",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "packages/rxjs/src",
+  "sourceRoot": "packages/rxjs",
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/js:tsc",
-      "outputs": ["{options.outputPath}"],
+      "executor": "@nrwl/angular:package",
+      "outputs": ["{workspaceRoot}/dist/packages/rxjs"],
       "options": {
-        "outputPath": "dist/packages/rxjs",
-        "main": "packages/rxjs/src/index.ts",
-        "tsConfig": "packages/rxjs/tsconfig.lib.json",
-        "assets": ["packages/rxjs/*.md"]
+        "project": "packages/rxjs/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "packages/rxjs/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "packages/rxjs/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@angular-devkit/build-angular:karma",
+      "options": {
+        "tsConfig": "packages/rxjs/tsconfig.spec.json",
+        "karmaConfig": "packages/rxjs/karma.conf.js",
+        "polyfills": ["zone.js", "zone.js/testing"]
       }
     },
     "publish": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "node tools/scripts/publish.mjs {args.tag} {args.verbose}"
+        "command": "node tools/scripts/publish.mjs rxjs {args.ver} {args.tag}"
       },
-      "dependsOn": [
-        {
-          "projects": "self",
-          "target": "build"
-        }
-      ]
+      "dependsOn": ["build"]
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": ["packages/rxjs/**/*.ts"]
-      }
-    },
-    "test": {
-      "executor": "@nrwl/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/packages/rxjs"],
-      "options": {
-        "jestConfig": "packages/rxjs/jest.config.ts",
-        "passWithNoTests": true
-      }
-    },
-    "version": {
-      "executor": "@jscutlery/semver:version",
-      "options": {
-        "preset": "conventional"
       }
     }
   },

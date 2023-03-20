@@ -2,8 +2,17 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "../../dist/out-tsc",
-    "module": "commonjs",
-    "types": ["jest", "node"]
+    "types": ["jasmine", "node"]
   },
-  "include": ["jest.config.ts", "**/*.test.ts", "**/*.spec.ts", "**/*.d.ts"]
+  "include": [
+    "./src/**/*.spec.ts",
+    "./src/**/*.test.ts",
+    "./src/**/*.d.ts",
+    "./decorators/**/*.spec.ts",
+    "./decorators/**/*.test.ts",
+    "./decorators/**/*.d.ts",
+    "./operators/**/*.spec.ts",
+    "./operators/**/*.test.ts",
+    "./operators/**/*.d.ts"
+  ]
 }

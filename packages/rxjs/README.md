@@ -1,29 +1,38 @@
 # @ngspot/rxjs
 
-> Various RxJS utilities
+A library providing a few useful RxJS operators.
 
-## Building
+## Installation
 
-Run `nx build rxjs` to build the library.
+### NPM
 
-## Running unit tests
+```sh
+npm install @ngspot/ng-superclass
+```
 
-Run `nx test rxjs` to execute the unit tests via [Jest](https://jestjs.io).
+### Yarn
 
-## Development
+```sh
+yarn add @ngspot/ng-superclass
+```
 
-### Basic Workflow
+## Operators:
 
-One time config: `git config --global push.followTags true`
+- `filterOutNullish` - type safe operator for filtering out nullish values
+- `deferredStartWith` - the same as start with, but takes the first value in a callback, which allows to evaluate it lazily
+- `log$` - logs values passing through this operator
+- `mutationObserver` - observable creator. Wraps native `MutationObserver`
+- `resizeObserver` - observable creator. Wraps native `ResizeObserver`
+- `zoneFull` - enters the stream into Angular Zone
+- `zoneFree` - exits the stream from Angular Zone
 
-1. Develop
-1. Write specs
-1. Run `npm run test:lib`
-1. Run `npm run commit` and choose fix or feature
-1. Run `npm run release`
-1. Run `npm run build:lib`
-1. Go to the dist directory and run `npm publish`
-1. Push changes `git push`
+## Usage
+
+```ts
+import { filterOutNullish } from '@ngspot/rxjs/operators';
+
+myObservable$.pipe(filterOutNullish);
+```
 
 ## License
 
