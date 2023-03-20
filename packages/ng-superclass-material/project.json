@@ -22,11 +22,11 @@
       "defaultConfiguration": "production"
     },
     "test": {
-      "executor": "@nrwl/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "executor": "@angular-devkit/build-angular:karma",
       "options": {
-        "jestConfig": "packages/ng-superclass-material/jest.config.ts",
-        "passWithNoTests": true
+        "tsConfig": "packages/ng-superclass-material/tsconfig.spec.json",
+        "karmaConfig": "packages/ng-superclass-material/karma.conf.js",
+        "polyfills": ["zone.js", "zone.js/testing"]
       }
     },
     "lint": {

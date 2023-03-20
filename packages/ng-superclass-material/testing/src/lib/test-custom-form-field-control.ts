@@ -1,6 +1,11 @@
 import { AbstractControl } from '@angular/forms';
 
-import { testCustomFormControl } from '@ngspot/ng-superclass/testing';
+import {
+  JestDescribeLike,
+  JestExpectLike,
+  JestItLike,
+  testCustomFormControl,
+} from '@ngspot/ng-superclass/testing';
 
 import { CustomFormFieldControlHarness } from './custom-form-field-control.harness';
 
@@ -10,6 +15,9 @@ export interface CustomFormFieldControlTestContext {
 }
 
 export function testCustomFormFieldControl(
+  describe: JestDescribeLike,
+  it: JestItLike,
+  expect: JestExpectLike,
   resolveArgsFn: () =>
     | CustomFormFieldControlTestContext
     | Promise<CustomFormFieldControlTestContext>
