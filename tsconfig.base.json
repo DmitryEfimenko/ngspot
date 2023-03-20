@@ -27,6 +27,12 @@
       "@ngspot/ng-superclass-demo": [
         "packages/ng-superclass/demo/src/index.ts"
       ],
+      "@ngspot/ng-superclass-material": [
+        "packages/ng-superclass-material/package/src/index.ts"
+      ],
+      "@ngspot/ng-superclass-material-demo": [
+        "packages/ng-superclass-material/demo/src/index.ts"
+      ],
       "@ngspot/ng-superclass/testing": [
         "packages/ng-superclass/package/testing/src/index.ts"
       ],

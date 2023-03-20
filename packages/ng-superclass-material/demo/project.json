@@ -1,0 +1,50 @@
+{
+  "name": "ng-superclass-material-demo",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "packages/ng-superclass-material/demo/src",
+  "prefix": "ngs",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/angular:ng-packagr-lite",
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+      "options": {
+        "project": "packages/ng-superclass-material/demo/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "packages/ng-superclass-material/demo/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "packages/ng-superclass-material/demo/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@angular-devkit/build-angular:karma",
+      "options": {
+        "tsConfig": "packages/ng-superclass-material/demo/tsconfig.spec.json",
+        "karmaConfig": "packages/ng-superclass-material/demo/karma.conf.js",
+        "polyfills": ["zone.js", "zone.js/testing"]
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "packages/ng-superclass-material/demo/**/*.ts",
+          "packages/ng-superclass-material/demo/**/*.html"
+        ]
+      }
+    }
+  },
+  "tags": ["lib:demo"]
+}

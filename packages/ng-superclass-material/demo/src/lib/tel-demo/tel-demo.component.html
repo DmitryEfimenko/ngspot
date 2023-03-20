@@ -1,0 +1,14 @@
+<h2>Telephone</h2>
+
+<ngs-code-snippets title="Telephone" [snippets]="snippets['tel']">
+  <ng-container *ngsSnippetResult>
+    <mat-form-field>
+      <mat-label>Phone number</mat-label>
+      <ngs-tel-input required [(ngModel)]="tel"></ngs-tel-input>
+      <mat-icon matSuffix>phone</mat-icon>
+      <mat-hint>Include area code</mat-hint>
+    </mat-form-field>
+
+    <pre ngsHighlightContent class="mt-2">value: {{ tel | json }}</pre>
+  </ng-container>
+</ngs-code-snippets>

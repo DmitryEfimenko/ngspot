@@ -201,7 +201,7 @@ export class MyTelInputComponent
     this._focusMonitor.stopMonitoring(this._elementRef);
   }
 
-  onFocusIn(event: FocusEvent) {
+  onFocusIn(_event: FocusEvent) {
     if (!this.focused) {
       this.focused = true;
       this.stateChanges.next();

@@ -19,4 +19,10 @@ export const PROJECTS: Project[] = [
     githubLink:
       'https://github.com/DmitryEfimenko/ngspot/tree/main/packages/ng-superclass/package',
   },
+  {
+    name: 'ng-superclass-material',
+    package: () => import('@ngspot/ng-superclass-material-demo'),
+    githubLink:
+      'https://github.com/DmitryEfimenko/ngspot/tree/main/packages/ng-superclass-material/package',
+  },
 ];

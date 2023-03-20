@@ -1,0 +1,46 @@
+{
+  "name": "ng-superclass-material",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "packages/ng-superclass-material/package/src",
+  "prefix": "ngspot",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/angular:package",
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+      "options": {
+        "project": "packages/ng-superclass-material/package/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "packages/ng-superclass-material/package/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "packages/ng-superclass-material/package/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@angular-devkit/build-angular:karma",
+      "options": {
+        "tsConfig": "packages/ng-superclass-material/package/tsconfig.spec.json",
+        "karmaConfig": "packages/ng-superclass-material/package/karma.conf.js",
+        "polyfills": ["zone.js", "zone.js/testing"]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "packages/ng-superclass-material/package/**/*.ts",
+          "packages/ng-superclass-material/package/**/*.html",
+          "packages/ng-superclass-material/package/testing/**/*.ts",
+          "packages/ng-superclass-material/package/testing/**/*.html"
+        ]
+      }
+    }
+  },
+  "tags": ["lib", "lib:ng-superclass-material"]
+}

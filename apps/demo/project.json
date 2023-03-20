@@ -30,14 +30,15 @@
             "packages/common/src/routed-tabs"
           ]
         },
-        "scripts": []
+        "scripts": [],
+        "allowedCommonJsDependencies": ["safevalues"]
       },
       "configurations": {
         "production": {
           "budgets": [
             {
               "type": "initial",
-              "maximumError": "822kb"
+              "maximumError": "824kb"
             },
             {
               "type": "anyComponentStyle",
