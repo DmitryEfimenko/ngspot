@@ -31,11 +31,11 @@ function reqWithError(err: unknown, delay = 10) {
 
 describe('trackRemoteData', () => {
   beforeAll(() => {
-    jest.useFakeTimers();
+    jasmine.clock().install();
   });
 
   afterAll(() => {
-    jest.useRealTimers();
+    jasmine.clock().uninstall();
   });
 
   describe('without options', () => {
@@ -46,7 +46,7 @@ describe('trackRemoteData', () => {
 
       expect(observerSpy.getValues()).toEqual([loadingState()]);
 
-      jest.advanceTimersByTime(10);
+      jasmine.clock().tick(10);
 
       expect(observerSpy.getValues()).toEqual([
         loadingState(),
@@ -61,7 +61,7 @@ describe('trackRemoteData', () => {
 
       const observerSpy = subscribeSpyTo(req$.pipe(trackRemoteData()));
 
-      jest.advanceTimersByTime(10);
+      jasmine.clock().tick(10);
 
       expect(observerSpy.getValues()).toEqual([
         loadingState(),
@@ -78,7 +78,7 @@ describe('trackRemoteData', () => {
       const subjectSpy = subscribeSpyTo(subject);
 
       trackedReq$.subscribe();
-      jest.advanceTimersByTime(10);
+      jasmine.clock().tick(10);
 
       expect(subjectSpy.getValues()).toEqual([
         notAskedState(),
@@ -87,7 +87,7 @@ describe('trackRemoteData', () => {
       ]);
 
       trackedReq$.subscribe();
-      jest.advanceTimersByTime(10);
+      jasmine.clock().tick(10);
 
       expect(subjectSpy.getValues()).toEqual([
         notAskedState(),
@@ -108,10 +108,10 @@ describe('trackRemoteData', () => {
       const emittedValues: RemoteData[] = [];
 
       trackedData$.subscribe((res) => emittedValues.push(res));
-      jest.advanceTimersByTime(10);
+      jasmine.clock().tick(10);
 
       trackedData$.subscribe((res) => emittedValues.push(res));
-      jest.advanceTimersByTime(10);
+      jasmine.clock().tick(10);
 
       expect(emittedValues).toEqual([
         loadingState(),
@@ -139,10 +139,10 @@ describe('trackRemoteData', () => {
       trackedData$.subscribe((res) => emittedValues.push(res));
 
       source.next(0);
-      jest.advanceTimersByTime(50);
+      jasmine.clock().tick(50);
 
       source.next(1);
-      jest.advanceTimersByTime(50);
+      jasmine.clock().tick(50);
 
       expect(emittedValues).toEqual([
         loadingState(),
