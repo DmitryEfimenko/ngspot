@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
-import { TableOfContentsComponent } from '../table-of-contents/table-of-contents';
+import { TableOfContentsComponent } from '@ngspot/table-of-contents';
 
 @Component({
   selector: 'ngs-demo-main-content',

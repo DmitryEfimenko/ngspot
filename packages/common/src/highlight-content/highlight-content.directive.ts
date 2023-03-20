@@ -6,11 +6,10 @@ import {
   OnInit,
 } from '@angular/core';
 
+import { mutationObserver } from '@ngspot/rxjs/operators';
 import hljs from 'highlight.js';
 import { HighlightJS } from 'ngx-highlightjs';
 import { delay, map, Subscription, switchMap, tap } from 'rxjs';
-
-import { mutationObserver } from '../rxjs';
 
 @Directive({
   selector: '[ngsHighlightContent]',

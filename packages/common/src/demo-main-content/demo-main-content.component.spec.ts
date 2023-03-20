@@ -1,7 +1,6 @@
 import { createComponentFactory } from '@ngneat/spectator';
+import { TableOfContentsComponent } from '@ngspot/table-of-contents';
 import { MockBuilder } from 'ng-mocks';
-
-import { TableOfContentsComponent } from '../table-of-contents/table-of-contents';
 
 import { DemoMainContentComponent } from './demo-main-content.component';
 

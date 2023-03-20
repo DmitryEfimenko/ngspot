@@ -11,12 +11,11 @@ import {
 import { MatTabGroup, MatTabsModule } from '@angular/material/tabs';
 import { ActivatedRoute, Router } from '@angular/router';
 
+import { filterOutNullish } from '@ngspot/rxjs/operators';
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
 import { map, startWith, Subscription, tap } from 'rxjs';
 
-import { NavigationFocusService } from '../navigation-focus';
-import { filterOutNullish } from '../rxjs';
-
+import { NavigationFocusService } from './navigation-focus';
 import { RoutedTabDirective } from './routed-tab.directive';
 
 export const ROUTE_PARAM_NAME = 'section';
