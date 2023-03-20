@@ -5,6 +5,7 @@ import { JestDescribeLike, JestExpectLike, JestItLike } from './model';
 
 export interface CustomControlTestContext {
   outerControl: AbstractControl;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   harness: CustomFormControlHarness<any>;
 }
 

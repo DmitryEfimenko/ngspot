@@ -16,6 +16,7 @@ export function noop() {}
  * }
  * ```
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function provideValueAccessor(type: Type<any>): Provider {
   return {
     provide: NG_VALUE_ACCESSOR,

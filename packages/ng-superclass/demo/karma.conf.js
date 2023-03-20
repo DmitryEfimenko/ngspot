@@ -11,7 +11,8 @@ module.exports = function (config) {
     ...baseConfig,
     coverageReporter: {
       ...baseConfig.coverageReporter,
-      dir: join(__dirname, '../../../coverage/packages/ng-superclass/package'),
+      dir: join(__dirname, '../../../coverage/packages/ng-superclass/demo'),
     },
+    failOnEmptyTestSuite: false,
   });
 };

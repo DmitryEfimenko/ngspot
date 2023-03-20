@@ -42,7 +42,7 @@ export class SubscribeSink implements OnDestroy {
     return createEffectFn(factoryFn)(this.destroy$);
   }
 
-  subscribeTo(source: Observable<any>) {
+  subscribeTo<T>(source: Observable<T>) {
     source.pipe(takeUntil(this.destroy$)).subscribe();
   }
 

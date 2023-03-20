@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable @angular-eslint/directive-class-suffix */
 import { FocusMonitor, FocusOrigin } from '@angular/cdk/a11y';

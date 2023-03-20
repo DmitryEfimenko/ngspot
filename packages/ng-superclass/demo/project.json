@@ -6,11 +6,11 @@
   "prefix": "ngs",
   "targets": {
     "test": {
-      "executor": "@nrwl/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "executor": "@angular-devkit/build-angular:karma",
       "options": {
-        "jestConfig": "packages/ng-superclass/demo/jest.config.ts",
-        "passWithNoTests": true
+        "tsConfig": "packages/ng-superclass/demo/tsconfig.spec.json",
+        "karmaConfig": "packages/ng-superclass/demo/karma.conf.js",
+        "polyfills": ["zone.js", "zone.js/testing"]
       },
       "configurations": {
         "ci": {
