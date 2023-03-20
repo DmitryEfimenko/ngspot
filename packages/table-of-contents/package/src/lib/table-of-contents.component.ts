@@ -60,9 +60,7 @@ interface Link {
   imports: [CommonModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TableOfContentsPackageComponent
-  implements AfterViewInit, OnDestroy
-{
+export class TableOfContentsComponent implements AfterViewInit, OnDestroy {
   /**
    * CSS selectors for headers. Usually tags such as 'h2, h3, h4' - which is a default.
    * The order identifies the indentation level

@@ -3,11 +3,11 @@ import { RouterTestingModule } from '@angular/router/testing';
 
 import { createHostFactory } from '@ngneat/spectator';
 
-import { TableOfContentsPackageComponent } from './table-of-contents.component';
+import { TableOfContentsComponent } from './table-of-contents.component';
 
-describe(TableOfContentsPackageComponent.name, () => {
-  const createHost = createHostFactory<TableOfContentsPackageComponent>({
-    component: TableOfContentsPackageComponent,
+describe(TableOfContentsComponent.name, () => {
+  const createHost = createHostFactory<TableOfContentsComponent>({
+    component: TableOfContentsComponent,
     imports: [RouterTestingModule],
     providers: [{ provide: DOCUMENT, useValue: document }],
   });
