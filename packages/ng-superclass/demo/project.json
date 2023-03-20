@@ -5,6 +5,22 @@
   "sourceRoot": "packages/ng-superclass/demo/src",
   "prefix": "ngs",
   "targets": {
+    "build": {
+      "executor": "@nrwl/angular:ng-packagr-lite",
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+      "options": {
+        "project": "packages/ng-superclass/demo/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "packages/ng-superclass/demo/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "packages/ng-superclass/demo/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
     "test": {
       "executor": "@angular-devkit/build-angular:karma",
       "options": {
