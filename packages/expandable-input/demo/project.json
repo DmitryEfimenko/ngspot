@@ -6,7 +6,7 @@
   "prefix": "ngs",
   "targets": {
     "build": {
-      "executor": "@nrwl/angular:ng-packagr-lite",
+      "executor": "@nrwl/angular:package",
       "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
       "options": {
         "project": "packages/expandable-input/demo/ng-package.json"
@@ -23,11 +23,11 @@
       "defaultConfiguration": "production"
     },
     "test": {
-      "executor": "@nrwl/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "executor": "@angular-devkit/build-angular:karma",
       "options": {
-        "jestConfig": "packages/expandable-input/demo/jest.config.ts",
-        "passWithNoTests": true
+        "tsConfig": "packages/expandable-input/demo/tsconfig.spec.json",
+        "karmaConfig": "packages/expandable-input/demo/karma.conf.js",
+        "polyfills": ["zone.js", "zone.js/testing"]
       }
     },
     "lint": {
