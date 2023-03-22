@@ -8,6 +8,7 @@
     "build": {
       "executor": "@nrwl/angular:ng-packagr-lite",
       "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+      "dependsOn": ["^build"],
       "options": {
         "project": "packages/ng-superclass/demo/ng-package.json"
       },

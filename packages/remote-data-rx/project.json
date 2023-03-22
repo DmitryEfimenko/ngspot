@@ -7,6 +7,7 @@
     "build": {
       "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
+      "dependsOn": ["^build"],
       "options": {
         "outputPath": "dist/packages/remote-data-rx",
         "main": "packages/remote-data-rx/src/index.ts",

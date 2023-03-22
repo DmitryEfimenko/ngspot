@@ -8,6 +8,7 @@
     "build": {
       "executor": "@nrwl/angular:package",
       "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+      "dependsOn": ["^build"],
       "options": {
         "project": "packages/ng-superclass-material/package/ng-package.json"
       },
