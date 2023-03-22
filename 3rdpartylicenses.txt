@@ -5,7 +5,7 @@ MIT
 MIT
 The MIT License
 
-Copyright (c) 2022 Google LLC.
+Copyright (c) 2023 Google LLC.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -39,7 +39,7 @@ MIT
 MIT
 The MIT License
 
-Copyright (c) 2022 Google LLC.
+Copyright (c) 2023 Google LLC.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -98,6 +98,21 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 MIT
 
 @ngspot/expandable-input-demo
+
+@ngspot/ng-superclass
+MIT
+
+@ngspot/ng-superclass-demo
+
+@ngspot/ng-superclass-material
+MIT
+
+@ngspot/ng-superclass-material-demo
+
+@ngspot/rxjs
+MIT
+
+@ngspot/table-of-contents
 
 highlight.js
 BSD-3-Clause
