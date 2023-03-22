@@ -41,6 +41,24 @@
           "packages/ng-superclass-material/package/testing/**/*.html"
         ]
       }
+    },
+    "publish": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node tools/scripts/publish.mjs {args.tag} {args.verbose}"
+      },
+      "dependsOn": [
+        {
+          "projects": "self",
+          "target": "build"
+        }
+      ]
+    },
+    "version": {
+      "executor": "@jscutlery/semver:version",
+      "options": {
+        "preset": "conventional"
+      }
     }
   },
   "tags": ["lib", "lib:ng-superclass-material"]
