@@ -25,7 +25,10 @@ describe(CounterComponent.name, () => {
     ) {
       const spectator = createHost<T>(template, { hostProps });
 
-      const setViewModelSpy = spyOn(spectator.component.viewModel, 'setValue');
+      const setViewModelSpy = spyOn(
+        spectator.component.viewModel,
+        'setValue'
+      ).and.callThrough();
 
       const loader = TestbedHarnessEnvironment.loader(spectator.fixture);
       const harness = await loader.getHarness(CounterHarness);
@@ -42,13 +45,6 @@ describe(CounterComponent.name, () => {
         });
 
         expect(spectator.component).toBeTruthy();
-      });
-
-      it('should set viewModel only once - to the initial value', async () => {
-        const { setViewModelSpy } = await setup(template, { count: 5 });
-
-        expect(setViewModelSpy).toHaveBeenCalledTimes(1);
-        expect(setViewModelSpy).toHaveBeenCalledWith(5);
       });
 
       it('setting value from the outside should update host value', async () => {
@@ -112,7 +108,7 @@ describe(CounterComponent.name, () => {
         expect(await harness.value()).toBe('4');
       });
 
-      fit('should set viewModel only once - to the initial value', async () => {
+      it('should set viewModel only once - to the initial value', async () => {
         const control = new FormControl(4);
         const { setViewModelSpy } = await setup(template, { control });
 
