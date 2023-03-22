@@ -18,7 +18,11 @@
   },
   "peerDependencies": {
     "@angular/common": ">=15",
-    "@angular/core": ">=15"
+    "@angular/core": ">=15",
+    "@angular/cdk": ">=15",
+    "@angular/forms": ">=15",
+    "@angular/material": ">=15",
+    "@ngspot/ng-superclass": "~2.1.0"
   },
   "dependencies": {
     "tslib": "^2.3.0"
