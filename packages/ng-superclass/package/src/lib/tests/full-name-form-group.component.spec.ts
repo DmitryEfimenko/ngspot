@@ -69,6 +69,7 @@ describe(FullNameReactiveComponent.name, () => {
           'john do',
           'john doe',
         ]);
+
         expect(control.value).toBe('john doe');
         expect(await harness.isMarkedAs('dirty')).toBe(true);
       });

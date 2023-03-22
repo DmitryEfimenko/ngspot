@@ -1,7 +1,7 @@
 {
   "root": true,
   "ignorePatterns": ["**/*"],
-  "plugins": ["@nrwl/nx", "prettier", "import"],
+  "plugins": ["@nrwl/nx", "prettier", "import", "jasmine"],
   "overrides": [
     {
       "settings": {
@@ -129,6 +129,11 @@
           }
         ]
       }
+    },
+    {
+      "files": ["*.spec.js", "*.spec.jsx", "*.spec.ts", "*.spec.tsx"],
+      "extends": ["plugin:jasmine/recommended"],
+      "rules": {}
     }
   ]
 }

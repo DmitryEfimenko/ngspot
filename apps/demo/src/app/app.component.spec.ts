@@ -29,6 +29,7 @@ describe(AppComponent.name, () => {
 
   it('should create the app', () => {
     const { spectator } = setup();
+
     expect(spectator.component).toBeTruthy();
   });
 });

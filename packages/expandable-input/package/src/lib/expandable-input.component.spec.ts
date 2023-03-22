@@ -39,6 +39,7 @@ describe(ExpandableInputComponent.name, () => {
 
   it('should create', () => {
     const { spectator } = setup();
+
     expect(spectator.component).toBeTruthy();
   });
 });

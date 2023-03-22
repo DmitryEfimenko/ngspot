@@ -15,6 +15,7 @@ describe('builders', () => {
   describe('notAskedState', () => {
     it('should return a new NotAskedState', () => {
       const result = notAskedState();
+
       expect(isNotAskedState(result)).toBe(true);
     });
   });
@@ -23,12 +24,14 @@ describe('builders', () => {
     it('should return a new LoadingState with the given last-known value', () => {
       const value = { foo: 42 };
       const result = loadingState(value);
+
       expect(isLoadingState(result)).toBe(true);
       expect(result.value).toBe(value);
     });
 
     it('should return a new LoadingState with no value if given undefined', () => {
       const result = loadingState();
+
       expect(isLoadingState(result)).toBe(true);
       expect(result.value).toBeUndefined();
     });
@@ -38,12 +41,14 @@ describe('builders', () => {
     it('should return a new SuccessState wrapping the given value', () => {
       const value = { foo: 42 };
       const result = successState(value);
+
       expect(isSuccessState(result)).toBe(true);
       expect(result.value).toBe(value);
     });
 
     it('should return a new SuccessState with no value if given undefined', () => {
       const result = successState();
+
       expect(isSuccessState(result)).toBe(true);
       expect(result.value).toBeUndefined();
     });
@@ -54,6 +59,7 @@ describe('builders', () => {
       const error = Error();
       const value = { foo: 42 };
       const result = errorState(error, value);
+
       expect(isErrorState(result)).toBe(true);
       expect(result.error).toBe(error);
       expect(result.value).toBe(value);
@@ -62,6 +68,7 @@ describe('builders', () => {
     it('should return a new ErrorState wrapping the given error and with no last-known value if given only an error', () => {
       const error = Error();
       const result = errorState(error);
+
       expect(isErrorState(result)).toBe(true);
       expect(result.error).toBe(error);
       expect(result.value).toBeUndefined();
