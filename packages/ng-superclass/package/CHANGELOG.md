@@ -2,6 +2,18 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [2.1.0](https://github.com/DmitryEfimenko/ngspot/compare/ng-superclass-2.0.0...ng-superclass-2.1.0) (2023-03-22)
+
+
+### Features
+
+* **ng-superclass:** 🔥 make focusMonitor prop protected ([c0e47c7](https://github.com/DmitryEfimenko/ngspot/commit/c0e47c77474b841a053d319c6f6ddbfc614250cb))
+
+
+### Bug Fixes
+
+* **ng-superclass:** 🐞 on init vm.setValue is called twise ([8e9fd4a](https://github.com/DmitryEfimenko/ngspot/commit/8e9fd4a9be2c4708f282103916118cf4ece1c7c9))
+
 ## [2.0.0](https://github.com/DmitryEfimenko/ngspot/compare/ng-superclass-1.1.0...ng-superclass-2.0.0) (2023-03-13)
 
 ### Features
