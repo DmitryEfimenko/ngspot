@@ -16,5 +16,6 @@ module.exports = function (config) {
         '../../../coverage/packages/ng-superclass-material/package'
       ),
     },
+    failOnEmptyTestSuite: false,
   });
 };

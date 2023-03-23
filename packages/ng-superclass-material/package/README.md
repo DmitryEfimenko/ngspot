@@ -27,8 +27,31 @@ Writing a custom control can be [quite a bit work](https://blog.angular-universi
 
 The work associated with writing a custom control is simplified via `FormComponentSuperclass` class from [@ngspot/ng-superclass](https://www.npmjs.com/package/@ngspot/ng-superclass) package. You are welcome.
 
-`@ngspot/ng-superclass-material` package presents a layer on top of it. It features `FormComponentMaterialSuperclass` that extends from `FormComponentSuperclass` and makes it much easier to author form components compatible with Material Form Field.
+`@ngspot/ng-superclass-material` package presents a layer on top of it. It features `FormComponentMaterialSuperclass` that extends from `FormComponentSuperclass` and makes it much easier to author form components compatible with **Material Form Field**.
 
 Take a look at the exactly the same component built by hand vs when `FormComponentMaterialSuperclass` was used:
 
-[TODO]
+![code comparison](https://github.com/DmitryEfimenko/ngspot/blob/main/packages/ng-superclass-material/package/assets/comparison.jpg?raw=true)
+
+## Usage:
+
+- Extend your component class from the `FormComponentMaterialSuperclass`
+- Implement `MatFormFieldControl`
+- Make sure to add `MatFormFieldControl` to providers
+- The rest is the same as for the `FormComponentSuperclass`. See [docs here](https://github.com/DmitryEfimenko/ngspot/blob/main/packages/ng-superclass/package/README.md#formcomponentsuperclass).
+
+```ts
+@Component({
+  // ...
+  providers: [{ provide: MatFormFieldControl, useExisting: MyComponent }],
+})
+class MyComponent
+  extends FormComponentMaterialSuperclass<ValueType>
+  implements MatFormFieldControl<ValueType> {
+  // ...
+}
+```
+
+## License
+
+MIT © [Dmitry Efimenko](mailto:dmitrief@gmail.com)
