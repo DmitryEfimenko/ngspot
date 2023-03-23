@@ -33,6 +33,8 @@ Take a look at the exactly the same component built by hand vs when `FormCompone
 
 ![code comparison](https://github.com/DmitryEfimenko/ngspot/blob/main/packages/ng-superclass-material/package/assets/comparison.png?raw=true)
 
+See the full code for this example in [the Demo](https://dmitryefimenko.github.io/ngspot/ng-superclass-material)
+
 ## Usage:
 
 - Extend your component class from the `FormComponentMaterialSuperclass`
