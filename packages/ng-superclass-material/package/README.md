@@ -31,7 +31,7 @@ The work associated with writing a custom control is simplified via `FormCompone
 
 Take a look at the exactly the same component built by hand vs when `FormComponentMaterialSuperclass` was used:
 
-![code comparison](https://github.com/DmitryEfimenko/ngspot/blob/main/packages/ng-superclass-material/package/assets/comparison.jpg?raw=true)
+![code comparison](https://github.com/DmitryEfimenko/ngspot/blob/main/packages/ng-superclass-material/package/assets/comparison.png?raw=true)
 
 ## Usage:
 
