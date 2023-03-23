@@ -1,10 +1,21 @@
 @Component({
   selector: 'app-consumer',
+  standalone: true,
+  imports: [
+    FormsModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MyTelInputComponent,
+  ],
   template: `
-    <app-counter [(ngModel)]="count" />
-    <pre>value: {{ count | json }}</pre>
+    <mat-form-field>
+      <mat-label>Phone number</mat-label>
+      <ngs-tel-input required [(ngModel)]="tel"></ngs-tel-input>
+      <mat-icon matSuffix>phone</mat-icon>
+      <mat-hint>Include area code</mat-hint>
+    </mat-form-field>
   `,
 })
 export class AppComponent {
-  count = 0
+  tel = new MyTel('', '', '');
 }
