@@ -2,6 +2,8 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [2.1.1](https://github.com/DmitryEfimenko/ngspot/compare/ng-superclass-2.1.0...ng-superclass-2.1.1) (2023-03-24)
+
 ## [2.1.0](https://github.com/DmitryEfimenko/ngspot/compare/ng-superclass-2.0.0...ng-superclass-2.1.0) (2023-03-22)
 
 
