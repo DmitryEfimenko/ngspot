@@ -5,8 +5,9 @@ import { FormComponentSuperclass } from '@ngspot/ng-superclass';
 @Component({
   selector: 'app-counter',
   standalone: true,
+  imports: [CommonModule],
   template: `
-    <button (click)="increment()" (blur)="onTouched()">
+    <button [ngClass]="{ disabled }" (click)="increment()" (blur)="onTouched()">
       {{ viewModel.value }}
     </button>
   `,
@@ -15,6 +16,8 @@ export class CounterComponent extends FormComponentSuperclass<number> {
   override viewModel = new FormControl(0, { nonNullable: true });
 
   increment() {
-    this.viewModel.setValue(this.viewModel.value + 1);
+    if (!this.disabled) {
+      this.viewModel.setValue(this.viewModel.value + 1);
+    }
   }
 }

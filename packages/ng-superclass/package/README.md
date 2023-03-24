@@ -44,9 +44,15 @@ Now, here is more about the unique functionality of each class:
 
 ### **FormComponentSuperclass**
 
-Writing a custom control in Angular requires quite a bit of boilerplate. It requires a developer to implement a `ControlValueAccessor` and provide some additional metadata in the `@Component` decorator. It gets trickier when your component needs to provide built-in custom validation. If you've ever been down this road, you might have run into some weird edge-cases.
+Writing a custom control in Angular requires [quite a bit of boilerplate](https://blog.angular-university.io/angular-custom-form-controls/#demoofafullyfunctionalcustomformcontrol). It requires a developer to implement a `ControlValueAccessor` and provide some additional metadata in the `@Component` decorator. It gets trickier when your component needs to provide built-in custom validation. If you've ever been down this road, you might have run into some weird edge-cases.
 
-`FormComponentSuperclass` class takes care of all the boilerplate, smoothens out edge-cases, and frees the developer up to concentrate strictly on the handling of control values. `FormComponentSuperclass` does not put any restrictions on the type of UI that drives the model value. There are two ways of using this class.
+`FormComponentSuperclass` class takes care of all the boilerplate, smoothens out edge-cases, and frees the developer up to concentrate strictly on the handling of control values.
+
+Take a look at the comparison of implementations of the same component without the `FormComponentSuperclass` (left) and with it (right):
+
+![code comparison](https://github.com/DmitryEfimenko/ngspot/blob/main/packages/ng-superclass/package/assets/comparison.png?raw=true)
+
+`FormComponentSuperclass` does not put any restrictions on the type of UI that drives the model value. There are two ways of using this class.
 
 #### 1. using `ngControl.control`
 

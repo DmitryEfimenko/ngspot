@@ -156,7 +156,7 @@ describe(CounterComponent.name, () => {
       describe('GIVEN: outer control is initialized with invalid value', () => {
         it('should be invalid if built-in validator does not pass', async () => {
           const { harness } = await setup(template, {
-            control: new FormControl(2),
+            control: new FormControl(12),
           });
 
           expect(await harness.isHostMarkedAs('invalid')).toBeTruthy();
