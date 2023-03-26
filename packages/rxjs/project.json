@@ -41,6 +41,12 @@
       "options": {
         "lintFilePatterns": ["packages/rxjs/**/*.ts"]
       }
+    },
+    "version": {
+      "executor": "@jscutlery/semver:version",
+      "options": {
+        "preset": "conventional"
+      }
     }
   },
   "tags": ["lib", "lib:rxjs"]
