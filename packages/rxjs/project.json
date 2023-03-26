@@ -31,7 +31,7 @@
     "publish": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "node tools/scripts/publish.mjs rxjs {args.ver} {args.tag}"
+        "command": "node tools/scripts/publish.mjs {args.tag} {args.verbose}"
       },
       "dependsOn": ["build"]
     },
