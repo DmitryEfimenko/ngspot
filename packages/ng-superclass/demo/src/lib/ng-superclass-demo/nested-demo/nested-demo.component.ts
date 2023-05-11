@@ -9,6 +9,8 @@ import {
 import { HighlightContentDirective } from '@ngspot/common/highlight-content';
 import { NestedComponent } from '@ngspot/ng-superclass';
 
+declare const require: any;
+
 const consumerTs = require('raw-loader!./snippet-consumer.txt').default;
 const nestedTs = require('raw-loader!./snippet-nested.txt').default;
 const oneInputTs = require('raw-loader!./snippet-one-input.txt').default;

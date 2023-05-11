@@ -6,7 +6,7 @@
   "prefix": "ngspot",
   "targets": {
     "build": {
-      "executor": "@nrwl/angular:package",
+      "executor": "@nx/angular:package",
       "outputs": ["{workspaceRoot}/dist/packages/ng-superclass/package"],
       "options": {
         "project": "packages/ng-superclass/package/ng-package.json"
@@ -30,7 +30,7 @@
       }
     },
     "lint": {
-      "executor": "@nrwl/linter:eslint",
+      "executor": "@nx/linter:eslint",
       "options": {
         "lintFilePatterns": [
           "packages/ng-superclass/package/**/*.ts",
@@ -47,7 +47,6 @@
       },
       "dependsOn": [
         {
-          "projects": "self",
           "target": "build"
         }
       ]

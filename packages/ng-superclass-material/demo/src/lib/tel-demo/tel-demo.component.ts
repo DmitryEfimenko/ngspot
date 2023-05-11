@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 
@@ -10,6 +10,8 @@ import {
 } from '@ngspot/common/code-snippets';
 import { HighlightContentDirective } from '@ngspot/common/highlight-content';
 import { MyTelInputComponent, MyTel } from '@ngspot/ng-superclass-material';
+
+declare const require: any;
 
 const consumerTs = require('raw-loader!./snippet-consumer.txt').default;
 const snippetTs = require('raw-loader!./snippet-tel.txt').default;

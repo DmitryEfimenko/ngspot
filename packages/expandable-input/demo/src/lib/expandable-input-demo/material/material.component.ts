@@ -20,6 +20,8 @@ import {
 import { iconCloseAnimation, iconOpenAnimation } from './icon-animations';
 import { MaterialExpandableInputComponent } from './material-expandable-input/material-expandable-input.component';
 
+declare const require: any;
+
 const basic = {
   html: require('raw-loader!./snippets/basic-html.html').default,
   css: require('raw-loader!./snippets/basic-css.txt').default,

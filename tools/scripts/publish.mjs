@@ -113,7 +113,7 @@ function getVersion(projectRoot) {
 
 function getOutputPath(project, projectRoot) {
   let outputPath =
-    project.data?.targets?.build?.executor === '@nrwl/angular:package'
+    project.data?.targets?.build?.executor === '@nx/angular:package'
       ? project.data?.targets?.build?.outputs?.[0]
       : project.data?.targets?.build?.options?.outputPath;
 

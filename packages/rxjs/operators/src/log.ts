@@ -46,7 +46,7 @@ export function log$<T>(
 
 function getStackTrace() {
   const obj = {} as { stack: string };
-  Error.captureStackTrace(obj, getStackTrace);
+  (Error as any).captureStackTrace(obj, getStackTrace);
   return obj.stack
     .split('\n')
     .map((s) => {

@@ -51,7 +51,7 @@ One time config: `git config --global push.followTags true`
 ### Generate JS lib
 
 ```
-nx g @nrwl/js:lib my-lib --publishable --importPath="@ngspot/my-lib"
+nx g @nx/js:lib my-lib --publishable --importPath="@ngspot/my-lib"
 ```
 
 ### Generate NG lib
@@ -59,7 +59,7 @@ nx g @nrwl/js:lib my-lib --publishable --importPath="@ngspot/my-lib"
 [Docs](https://nx.dev/packages/angular/generators/library)
 
 ```
-nx g @nrwl/angular:library [optional-scope/]my-lib --publishable --importPath="@ngspot/my-lib" --changeDetection="OnPush" --prefix="ngs" --standalone --style="scss"
+nx g @nx/angular:library [optional-scope/]my-lib --publishable --importPath="@ngspot/my-lib" --changeDetection="OnPush" --prefix="ngs" --standalone --style="scss"
 ```
 
 After the lib is generated:
@@ -74,7 +74,7 @@ Libraries are shareable across libraries and applications. They can be imported 
 #### Example command creating a demo project:
 
 ```
-nx g @nrwl/angular:library ng-superclass/demo --importPath="@ngspot/ng-superclass-demo" --changeDetection="OnPush" --prefix="ngs" --standalone --style="scss"
+nx g @nx/angular:library ng-superclass/demo --importPath="@ngspot/ng-superclass-demo" --changeDetection="OnPush" --prefix="ngs" --standalone --style="scss"
 ```
 
 ## To add a new library via schematic

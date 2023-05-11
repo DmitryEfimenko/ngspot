@@ -14,6 +14,8 @@ import {
   smoothHorizontalCollapse,
 } from '@ngspot/expandable-input';
 
+declare const require: any;
+
 const basicCss = require('raw-loader!./snippets/basic-css.txt').default;
 const basicHtml = require('raw-loader!./snippets/basic-html.html').default;
 const hidingSiblingCss =

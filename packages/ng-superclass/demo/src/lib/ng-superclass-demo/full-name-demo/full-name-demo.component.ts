@@ -9,6 +9,8 @@ import {
 import { HighlightContentDirective } from '@ngspot/common/highlight-content';
 import { FullNameReactiveComponent } from '@ngspot/ng-superclass';
 
+declare const require: any;
+
 const consumerTs = require('raw-loader!./snippet-consumer.txt').default;
 const fullNameTs = require('raw-loader!./snippet-full-name.txt').default;
 

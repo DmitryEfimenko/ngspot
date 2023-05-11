@@ -9,6 +9,8 @@ import {
 import { HighlightContentDirective } from '@ngspot/common/highlight-content';
 import { CounterComponent } from '@ngspot/ng-superclass';
 
+declare const require: any;
+
 const consumerTs = require('raw-loader!./snippet-consumer.txt').default;
 const snippetTs = require('raw-loader!./snippet-counter.txt').default;
 
