@@ -32,9 +32,13 @@ export const smoothHorizontalCollapse = (params: {
   };
 
   return trigger('smoothHorizontalCollapse', [
-    state('true', style({ opacity: 0, ...sizingPropsCollapsed })),
+    state(
+      'true',
+      style({ opacity: 0, display: 'none', ...sizingPropsCollapsed })
+    ),
     state('false', style({ opacity: 1, ...sizingPropsExpanded })),
     transition('true => false', [
+      style({ display: '*' }),
       sequence([
         style({ fontSize: 0, lineHeight: 0 }),
         animate(timing, style(sizingPropsExpanded)),

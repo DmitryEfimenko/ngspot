@@ -20,10 +20,12 @@
     "@nx/angular:application": {
       "style": "scss",
       "linter": "eslint",
+      "unitTestRunner": "none",
       "e2eTestRunner": "cypress"
     },
     "@nx/angular:library": {
-      "linter": "eslint"
+      "linter": "eslint",
+      "unitTestRunner": "none"
     },
     "@nx/angular:component": {
       "style": "scss"

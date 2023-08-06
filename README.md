@@ -58,8 +58,26 @@ nx g @nx/js:lib my-lib --publishable --importPath="@ngspot/my-lib"
 
 [Docs](https://nx.dev/packages/angular/generators/library)
 
+```sh
+nx g @nx/angular:library my-lib --publishable --importPath="@ngspot/my-lib" --changeDetection="OnPush" --prefix="ngs" --standalone --style="scss"
 ```
-nx g @nx/angular:library [optional-scope/]my-lib --publishable --importPath="@ngspot/my-lib" --changeDetection="OnPush" --prefix="ngs" --standalone --style="scss"
+
+Then move it to `package` folder:
+
+```sh
+nx generate @nx/angular:move my-lib/package --projectName=my-lib --no-interactive --dry-run
+```
+
+Create demo package:
+
+```sh
+nx g @nx/angular:library my-lib-demo --buildable --importPath="@ngspot/my-lib-demo" --changeDetection="OnPush" --prefix="ngs" --standalone --style="scss"
+```
+
+Move it:
+
+```sh
+nx generate @nx/angular:move my-lib/demo --projectName=my-lib-demo --no-interactive --dry-run
 ```
 
 After the lib is generated:
