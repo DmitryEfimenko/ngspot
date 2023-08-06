@@ -2,24 +2,29 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
-## [3.0.0](https://github.com/DmitryEfimenko/ngspot/compare/expandable-input-2.0.0...expandable-input-3.0.0) (2023-01-10)
+### [3.0.1](https://github.com/DmitryEfimenko/ngspot/compare/expandable-input-3.0.0...expandable-input-3.0.1) (2023-08-06)
 
+### Bug Fixes
+
+- **expandable-input:** 🐞 apply display none when collapsed ([37c5bf1](https://github.com/DmitryEfimenko/ngspot/commit/37c5bf1667bd8830add8d12772644f2c1ac2a8cc))
+
+## [3.0.0](https://github.com/DmitryEfimenko/ngspot/compare/expandable-input-2.0.0...expandable-input-3.0.0) (2023-01-10)
 
 ### ⚠ BREAKING CHANGES
 
-* **expandable-input:** 🧨 animation gap is replaced with animation animateCssProperty
+- **expandable-input:** 🧨 animation gap is replaced with animation animateCssProperty
 
 ### Features
 
-* **expandable-input:** 🔥 improve extensibility story ([a4f8113](https://github.com/DmitryEfimenko/ngspot/commit/a4f8113256ff909fa859d41ce98dda494c0ff337))
+- **expandable-input:** 🔥 improve extensibility story ([a4f8113](https://github.com/DmitryEfimenko/ngspot/commit/a4f8113256ff909fa859d41ce98dda494c0ff337))
 
 ## [2.0.0](https://github.com/DmitryEfimenko/ngspot/compare/expandable-input-1.0.0...expandable-input-2.0.0) (2023-01-04)
 
-
 ### ⚠ BREAKING CHANGES
 
-* **expandable-input:** 🧨 Switch to structural directives for input and icon selectors.
-Before:
+- **expandable-input:** 🧨 Switch to structural directives for input and icon selectors.
+  Before:
+
 ```html
 <ngs-expandable-input>
   <input type="text" ngsExpInput />
@@ -27,7 +32,9 @@ Before:
   <i ngsExpIconClose>✖️</i>
 </ngs-expandable-input>
 ```
+
 After:
+
 ```html
 <ngs-expandable-input>
   <input type="text" *ngsExpInput />
@@ -38,7 +45,7 @@ After:
 
 ### Features
 
-* **expandable-input:** 🔥 improve extensibility ([ae42b26](https://github.com/DmitryEfimenko/ngspot/commit/ae42b260e5ce67cfbe6bb5e90828486c138d1d98))
+- **expandable-input:** 🔥 improve extensibility ([ae42b26](https://github.com/DmitryEfimenko/ngspot/commit/ae42b260e5ce67cfbe6bb5e90828486c138d1d98))
 
 ### [1.0.1](https://github.com/DmitryEfimenko/ngspot/compare/expandable-input-1.0.0...expandable-input-1.0.1) (2023-01-03)
 
