@@ -57,7 +57,7 @@ export abstract class RoutePathBuilder {
    */
   private path = '';
 
-  private injector = inject(Injector);
+  protected injector = inject(Injector);
 
   /**
    * Instance of injected Router
