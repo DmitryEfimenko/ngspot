@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [2.0.1](https://github.com/DmitryEfimenko/ngspot/compare/route-path-builder-2.0.0...route-path-builder-2.0.1) (2023-08-20)
+
+
+### Bug Fixes
+
+* **route-path-builder:** 🐞 injector should be protected ([31cbf0c](https://github.com/DmitryEfimenko/ngspot/commit/31cbf0c45057bebda5100d2846ea306c4baa8b68))
+
 ## [2.0.0](https://github.com/DmitryEfimenko/ngspot/compare/route-path-builder-1.0.0...route-path-builder-2.0.0) (2023-08-20)
 
 
