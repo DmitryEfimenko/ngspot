@@ -9,6 +9,7 @@
     "eamodio.gitlens",
     "xabikos.javascriptsnippets",
     "bradlc.vscode-tailwindcss",
-    "xabikos.jasminesnippets"
+    "xabikos.jasminesnippets",
+    "firsttris.vscode-jest-runner"
   ]
 }

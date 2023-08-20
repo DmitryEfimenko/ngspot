@@ -1,0 +1,61 @@
+{
+  "name": "route-path-builder",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/route-path-builder/package/src",
+  "prefix": "ngs",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:package",
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+      "options": {
+        "project": "packages/route-path-builder/package/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "packages/route-path-builder/package/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "packages/route-path-builder/package/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "packages/route-path-builder/package/**/*.ts",
+          "packages/route-path-builder/package/**/*.html"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@angular-devkit/build-angular:karma",
+      "options": {
+        "tsConfig": "packages/route-path-builder/package/tsconfig.spec.json",
+        "karmaConfig": "packages/route-path-builder/package/karma.conf.js",
+        "polyfills": ["zone.js", "zone.js/testing"]
+      }
+    },
+    "publish": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node tools/scripts/publish.mjs {args.tag} {args.verbose}"
+      },
+      "dependsOn": [
+        {
+          "target": "build"
+        }
+      ]
+    },
+    "version": {
+      "executor": "@jscutlery/semver:version",
+      "options": {
+        "preset": "conventional"
+      }
+    }
+  },
+  "tags": ["lib", "lib:route-path-builder"]
+}

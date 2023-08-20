@@ -1,0 +1,36 @@
+{
+  "projectName": "route-path-builder",
+  "projectOwner": "DmitryEfimenko",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": true,
+  "commitConvention": "angular",
+  "contributors": [
+    {
+      "login": "DmitryEfimenko",
+      "name": "Dmitry A. Efimenko",
+      "avatar_url": "https://avatars.githubusercontent.com/u/2098175?v=4",
+      "profile": "https://github.com/DmitryEfimenko/",
+      "contributions": [
+        "blog",
+        "code",
+        "design",
+        "doc"
+      ]
+    },
+    {
+      "login": "AnaBoca",
+      "name": "Ana Boca",
+      "avatar_url": "https://avatars.githubusercontent.com/u/17017510?v=4",
+      "profile": "https://github.com/AnaBoca",
+      "contributions": [
+        "blog"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7
+}

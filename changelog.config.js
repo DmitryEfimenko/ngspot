@@ -24,6 +24,7 @@ module.exports = {
     'rxjs',
     'expandable-input',
     'table-of-contents',
+    'route-path-builder',
   ],
   types: {
     chore: {

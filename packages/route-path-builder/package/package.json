@@ -1,0 +1,34 @@
+{
+  "name": "@ngspot/route-path-builder",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/router": "^11.2.0",
+    "@angular/core": "^11.2.0"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "author": {
+    "name": "Dmitry Efimenko",
+    "email": "dmitrief@gmail.com"
+  },
+  "keywords": [
+    "angular",
+    "routes",
+    "routing",
+    "declarative"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/DmitryEfimenko/ngspot/tree/main/packages/route-path-builder/package",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DmitryEfimenko/ngspot/tree/main/packages/route-path-builder/package"
+  },
+  "bugs": {
+    "url": "hhttps://github.com/DmitryEfimenko/ngspot/tree/main/packages/route-path-builder/package/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false
+}

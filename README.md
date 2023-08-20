@@ -82,8 +82,15 @@ nx generate @nx/angular:move my-lib/demo --projectName=my-lib-demo --no-interact
 
 After the lib is generated:
 
-- if publishable lib was created, update `project.json` file and add `targets`: `publish` and `version`. See `project.json` file from the existing libs as example.
+- update `project.json` file:
+  - update `name`: remove "-package" suffix
+  - update `tags` to include `"lib", "lib:my-lib"`
+  - if publishable lib was created, add `targets`: `publish` and `version`. See `project.json` file from the existing libs as example.
 - add `CHANGELOG.md` file
+- update `package.json` file:
+  - Update `name` - remove `/package` suffix
+  - Add additional metadata such as "author", "keywords", "license", etc. See other libs for example.
+- update `scopes` in `changelog.config.js` to add the new lib
 
 > You can also use any of the plugins above to generate libraries as well.
 
