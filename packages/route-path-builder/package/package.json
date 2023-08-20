@@ -1,6 +1,6 @@
 {
   "name": "@ngspot/route-path-builder",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "peerDependencies": {
     "@angular/router": ">=15.0.0",
     "@angular/core": ">=15.0.0"
