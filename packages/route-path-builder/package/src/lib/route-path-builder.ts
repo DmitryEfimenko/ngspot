@@ -1,4 +1,4 @@
-import { Injectable, Injector, Type } from '@angular/core';
+import { Injectable, Injector, Type, inject } from '@angular/core';
 import { Router, UrlCreationOptions } from '@angular/router';
 
 import { AppUrl } from './app-url';
@@ -57,10 +57,12 @@ export abstract class RoutePathBuilder {
    */
   private path = '';
 
+  private injector = inject(Injector);
+
   /**
    * Instance of injected Router
    */
-  protected router: Router;
+  protected router = inject(Router);
 
   private get parentCommands() {
     let parent = this.parent;
@@ -70,15 +72,6 @@ export abstract class RoutePathBuilder {
       parent = parent.parent;
     }
     return commands;
-  }
-
-  constructor(
-    /**
-     * Injector associated with the Angular Module
-     */
-    protected injector: Injector
-  ) {
-    this.router = injector.get(Router);
   }
 
   /**
