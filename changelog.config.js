@@ -25,6 +25,8 @@ module.exports = {
     'expandable-input',
     'table-of-contents',
     'route-path-builder',
+    'ngx-errors',
+    'ngx-errors-material',
   ],
   types: {
     chore: {

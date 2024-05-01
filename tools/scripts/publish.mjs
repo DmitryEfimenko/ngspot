@@ -16,8 +16,8 @@ import path from 'path';
 const { readCachedProjectGraph } = nrwlDevkit;
 
 // Executing publish script: node path/to/publish.mjs --tag {tag}
-// Default "tag" to "next" so we won't publish the "latest" tag by accident.
-let [, , tag = 'next', verbose = false] = process.argv;
+// Default "tag" to "latest" to avoid accidental "next" tags.
+let [, , tag = 'latest', verbose = false] = process.argv;
 
 if (tag === 'undefined') {
   tag = 'next';

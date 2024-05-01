@@ -46,6 +46,10 @@
                 "onlyDependOnLibsWithTags": ["lib:ng-superclass"]
               },
               {
+                "sourceTag": "lib:ngx-errors-material",
+                "onlyDependOnLibsWithTags": ["lib:ngx-errors"]
+              },
+              {
                 "sourceTag": "lib:demo",
                 "onlyDependOnLibsWithTags": ["lib:common", "lib"]
               },

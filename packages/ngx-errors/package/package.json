@@ -1,0 +1,33 @@
+{
+  "name": "@ngspot/ngx-errors",
+  "version": "3.2.1",
+  "peerDependencies": {
+    "@angular/common": ">=13.0.0",
+    "@angular/core": ">=13.0.0",
+    "rxjs": ">=7"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "sideEffects": false,
+  "author": {
+    "name": "Dmitry Efimenko",
+    "email": "dmitrief@gmail.com"
+  },
+  "keywords": [
+    "angular",
+    "validation",
+    "reactive forms",
+    "template-driven forms"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/DmitryEfimenko/ngspot/tree/main/packages/ngx-errors",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DmitryEfimenko/ngspot",
+    "directory": "packages/ngx-errors"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

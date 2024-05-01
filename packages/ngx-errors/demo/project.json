@@ -1,0 +1,36 @@
+{
+  "name": "ngx-errors-demo",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/ngx-errors/demo/src",
+  "prefix": "ngs",
+  "tags": ["lib:demo"],
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:ng-packagr-lite",
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+      "options": {
+        "project": "packages/ngx-errors/demo/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "packages/ngx-errors/demo/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "packages/ngx-errors/demo/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "packages/ngx-errors/demo/**/*.ts",
+          "packages/ngx-errors/demo/**/*.html"
+        ]
+      }
+    }
+  }
+}

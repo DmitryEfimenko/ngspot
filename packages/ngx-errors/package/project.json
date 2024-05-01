@@ -1,0 +1,61 @@
+{
+  "name": "ngx-errors",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/ngx-errors/package/src",
+  "prefix": "ngs",
+  "tags": ["lib", "lib:ngx-errors"],
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:package",
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+      "options": {
+        "project": "packages/ngx-errors/package/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "packages/ngx-errors/package/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "packages/ngx-errors/package/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "packages/ngx-errors/package/**/*.ts",
+          "packages/ngx-errors/package/**/*.html"
+        ]
+      }
+    },
+    "publish": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node tools/scripts/publish.mjs {args.tag} {args.verbose}"
+      },
+      "dependsOn": [
+        {
+          "target": "build"
+        }
+      ]
+    },
+    "version": {
+      "executor": "@jscutlery/semver:version",
+      "options": {
+        "preset": "conventional"
+      }
+    },
+    "test": {
+      "executor": "@angular-devkit/build-angular:karma",
+      "options": {
+        "tsConfig": "packages/ngx-errors/package/tsconfig.spec.json",
+        "karmaConfig": "packages/ngx-errors/package/karma.conf.js",
+        "polyfills": ["zone.js", "zone.js/testing"]
+      }
+    }
+  }
+}

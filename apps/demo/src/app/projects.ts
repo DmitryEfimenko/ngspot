@@ -8,6 +8,18 @@ export interface Project {
 
 export const PROJECTS: Project[] = [
   {
+    name: 'ngx-errors',
+    package: () => import('@ngspot/ngx-errors-demo'),
+    githubLink:
+      'https://github.com/DmitryEfimenko/ngspot/tree/main/packages/ngx-errors/package',
+  },
+  {
+    name: 'ngx-errors-material',
+    package: () => import('@ngspot/ngx-errors-material-demo'),
+    githubLink:
+      'https://github.com/DmitryEfimenko/ngspot/tree/main/packages/ngx-errors-material/package',
+  },
+  {
     name: 'expandable-input',
     package: () => import('@ngspot/expandable-input-demo'),
     githubLink:
