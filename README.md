@@ -45,6 +45,8 @@ One time config: `git config --global push.followTags true`
 1. Run `npm run nx -- build <project>`
 1. Run `npm run nx -- publish <project> [--tag=next] [--verbose=true]`
 1. Repeat for each `<package-worked-on>`
+1. Run `git push`
+1. Run `git push origin --tags`
 
 ## Generate a publishable library
 

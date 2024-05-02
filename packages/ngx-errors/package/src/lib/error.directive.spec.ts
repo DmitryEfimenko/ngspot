@@ -7,7 +7,7 @@ import {
   ViewChild,
   ChangeDetectionStrategy,
 } from '@angular/core';
-import { waitForAsync } from '@angular/core/testing';
+import { fakeAsync, flush, waitForAsync } from '@angular/core/testing';
 import {
   AbstractControl,
   AsyncValidatorFn,
@@ -576,18 +576,21 @@ describe(ErrorDirective.name, () => {
       expect(spectator.query('#error-outside')).toContainText('min: 10');
     });
 
-    xit('should access new error details after a change', () => {
+    it('should access new error details after a change', fakeAsync(() => {
       const { spectator } = setupDirectiveWithConfig(template, undefined);
 
-      spectator.hostComponent.form.get('invalidInitialVal')!.markAsTouched();
-      spectator.hostComponent.form.get('invalidInitialVal')!.setValue(4);
+      spectator.typeInElement('4', 'input');
+      spectator.blur('input');
 
-      expect(spectator.element).toContainText(
+      spectator.tick(0);
+      flush();
+
+      expect(spectator.query('[ngxerror="min"]')).toContainText(
         "Number should be greater than 10. You've typed 4."
       );
 
       expect(spectator.query('#error-outside')).toContainText('min: 10');
-    });
+    }));
   });
 
   describe('TEST: directive is inside of child OnPush component', () => {

@@ -1,9 +1,11 @@
+/* eslint-disable @angular-eslint/directive-selector */
 import {
   AfterViewInit,
   Directive,
   Input,
   Optional,
   SkipSelf,
+  OnDestroy,
 } from '@angular/core';
 import {
   AbstractControl,
@@ -14,8 +16,14 @@ import {
   FormGroupName,
 } from '@angular/forms';
 
-import { BehaviorSubject } from 'rxjs';
-import { distinctUntilChanged, map, shareReplay } from 'rxjs/operators';
+import { BehaviorSubject, combineLatest, Subscription } from 'rxjs';
+import {
+  distinctUntilChanged,
+  map,
+  shareReplay,
+  filter,
+  tap,
+} from 'rxjs/operators';
 
 import { ErrorsConfiguration } from './errors-configuration';
 import { NgxErrorsFormDirective } from './form.directive';
@@ -66,17 +74,28 @@ import {
  * ```
  */
 @Directive({
-  // eslint-disable-next-line @angular-eslint/directive-selector
   selector: '[ngxErrors]',
   exportAs: 'ngxErrors',
 })
-export class ErrorsDirective implements AfterViewInit {
+export class ErrorsDirective implements AfterViewInit, OnDestroy {
+  private subs = new Subscription();
+
   private control$$ = new BehaviorSubject<AbstractControl | undefined>(
     undefined
   );
   control$ = this.control$$.asObservable().pipe(filterOutNullish());
 
-  @Input('ngxErrors') _control: AbstractControl | string;
+  private _controlInput$ = new BehaviorSubject<
+    AbstractControl | string | undefined
+  >(undefined);
+  private afterViewInit$ = new BehaviorSubject(false);
+
+  @Input('ngxErrors')
+  set _control(val: AbstractControl | string | undefined) {
+    if (val != null) {
+      this._controlInput$.next(val);
+    }
+  }
 
   @Input() showWhen: string;
 
@@ -119,10 +138,36 @@ export class ErrorsDirective implements AfterViewInit {
     @SkipSelf()
     private parentFormGroupName: FormGroupName | null,
     private config: ErrorsConfiguration
-  ) {}
+  ) {
+    // initialize directive only after control input was set AND after
+    // afterViewInit since parentFormGroupDirective might not be resolved
+    // before that
+    const $ = combineLatest(
+      this._controlInput$.pipe(filterOutNullish()),
+      this.afterViewInit$.pipe(filter((hasInit) => hasInit === true))
+    ).pipe(
+      tap(([control]) => {
+        this.initDirective(control);
+      })
+    );
+
+    this.subs.add($.subscribe());
+  }
 
   ngAfterViewInit() {
-    this.initAndValidateDirective();
+    this.afterViewInit$.next(true);
+
+    // Use of the setTimeout to ensure that the @Input _control was surely set
+    // in the all cases. In particular the edge-case where ngModelGroup
+    // declared via template driven forms results in the control being
+    // set later than ngAfterViewInit life-cycle hook is called
+    setTimeout(() => {
+      this.validateDirective();
+    }, 0);
+  }
+
+  ngOnDestroy() {
+    this.subs.unsubscribe();
   }
 
   visibilityForKey$(key: string) {
@@ -143,33 +188,35 @@ export class ErrorsDirective implements AfterViewInit {
     }
   }
 
-  private initAndValidateDirective() {
-    if (!this._control) {
+  private validateDirective() {
+    if (!this._controlInput$.value) {
       throw new NoControlError();
     }
+  }
 
-    if (typeof this._control === 'string') {
+  private initDirective(_control: AbstractControl | string) {
+    if (typeof _control === 'string') {
       if (!this.parentFormGroupDirective) {
-        throw new ParentFormGroupNotFoundError(this._control);
+        throw new ParentFormGroupNotFoundError(_control);
       }
 
       const control = !this.parentFormGroupName
-        ? this.parentFormGroupDirective.form.get(this._control)
-        : this.parentFormGroupName.control.get(this._control);
+        ? this.parentFormGroupDirective.form.get(_control)
+        : this.parentFormGroupName.control.get(_control);
 
       if (control == null) {
-        throw new ControlNotFoundError(this._control);
+        throw new ControlNotFoundError(_control);
       }
 
       this.control$$.next(control);
       return;
     }
 
-    if (!this.isAbstractControl(this._control)) {
+    if (!this.isAbstractControl(_control)) {
       throw new ControlInstanceError();
     }
 
-    this.control$$.next(this._control);
+    this.control$$.next(_control);
   }
 
   private isAbstractControl(

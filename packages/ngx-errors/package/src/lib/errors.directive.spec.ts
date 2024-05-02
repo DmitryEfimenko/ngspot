@@ -96,11 +96,8 @@ function expectNgxError(error: NgxError) {
 
 describe(ErrorsDirective.name, () => {
   it('should throw if no control is provided', fakeAsync(() => {
-    // setupWithReactiveForms(`<div [ngxErrors]="undefined"></div>`);
-    // expectNgxError(new NoControlError());
-    expect(() => {
-      setupWithReactiveForms(`<div ngxErrors></div>`);
-    }).toThrow(new NoControlError());
+    setupWithReactiveForms(`<div [ngxErrors]="undefined"></div>`);
+    expectNgxError(new NoControlError());
   }));
 
   describe('GIVEN: with control', () => {
@@ -113,12 +110,8 @@ describe(ErrorsDirective.name, () => {
     });
 
     it('GIVEN: control is NOT an instance of FormControl, should throw', fakeAsync(() => {
-      // setupWithReactiveForms(`<div [ngxErrors]="{}"></div>`);
-      // expectNgxError(new ControlInstanceError());
-
-      expect(() => {
-        setupWithReactiveForms(`<div [ngxErrors]="{}"></div>`);
-      }).toThrow(new ControlInstanceError());
+      setupWithReactiveForms(`<div [ngxErrors]="{}"></div>`);
+      expectNgxError(new ControlInstanceError());
     }));
   });
 
@@ -158,20 +151,13 @@ describe(ErrorsDirective.name, () => {
     }));
 
     it('GIVEN: control specified as string; control DOES NOT exist, should throw', fakeAsync(() => {
-      expect(() => {
-        setupWithReactiveForms(`
-        <form [formGroup]="form">
-          <div ngxErrors="mistake"></div>
-        </form>
-        `);
-      }).toThrow(new ControlNotFoundError('mistake'));
-      // setupWithReactiveForms(`
-      // <form [formGroup]="form">
-      //   <div ngxErrors="mistake"></div>
-      // </form>
-      // `);
+      setupWithReactiveForms(`
+      <form [formGroup]="form">
+        <div ngxErrors="mistake"></div>
+      </form>
+      `);
 
-      // expectNgxError(new ControlNotFoundError('mistake'));
+      expectNgxError(new ControlNotFoundError('mistake'));
     }));
 
     it('GIVEN: formGroup with nested formGroupName, control should be the "street"', fakeAsync(() => {
@@ -199,7 +185,7 @@ describe(ErrorsDirective.name, () => {
     }));
   });
 
-  xdescribe('GIVEN: with template-driven forms', () => {
+  describe('GIVEN: with template-driven forms', () => {
     /**
      * This function must run in the fakeAsync context
      */

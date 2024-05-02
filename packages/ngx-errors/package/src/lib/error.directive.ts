@@ -1,3 +1,4 @@
+/* eslint-disable @angular-eslint/directive-selector */
 import {
   AfterViewInit,
   ChangeDetectorRef,
@@ -9,8 +10,25 @@ import {
 } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
 
-import { merge, NEVER, Observable, of, Subscription, timer } from 'rxjs';
-import { auditTime, filter, first, map, switchMap, tap } from 'rxjs/operators';
+import {
+  BehaviorSubject,
+  combineLatest,
+  merge,
+  NEVER,
+  Observable,
+  of,
+  Subscription,
+  timer,
+} from 'rxjs';
+import {
+  auditTime,
+  filter,
+  first,
+  map,
+  switchMap,
+  tap,
+  share,
+} from 'rxjs/operators';
 
 import { ErrorStateMatchers } from './error-state-matchers.service';
 import { ErrorsConfiguration } from './errors-configuration';
@@ -51,6 +69,7 @@ export class ErrorDirective implements AfterViewInit, OnDestroy {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   err: any = {};
+  private err$$ = new BehaviorSubject<any>({});
 
   constructor(
     private config: ErrorsConfiguration,
@@ -68,6 +87,15 @@ export class ErrorDirective implements AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    // without the timeout object gets destroyed before call finishes causing errors
+    setTimeout(() => {
+      this.errorsDirective?.visibilityChanged(
+        this.errorName,
+        this.showWhen,
+        true
+      );
+    }, 0);
+
     this.subs.unsubscribe();
   }
 
@@ -92,7 +120,6 @@ export class ErrorDirective implements AfterViewInit, OnDestroy {
           // https://github.com/angular/angular/issues/41519
           // control.statusChanges do not emit when there's async validator
           // ugly workaround:
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           let asyncBugWorkaround$: Observable<any> = NEVER;
           if (control.asyncValidator && control.status === 'PENDING') {
             asyncBugWorkaround$ = timer(0, 50).pipe(
@@ -125,6 +152,13 @@ export class ErrorDirective implements AfterViewInit, OnDestroy {
   private calcShouldDisplay(control: AbstractControl) {
     const hasError = control.hasError(this.errorName);
 
+    const controlError = control.getError(this.errorName) || {};
+    if (
+      JSON.stringify(this.err$$.getValue()) !== JSON.stringify(controlError)
+    ) {
+      this.err$$.next(controlError);
+    }
+
     const form = this.errorsDirective.formDirective?.form ?? null;
 
     const errorStateMatcher = this.errorStateMatchers.get(this.showWhen);
@@ -150,10 +184,12 @@ export class ErrorDirective implements AfterViewInit, OnDestroy {
   private watchForVisibilityChange(control: AbstractControl) {
     const key = `${this.errorName}-${this.showWhen}`;
 
-    const sub = this.errorsDirective
-      .visibilityForKey$(key)
+    const sub = combineLatest([
+      this.errorsDirective.visibilityForKey$(key),
+      this.err$$,
+    ])
       .pipe(
-        tap((hidden) => {
+        tap(([hidden, err]) => {
           this.hidden = hidden;
 
           this.overriddenShowWhen.errorVisibilityChanged(
@@ -163,7 +199,7 @@ export class ErrorDirective implements AfterViewInit, OnDestroy {
             !this.hidden
           );
 
-          this.err = control.getError(this.errorName) || {};
+          this.err = err;
 
           this.cdr.detectChanges();
         })
