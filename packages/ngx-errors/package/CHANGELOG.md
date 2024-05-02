@@ -1,6 +1,13 @@
 # Changelog
 
-All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
+
+### [3.2.2](https://github.com/DmitryEfimenko/ngspot/compare/ngx-errors-3.2.1...ngx-errors-3.2.2) (2024-05-02)
+
+
+### Bug Fixes
+
+* **ngx-errors:** 🐞 fix integration with template-driven forms ([69dc03f](https://github.com/DmitryEfimenko/ngspot/commit/69dc03f1e96da1e3f59d756dbe192a1222149e8a))
 
 ### [3.2.1](https://github.com/ngspot/ngx-errors/compare/v3.2.0...v3.2.1) (2022-11-25)
 
