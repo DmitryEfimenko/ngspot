@@ -2,6 +2,8 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [1.0.3](https://github.com/DmitryEfimenko/ngspot/compare/rxjs-1.0.2...rxjs-1.0.3) (2024-05-03)
+
 ### [1.0.2](https://github.com/DmitryEfimenko/ngspot/compare/rxjs-1.0.1...rxjs-1.0.2) (2023-03-29)
 
 
