@@ -128,7 +128,8 @@
       "executor": "angular-cli-ghpages:deploy",
       "options": {
         "baseHref": "/ngspot/",
-        "cname": "undefined"
+        "cname": "undefined",
+        "dir": "dist/apps/demo"
       }
     }
   },
