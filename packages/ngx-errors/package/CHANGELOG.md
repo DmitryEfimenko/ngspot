@@ -2,6 +2,8 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [3.2.3](https://github.com/DmitryEfimenko/ngspot/compare/ngx-errors-3.2.2...ngx-errors-3.2.3) (2024-05-03)
+
 ### [3.2.2](https://github.com/DmitryEfimenko/ngspot/compare/ngx-errors-3.2.1...ngx-errors-3.2.2) (2024-05-02)
 
 
