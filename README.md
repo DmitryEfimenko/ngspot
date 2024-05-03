@@ -8,7 +8,8 @@
 ## Packages
 
 - [@ngspot/expandable-input](https://github.com/DmitryEfimenko/ngspot/tree/main/packages/expandable-input/package) ([Demo](https://dmitryefimenko.github.io/ngspot/expandable-input))
-- [@ngspot/ngx-errors](toMoveInThisRepo)
+- [@ngspot/ngx-errors](https://github.com/DmitryEfimenko/ngspot/tree/main/packages/ngx-errors)
+- [@ngspot/ngx-errors-material](https://github.com/DmitryEfimenko/ngspot/tree/main/packages/ngx-errors-material)
 - [@ngspot/remote-data](https://github.com/DmitryEfimenko/ngspot/tree/main/packages/remote-data)
 - [@ngspot/remote-data-rx](https://github.com/DmitryEfimenko/ngspot/tree/main/packages/remote-data-rx)
 - [@ngspot/ng-superclass](https://github.com/DmitryEfimenko/ngspot/tree/main/packages/ng-superclass/package)

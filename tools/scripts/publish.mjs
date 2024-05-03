@@ -20,7 +20,7 @@ const { readCachedProjectGraph } = nrwlDevkit;
 let [, , tag = 'latest', verbose = false] = process.argv;
 
 if (tag === 'undefined') {
-  tag = 'next';
+  tag = 'latest';
 }
 
 if (verbose === 'undefined') {
@@ -46,7 +46,6 @@ const version = getVersion(projectRoot);
 const outputPath = getOutputPath(project, projectRoot);
 
 process.chdir(outputPath);
-// updateDistPackageJsonVersion(outputPath);
 execSync(`npm publish --access public --tag ${tag}`);
 
 function getProject(name) {
