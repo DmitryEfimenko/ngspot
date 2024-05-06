@@ -48,6 +48,14 @@
       "options": {
         "preset": "conventional"
       }
+    },
+    "test": {
+      "executor": "@angular-devkit/build-angular:karma",
+      "options": {
+        "tsConfig": "packages/ngx-errors-material/package/tsconfig.spec.json",
+        "karmaConfig": "packages/ngx-errors-material/package/karma.conf.js",
+        "polyfills": ["zone.js", "zone.js/testing"]
+      }
     }
   }
 }
