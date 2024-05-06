@@ -3,6 +3,7 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/rxjs",
   "projectType": "library",
+  "tags": ["lib", "lib:rxjs"],
   "targets": {
     "build": {
       "executor": "@nx/angular:package",
@@ -36,11 +37,8 @@
       "dependsOn": ["build"]
     },
     "lint": {
-      "executor": "@nx/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["packages/rxjs/**/*.ts"]
-      }
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
     },
     "version": {
       "executor": "@jscutlery/semver:version",
@@ -48,6 +46,5 @@
         "preset": "conventional"
       }
     }
-  },
-  "tags": ["lib", "lib:rxjs"]
+  }
 }

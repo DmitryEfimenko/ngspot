@@ -36,14 +36,14 @@
       "@ngspot/ng-superclass/testing": [
         "packages/ng-superclass/package/testing/src/index.ts"
       ],
-      "@ngspot/ngx-errors-material-demo": [
-        "packages/ngx-errors-material/demo/src/index.ts"
-      ],
+      "@ngspot/ngx-errors": ["packages/ngx-errors/package/src/index.ts"],
+      "@ngspot/ngx-errors-demo": ["packages/ngx-errors/demo/src/index.ts"],
       "@ngspot/ngx-errors-material": [
         "packages/ngx-errors-material/package/src/index.ts"
       ],
-      "@ngspot/ngx-errors-demo": ["packages/ngx-errors/demo/src/index.ts"],
-      "@ngspot/ngx-errors": ["packages/ngx-errors/package/src/index.ts"],
+      "@ngspot/ngx-errors-material-demo": [
+        "packages/ngx-errors-material/demo/src/index.ts"
+      ],
       "@ngspot/remote-data": ["packages/remote-data/src/index.ts"],
       "@ngspot/remote-data-rx": ["packages/remote-data-rx/src/index.ts"],
       "@ngspot/route-path-builder/package": [

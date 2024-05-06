@@ -4,10 +4,10 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
-  Inject,
   Input,
   NgZone,
   OnDestroy,
+  inject,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
@@ -61,6 +61,12 @@ interface Link {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TableOfContentsComponent implements AfterViewInit, OnDestroy {
+  private route = inject(ActivatedRoute);
+  private elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
+  private _document = inject(DOCUMENT);
+  private _ngZone = inject(NgZone);
+  private location = inject(Location);
+
   /**
    * CSS selectors for headers. Usually tags such as 'h2, h3, h4' - which is a default.
    * The order identifies the indentation level
@@ -101,14 +107,14 @@ export class TableOfContentsComponent implements AfterViewInit, OnDestroy {
   private contentContainer$ = this.contentContainer$$.asObservable();
   private contentResize$ = this.contentContainer$.pipe(
     switchMap((contentContainer) => resizeObserver(contentContainer)),
-    shareReplay(1)
+    shareReplay(1),
   );
   private links$ = this.contentResize$.pipe(
     debounceTime(10),
     withLatestFrom(this.contentContainer$),
     map(([, contentContainer]) => contentContainer),
     this.buildLinks(),
-    shareReplay(1)
+    shareReplay(1),
   );
 
   private scrollContainer$$ = new ReplaySubject<HTMLElement>(1);
@@ -116,7 +122,7 @@ export class TableOfContentsComponent implements AfterViewInit, OnDestroy {
   private scroll$ = this.scrollContainer$.pipe(
     switchMap((scrollContainer) => fromEvent(scrollContainer, 'scroll')),
     debounceTime(10),
-    zoneFree(this._ngZone)
+    zoneFree(this._ngZone),
   );
 
   liveLinks$ = combineLatest([
@@ -125,16 +131,10 @@ export class TableOfContentsComponent implements AfterViewInit, OnDestroy {
   ]).pipe(
     withLatestFrom(this.scrollContainer$),
     map(([[links], scrollContainer]) => ({ links, scrollContainer })),
-    this.updateActiveLink()
+    this.updateActiveLink(),
   );
 
-  constructor(
-    private route: ActivatedRoute,
-    private elementRef: ElementRef<HTMLElement>,
-    @Inject(DOCUMENT) private _document: Document,
-    private _ngZone: NgZone,
-    private location: Location
-  ) {
+  constructor() {
     this.locationCleanupFn = this.location.onUrlChange(() => {
       const rootUrl = document.location.pathname;
       if (rootUrl !== this._rootUrl) {
@@ -152,7 +152,7 @@ export class TableOfContentsComponent implements AfterViewInit, OnDestroy {
         if (link) {
           scrollContainer.scrollTo({ top: link.top });
         }
-      })
+      }),
     );
 
     this.subscriptions.add(watchFragment$.subscribe());
@@ -201,7 +201,7 @@ export class TableOfContentsComponent implements AfterViewInit, OnDestroy {
 
     if (!contentContainer) {
       throw new Error(
-        `Could not find content container using CSS selector: ${this.contentContainer}`
+        `Could not find content container using CSS selector: ${this.contentContainer}`,
       );
     }
     this.contentContainer$$.next(contentContainer);
@@ -225,7 +225,7 @@ export class TableOfContentsComponent implements AfterViewInit, OnDestroy {
               if (!header.getAttribute('id')) {
                 header.setAttribute(
                   'id',
-                  name.toLowerCase().split(' ').join('_')
+                  name.toLowerCase().split(' ').join('_'),
                 );
               }
 
@@ -241,7 +241,7 @@ export class TableOfContentsComponent implements AfterViewInit, OnDestroy {
                 id: header.id,
                 active: false,
               };
-            }
+            },
           );
 
           return links;
@@ -256,7 +256,7 @@ export class TableOfContentsComponent implements AfterViewInit, OnDestroy {
           }
 
           const linkProps = Object.keys(
-            previous[0]
+            previous[0],
           ) as unknown as (keyof Link)[];
 
           for (let i = 0; i < previous.length; i++) {
@@ -268,7 +268,7 @@ export class TableOfContentsComponent implements AfterViewInit, OnDestroy {
           }
 
           return true;
-        })
+        }),
       );
   }
 
@@ -308,7 +308,7 @@ export class TableOfContentsComponent implements AfterViewInit, OnDestroy {
           return { links: updatedLinks, hasChanged };
         }),
         filter(({ hasChanged }) => hasChanged),
-        map(({ links }) => links)
+        map(({ links }) => links),
       );
   }
 

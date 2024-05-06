@@ -3,6 +3,7 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/remote-data-rx/src",
   "projectType": "library",
+  "tags": ["lib", "lib:remote-data-rx"],
   "targets": {
     "build": {
       "executor": "@nx/js:tsc",
@@ -27,11 +28,8 @@
       ]
     },
     "lint": {
-      "executor": "@nx/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["packages/remote-data-rx/**/*.ts"]
-      }
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
     },
     "test": {
       "executor": "@angular-devkit/build-angular:karma",
@@ -47,6 +45,5 @@
         "preset": "conventional"
       }
     }
-  },
-  "tags": ["lib", "lib:remote-data-rx"]
+  }
 }

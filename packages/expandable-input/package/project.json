@@ -4,6 +4,7 @@
   "projectType": "library",
   "sourceRoot": "packages/expandable-input/package/src",
   "prefix": "ngs",
+  "tags": ["lib", "lib:expandable-input"],
   "targets": {
     "build": {
       "executor": "@nx/angular:package",
@@ -30,14 +31,8 @@
       }
     },
     "lint": {
-      "executor": "@nx/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": [
-          "packages/expandable-input/package/**/*.ts",
-          "packages/expandable-input/package/**/*.html"
-        ]
-      }
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
     },
     "publish": {
       "executor": "nx:run-commands",
@@ -56,6 +51,5 @@
         "preset": "conventional"
       }
     }
-  },
-  "tags": ["lib", "lib:expandable-input"]
+  }
 }

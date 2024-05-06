@@ -45,7 +45,11 @@
               *ngFor="let snippet of _snippets; trackBy: trackByFileName"
             >
               <mat-tab [label]="snippet.fileName">
-                <pre><code [highlight]="snippet.content" [languages]="snippet.language ? [snippet.language] : $any(undefined)" [lineNumbers]="true"></code></pre>
+                @if (snippet.language) {
+                  <pre><code lineNumbers [highlight]="snippet.content" [language]="snippet.language"></code></pre>
+                } @else {
+                  <pre><code lineNumbers [highlightAuto]="snippet.content"></code></pre>
+                }
               </mat-tab>
             </ng-container>
           </mat-tab-group>

@@ -16,7 +16,8 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
-import { HighlightModule } from 'ngx-highlightjs';
+import { Highlight, HighlightAuto } from 'ngx-highlightjs';
+import { HighlightLineNumbers } from 'ngx-highlightjs/line-numbers';
 
 import { SnippetDescriptionDirective } from './snippet-description.directive';
 import { SnippetResultDirective } from './snippet-result.directive';
@@ -31,7 +32,9 @@ import { SnippetResultDirective } from './snippet-result.directive';
     MatCardModule,
     MatIconModule,
     MatTooltipModule,
-    HighlightModule,
+    Highlight,
+    HighlightAuto,
+    HighlightLineNumbers,
     MatSnackBarModule,
   ],
   templateUrl: './code-snippets.component.html',

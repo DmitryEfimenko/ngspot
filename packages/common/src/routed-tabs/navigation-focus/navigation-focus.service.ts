@@ -1,4 +1,4 @@
-import { Injectable, OnDestroy } from '@angular/core';
+import { Injectable, OnDestroy, inject } from '@angular/core';
 import { Event, NavigationEnd, Router } from '@angular/router';
 
 import { Subscription } from 'rxjs';
@@ -12,15 +12,16 @@ export class NavigationFocusService implements OnDestroy {
   private navigationFocusRequests: HTMLElement[] = [];
   private skipLinkFocusRequests: HTMLElement[] = [];
   private skipLinkHref: string | null | undefined;
+  private router = inject(Router);
 
   readonly navigationEndEvents = this.router.events.pipe(
     filter(
-      (event: Event): event is NavigationEnd => event instanceof NavigationEnd
-    )
+      (event: Event): event is NavigationEnd => event instanceof NavigationEnd,
+    ),
   );
   readonly softNavigations = this.navigationEndEvents.pipe(skip(1));
 
-  constructor(private router: Router) {
+  constructor() {
     this.subscriptions.add(
       this.softNavigations.subscribe(() => {
         // focus if url does not have fragment
@@ -33,7 +34,7 @@ export class NavigationFocusService implements OnDestroy {
             }
           }, 100);
         }
-      })
+      }),
     );
   }
 
@@ -48,7 +49,7 @@ export class NavigationFocusService implements OnDestroy {
   relinquishFocusOnNavigation(el: HTMLElement) {
     this.navigationFocusRequests.splice(
       this.navigationFocusRequests.indexOf(el),
-      1
+      1,
     );
   }
 
@@ -60,7 +61,7 @@ export class NavigationFocusService implements OnDestroy {
   relinquishSkipLinkFocus(el: HTMLElement) {
     this.skipLinkFocusRequests.splice(
       this.skipLinkFocusRequests.indexOf(el),
-      1
+      1,
     );
     const skipLinkFocusTarget =
       this.skipLinkFocusRequests[this.skipLinkFocusRequests.length - 1];

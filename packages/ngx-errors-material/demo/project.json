@@ -3,8 +3,8 @@
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/ngx-errors-material/demo/src",
   "prefix": "ngs",
-  "tags": ["lib:demo"],
   "projectType": "library",
+  "tags": ["lib:demo"],
   "targets": {
     "build": {
       "executor": "@nx/angular:ng-packagr-lite",
@@ -23,14 +23,8 @@
       "defaultConfiguration": "production"
     },
     "lint": {
-      "executor": "@nx/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": [
-          "packages/ngx-errors-material/demo/**/*.ts",
-          "packages/ngx-errors-material/demo/**/*.html"
-        ]
-      }
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
     }
   }
 }

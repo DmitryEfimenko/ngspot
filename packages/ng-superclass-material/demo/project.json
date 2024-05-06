@@ -4,6 +4,7 @@
   "projectType": "library",
   "sourceRoot": "packages/ng-superclass-material/demo/src",
   "prefix": "ngs",
+  "tags": ["lib:demo"],
   "targets": {
     "build": {
       "executor": "@nx/angular:ng-packagr-lite",
@@ -37,15 +38,8 @@
       }
     },
     "lint": {
-      "executor": "@nx/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": [
-          "packages/ng-superclass-material/demo/**/*.ts",
-          "packages/ng-superclass-material/demo/**/*.html"
-        ]
-      }
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
     }
-  },
-  "tags": ["lib:demo"]
+  }
 }

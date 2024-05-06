@@ -24,7 +24,7 @@ const highlightOptions: Provider = {
     coreLibraryLoader: () => import('highlight.js/lib/core'),
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    lineNumbersLoader: () => import('highlightjs-line-numbers.js'),
+    lineNumbersLoader: () => import('ngx-highlightjs/line-numbers'),
     languages: {
       typescript: () => import('highlight.js/lib/languages/typescript'),
       css: () => import('highlight.js/lib/languages/css'),
@@ -42,8 +42,8 @@ const analyticsProviders: Provider[] | EnvironmentProviders[] =
             'G-DQFP38FYZC',
             [],
             undefined,
-            environment.stage === 'prod'
-          )
+            environment.stage === 'prod',
+          ),
         ),
       ]
     : ([] as Provider[]);

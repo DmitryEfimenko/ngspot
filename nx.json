@@ -1,21 +1,5 @@
 {
-  "tasksRunnerOptions": {
-    "default": {
-      "runner": "nx-cloud",
-      "options": {
-        "cacheableOperations": ["build", "lint", "test", "e2e"],
-        "accessToken": "Y2FmYWYyM2MtYTE4YS00M2I4LTk4ZDgtZWQ0ZWRjMzVjYjNifHJlYWQtd3JpdGU="
-      }
-    }
-  },
   "extends": "nx/presets/core.json",
-  "npmScope": "ngspot",
-  "affected": {
-    "defaultBase": "main"
-  },
-  "cli": {
-    "defaultCollection": "@nx/angular"
-  },
   "generators": {
     "@nx/angular:application": {
       "style": "scss",
@@ -45,13 +29,16 @@
   },
   "targetDefaults": {
     "build": {
-      "inputs": ["production", "^production"]
+      "inputs": ["production", "^production"],
+      "cache": true
     },
     "test": {
-      "inputs": ["default", "^production", "{workspaceRoot}/karma.conf.js"]
+      "inputs": ["default", "^production", "{workspaceRoot}/karma.conf.js"],
+      "cache": true
     },
-    "lint": {
-      "inputs": ["default", "{workspaceRoot}/.eslintrc.json"]
+    "@nx/eslint:lint": {
+      "inputs": ["default", "{workspaceRoot}/.eslintrc.json"],
+      "cache": true
     }
   },
   "pluginsConfig": {
@@ -59,5 +46,8 @@
       "analyzeSourceFiles": true
     }
   },
-  "defaultProject": "demo"
+  "defaultProject": "demo",
+  "nxCloudAccessToken": "Y2FmYWYyM2MtYTE4YS00M2I4LTk4ZDgtZWQ0ZWRjMzVjYjNifHJlYWQtd3JpdGU=",
+  "useInferencePlugins": false,
+  "defaultBase": "main"
 }

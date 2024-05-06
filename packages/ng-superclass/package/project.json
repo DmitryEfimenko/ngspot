@@ -4,6 +4,7 @@
   "projectType": "library",
   "sourceRoot": "packages/ng-superclass/package/src",
   "prefix": "ngspot",
+  "tags": ["lib", "lib:ng-superclass"],
   "targets": {
     "build": {
       "executor": "@nx/angular:package",
@@ -30,15 +31,7 @@
       }
     },
     "lint": {
-      "executor": "@nx/linter:eslint",
-      "options": {
-        "lintFilePatterns": [
-          "packages/ng-superclass/package/**/*.ts",
-          "packages/ng-superclass/package/**/*.html",
-          "packages/ng-superclass/package/testing/**/*.ts",
-          "packages/ng-superclass/package/testing/**/*.html"
-        ]
-      }
+      "executor": "@nx/eslint:lint"
     },
     "publish": {
       "executor": "nx:run-commands",
@@ -57,6 +50,5 @@
         "preset": "conventional"
       }
     }
-  },
-  "tags": ["lib", "lib:ng-superclass"]
+  }
 }

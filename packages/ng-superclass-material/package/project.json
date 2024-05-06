@@ -4,6 +4,7 @@
   "projectType": "library",
   "sourceRoot": "packages/ng-superclass-material/package/src",
   "prefix": "ngspot",
+  "tags": ["lib", "lib:ng-superclass-material"],
   "targets": {
     "build": {
       "executor": "@nx/angular:package",
@@ -31,16 +32,8 @@
       }
     },
     "lint": {
-      "executor": "@nx/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": [
-          "packages/ng-superclass-material/package/**/*.ts",
-          "packages/ng-superclass-material/package/**/*.html",
-          "packages/ng-superclass-material/package/testing/**/*.ts",
-          "packages/ng-superclass-material/package/testing/**/*.html"
-        ]
-      }
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
     },
     "publish": {
       "executor": "nx:run-commands",
@@ -59,6 +52,5 @@
         "preset": "conventional"
       }
     }
-  },
-  "tags": ["lib", "lib:ng-superclass-material"]
+  }
 }

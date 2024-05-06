@@ -4,6 +4,7 @@
   "sourceRoot": "packages/route-path-builder/package/src",
   "prefix": "ngs",
   "projectType": "library",
+  "tags": ["lib", "lib:route-path-builder"],
   "targets": {
     "build": {
       "executor": "@nx/angular:package",
@@ -22,14 +23,8 @@
       "defaultConfiguration": "production"
     },
     "lint": {
-      "executor": "@nx/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": [
-          "packages/route-path-builder/package/**/*.ts",
-          "packages/route-path-builder/package/**/*.html"
-        ]
-      }
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
     },
     "test": {
       "executor": "@angular-devkit/build-angular:karma",
@@ -56,6 +51,5 @@
         "preset": "conventional"
       }
     }
-  },
-  "tags": ["lib", "lib:route-path-builder"]
+  }
 }
