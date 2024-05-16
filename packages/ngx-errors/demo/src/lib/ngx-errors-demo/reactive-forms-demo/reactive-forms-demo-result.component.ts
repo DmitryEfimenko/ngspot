@@ -1,16 +1,16 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
-import { NgxErrorsModule } from '@ngspot/ngx-errors';
+import { NGX_ERRORS_DECLARATIONS } from '@ngspot/ngx-errors';
 
 @Component({
-  selector: 'ngs-reactive-forms-demo',
+  selector: 'ngs-reactive-forms-demo-result',
   standalone: true,
-  imports: [ReactiveFormsModule, NgxErrorsModule],
+  imports: [ReactiveFormsModule, NGX_ERRORS_DECLARATIONS],
   changeDetection: ChangeDetectionStrategy.OnPush,
   styles: [
     `
-      [ngxerror] {
+      [ngxerrors] {
         color: red;
       }
     `,
@@ -18,17 +18,17 @@ import { NgxErrorsModule } from '@ngspot/ngx-errors';
   template: `
     <form [formGroup]="form">
       <label>
-        First Name:
+        Name:
         <input formControlName="name" />
       </label>
 
       <div ngxErrors="name">
-        <div ngxError="required">Name is required</div>
+        <div *ngxError="'required'">Name is required</div>
       </div>
     </form>
   `,
 })
-export class ReactiveFormsDemoComponent {
+export class ReactiveFormsDemoResultComponent {
   private fb = inject(FormBuilder);
 
   form = this.fb.group({

@@ -3,27 +3,19 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 
 import {
-  ErrorsConfiguration,
-  IErrorsConfiguration,
-  NgxErrorsModule,
-} from '@ngspot/ngx-errors';
-import { NgxErrorsMaterialModule } from '@ngspot/ngx-errors-material';
+  NGX_ERRORS_MATERIAL_DECLARATIONS,
+  provideNgxErrorsConfig,
+} from '@ngspot/ngx-errors-material';
 
 @Component({
   selector: 'ngs-with-module-demo-result',
   standalone: true,
   imports: [
     ReactiveFormsModule,
-    NgxErrorsModule,
-    NgxErrorsMaterialModule,
     MatInputModule,
+    NGX_ERRORS_MATERIAL_DECLARATIONS,
   ],
-  providers: [
-    {
-      provide: ErrorsConfiguration,
-      useValue: <IErrorsConfiguration>{ showErrorsWhenInput: 'dirty' },
-    },
-  ],
+  providers: [provideNgxErrorsConfig({ showErrorsWhenInput: 'dirty' })],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <form [formGroup]="form">
@@ -32,9 +24,7 @@ import { NgxErrorsMaterialModule } from '@ngspot/ngx-errors-material';
 
         <input matInput formControlName="name" />
 
-        <mat-error ngxErrors="name">
-          <span ngxError="required">Name is required</span>
-        </mat-error>
+        <mat-error *ngxError="'required'">Name is required</mat-error>
       </mat-form-field>
     </form>
   `,

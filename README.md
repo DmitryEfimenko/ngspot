@@ -41,7 +41,7 @@ One time config: `git config --global push.followTags true`
 
 1. Switch to main branch: `git checkout main`
 1. Make sure you have latest: `git pull` and `npm install`
-1. Run `npm run nx -- version <project> --dryRun true`. If releasing for the first time, consider adding an override flag at the end of the command: `--releaseAs=major` (or `minor`, or `patch`)
+1. Run `npm run nx -- version <project> -- --dryRun true`. If releasing for the first time, consider adding an override flag at the end of the command: `--releaseAs=major` (or `minor`, or `patch`)
 1. Make sure that CHANGELOG looks right and run the command above without `--dryRun ` option
 1. Run `npm run nx -- build <project>`
 1. Run `npm run nx -- publish <project> [--tag=next] [--verbose=true]`
