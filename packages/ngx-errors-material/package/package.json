@@ -2,9 +2,10 @@
   "name": "@ngspot/ngx-errors-material",
   "version": "3.0.0",
   "peerDependencies": {
-    "@angular/common": ">=13.0.0",
-    "@angular/core": ">=13.0.0",
-    "@angular/material": ">=13.0.0"
+    "@angular/core": ">=17.1.0",
+    "@angular/forms": ">=17.1.0",
+    "@angular/material": ">=17.0.0",
+    "@ngspot/ngx-errors": "^4.0.0"
   },
   "dependencies": {
     "tslib": "^2.3.0"
@@ -17,7 +18,7 @@
   "keywords": [
     "angular",
     "validation",
-    "reactive forms",
+    "forms",
     "material"
   ],
   "license": "MIT",

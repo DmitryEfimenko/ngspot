@@ -1,28 +1,12 @@
-import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
-import { ErrorStateMatcher } from '@angular/material/core';
+import { NGX_ERRORS_DECLARATIONS } from '@ngspot/ngx-errors';
 
-import { ErrorsConfiguration, ErrorStateMatchers } from '@ngspot/ngx-errors';
-
+import { FormFieldAsNgxErrorsDirective } from './form-field-as-ngx-errors.directive';
 import { SetMatInputErrorStateMatcherDirective } from './set-mat-input-error-state-matcher.directive';
 
-const declarationsAndExports = [SetMatInputErrorStateMatcherDirective];
+export const NGX_ERRORS_MATERIAL_DECLARATIONS = [
+  SetMatInputErrorStateMatcherDirective,
+  FormFieldAsNgxErrorsDirective,
+  ...NGX_ERRORS_DECLARATIONS,
+] as const;
 
-@NgModule({
-  imports: [ReactiveFormsModule],
-  declarations: [...declarationsAndExports],
-  exports: [...declarationsAndExports],
-  providers: [
-    {
-      provide: ErrorStateMatcher,
-      useFactory: (
-        errorsConfiguration: ErrorsConfiguration,
-        errorStateMatchers: ErrorStateMatchers
-      ) => {
-        return errorStateMatchers.get(errorsConfiguration.showErrorsWhenInput);
-      },
-      deps: [ErrorsConfiguration, ErrorStateMatchers],
-    },
-  ],
-})
-export class NgxErrorsMaterialModule {}
+export { provideNgxErrorsConfig } from '@ngspot/ngx-errors';

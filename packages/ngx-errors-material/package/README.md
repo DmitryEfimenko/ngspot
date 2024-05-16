@@ -14,25 +14,63 @@
 
 Angular Material inputs have [their own way](https://material.angular.io/components/input/overview#changing-when-error-messages-are-shown) of setting logic for determining if the input needs to be highlighted red or not. If custom behavior is needed, a developer needs to provide appropriate configuration. @ngspot/ngx-errors configures this functionality for the developer under the hood. Use package `@ngspot/ngx-errors-material` for this configuration to integrate with @angular/material inputs smoothly.
 
-This package is expected to be installed together with the package `@ngspot/ngx-errors` when use use `@angular/material` inputs.
+This package is expected to be installed together with the package `@ngspot/ngx-errors` when using `@angular/material` inputs.
 
 ## Installation
 
 `npm install @ngspot/ngx-errors-material`
 
 ## Usage
-
 Import library into application module:
 
 ```ts
-import { NgxErrorsModule } from '@ngspot/ngx-errors';
-import { NgxErrorsMaterialModule } from '@ngspot/ngx-errors-material'; // <-- import the module
+import { NGX_ERRORS_MATERIAL_DECLARATIONS } from '@ngspot/ngx-errors-material'; // <-- import the declarations
 
-@NgModule({
+@Component({
+  selector: 'my-component',
+  standalone: true,
   imports: [
-    NgxErrorsModule,
-    NgxErrorsMaterialModule, // <-- include imported module in app module
+    ReactiveFormsModule,
+    MatInputModule,
+    NGX_ERRORS_MATERIAL_DECLARATIONS, // <-- include imported declarations
   ],
+  template: `
+    <form [formGroup]="form">
+      <mat-form-field>
+        <mat-label>Name</mat-label>
+
+        <input matInput formControlName="name" />
+
+        <!-- 
+          Note: there's no parent ngxErrors directive.
+          mat-form-field serves the purpose ngxErrors directive.
+        -->
+        <mat-error *ngxError="'required'">Name is required</mat-error>
+      </mat-form-field>
+    </form>
+  `
 })
-export class MyAppModule {}
+export class MyComponent {
+  private fb = inject(FormBuilder);
+
+  form = this.fb.group({
+    name: this.fb.control('', { validators: [Validators.required] }),
+  });
+}
+```
+
+[Optional] Provide errors configuration at the application level or at a component level:
+
+```ts
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideNgxErrorsConfig({
+      // optional configuration object
+      showErrorsWhenInput: 'dirty',
+      showMaxErrors: 1,
+    })
+  ]
+}).catch((err) =>
+  console.error(err)
+);
 ```
