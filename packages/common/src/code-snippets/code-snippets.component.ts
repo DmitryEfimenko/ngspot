@@ -47,7 +47,7 @@ export class CodeSnippetsComponent {
 
   _snippets: Snippet[] | undefined;
 
-  @Input() title: string;
+  @Input() header: string;
 
   @Input()
   set snippets(val: Snippet | Snippet[]) {

@@ -1,7 +1,7 @@
 {
   "root": true,
   "ignorePatterns": ["**/*"],
-  "plugins": ["@nx", "prettier", "import", "jasmine"],
+  "plugins": ["@nx", "prettier", "import", "unused-imports", "jasmine"],
   "overrides": [
     {
       "settings": {
@@ -67,11 +67,14 @@
             ]
           }
         ],
-        "@typescript-eslint/no-unused-vars": [
+        "@typescript-eslint/no-unused-vars": "off",
+        "unused-imports/no-unused-imports": [
           "error",
           {
-            "argsIgnorePattern": "^_",
-            "varsIgnorePattern": "^_"
+            "vars": "all",
+            "varsIgnorePattern": "^_",
+            "args": "after-used",
+            "argsIgnorePattern": "^_"
           }
         ],
         "import/order": [
