@@ -7,7 +7,7 @@ import {
   ViewChild,
   ChangeDetectionStrategy,
 } from '@angular/core';
-import { fakeAsync, flush, waitForAsync } from '@angular/core/testing';
+import { discardPeriodicTasks, fakeAsync, flush } from '@angular/core/testing';
 import {
   AbstractControl,
   AsyncValidatorFn,
@@ -23,21 +23,16 @@ import {
 
 import { createDirectiveFactory, SpectatorDirective } from '@ngneat/spectator';
 
-import {
-  ShowOnDirtyErrorStateMatcher,
-  ShowOnSubmittedErrorStateMatcher,
-  ShowOnTouchedAndDirtyErrorStateMatcher,
-  ShowOnTouchedErrorStateMatcher,
-} from './error-state-matchers';
-import { ErrorStateMatchers } from './error-state-matchers.service';
+import { AllErrorsStateService } from './all-errors-state.service';
+import { ProvidedErrorStateMatcherKeys } from './error-state-matchers.service';
 import { ErrorDirective } from './error.directive';
 import {
   ErrorsConfiguration,
-  IErrorsConfiguration,
+  provideNgxErrorsConfig,
 } from './errors-configuration';
+import { NGX_ERRORS_DECLARATIONS } from './errors-declarations';
 import { ErrorsDirective } from './errors.directive';
 import { NgxErrorsFormDirective } from './form.directive';
-import { NoParentNgxErrorsError, ValueMustBeStringError } from './ngx-errors';
 
 const myAsyncValidator: AsyncValidatorFn = (c: AbstractControl) => {
   return new Promise((resolve) => {
@@ -55,7 +50,7 @@ const myAsyncValidator: AsyncValidatorFn = (c: AbstractControl) => {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 class TestHostComponent {
-  @ViewChild(NgForm) ngForm: NgForm;
+  @ViewChild(NgForm, { static: true }) ngForm: NgForm;
 
   validInitialVal = new FormControl('val', Validators.required);
   invalidInitialVal = new FormControl('', Validators.required);
@@ -92,9 +87,17 @@ export const formViewProvider: Provider = {
 
 export function _formViewProviderFactory(
   ngForm: NgForm,
-  ngModelGroup: NgModelGroup
+  ngModelGroup: NgModelGroup,
 ) {
   return ngModelGroup || ngForm || null;
+}
+
+const VISIBLE_ERROR_TEXT_PREFIX = 'ERROR TEXT';
+
+function errorText(text?: string) {
+  return text
+    ? `${VISIBLE_ERROR_TEXT_PREFIX}: ${text}`
+    : VISIBLE_ERROR_TEXT_PREFIX;
 }
 
 @Component({
@@ -107,9 +110,11 @@ export function _formViewProviderFactory(
       [(ngModel)]="address.street"
     />
     <div [ngxErrors]="street.control">
-      <div ngxError="required">Required</div>
+      <div *ngxError="'required'">${errorText('Required')}</div>
     </div>
   `,
+  standalone: true,
+  imports: [FormsModule, NGX_ERRORS_DECLARATIONS],
   changeDetection: ChangeDetectionStrategy.OnPush,
   viewProviders: [formViewProvider],
 })
@@ -118,21 +123,22 @@ class TestChildComponent {
 }
 
 describe(ErrorDirective.name, () => {
-  const initialConfig: IErrorsConfiguration = {
-    showErrorsWhenInput: 'touched',
-  };
-
   const createDirective = createDirectiveFactory({
     directive: ErrorDirective,
-    declarations: [ErrorsDirective, NgxErrorsFormDirective, TestChildComponent],
-    imports: [ReactiveFormsModule, FormsModule],
+    imports: [
+      ReactiveFormsModule,
+      FormsModule,
+      ErrorsDirective,
+      NgxErrorsFormDirective,
+      TestChildComponent,
+    ],
     providers: [
-      { provide: ErrorsConfiguration, useValue: initialConfig },
-      ErrorStateMatchers,
-      ShowOnTouchedErrorStateMatcher,
-      ShowOnDirtyErrorStateMatcher,
-      ShowOnTouchedAndDirtyErrorStateMatcher,
-      ShowOnSubmittedErrorStateMatcher,
+      provideNgxErrorsConfig(),
+      // ErrorStateMatchers,
+      // ShowOnTouchedErrorStateMatcher,
+      // ShowOnDirtyErrorStateMatcher,
+      // ShowOnTouchedAndDirtyErrorStateMatcher,
+      // ShowOnSubmittedErrorStateMatcher,
     ],
     host: TestHostComponent,
   });
@@ -140,9 +146,13 @@ describe(ErrorDirective.name, () => {
   function setupDirectiveWithConfig(
     template: string,
     showWhen: string | undefined,
-    showMaxErrors?: number
+    showMaxErrors?: number,
   ) {
-    const config = new ErrorsConfiguration();
+    const config: ErrorsConfiguration = {
+      showErrorsWhenInput: 'touched',
+      showMaxErrors: null,
+    };
+
     if (showWhen) {
       config.showErrorsWhenInput = showWhen;
     }
@@ -150,60 +160,58 @@ describe(ErrorDirective.name, () => {
       config.showMaxErrors = showMaxErrors;
     }
     const spectator = createDirective(template, {
-      providers: [
-        {
-          provide: ErrorsConfiguration,
-          useValue: config,
-        },
-      ],
+      providers: [provideNgxErrorsConfig(config)],
     });
 
     return { spectator };
   }
 
   function expectErrorShouldBeVisible(
-    spectator: SpectatorDirective<ErrorDirective, TestHostComponent>
+    spectator: SpectatorDirective<ErrorDirective, TestHostComponent>,
   ) {
-    expect(spectator.element).toBeVisible();
+    expect(spectator.element).toHaveText(VISIBLE_ERROR_TEXT_PREFIX);
   }
 
   function expectErrorShouldBeHidden(
-    spectator: SpectatorDirective<ErrorDirective, TestHostComponent>
+    spectator: SpectatorDirective<ErrorDirective, TestHostComponent>,
   ) {
-    expect(spectator.element).toBeHidden();
+    expect(spectator.element).not.toHaveText(VISIBLE_ERROR_TEXT_PREFIX);
   }
 
   function testErrorVisibilityForConfigShowWhenStates(opts: {
     template: string;
     expectedVisibility: boolean;
     action?: (
-      spectator: SpectatorDirective<ErrorDirective, TestHostComponent>
+      spectator: SpectatorDirective<ErrorDirective, TestHostComponent>,
     ) => void;
     forConfigShowWhenStates: string[];
   }) {
     opts.forConfigShowWhenStates.forEach((givenShowWhen) => {
       describe(`GIVEN: config.showWhen: ${givenShowWhen}`, () => {
-        const visibility = opts.expectedVisibility ? 'visible' : 'invisible';
+        const visibility = opts.expectedVisibility ? 'visible' : 'hidden';
 
-        it(`error should be ${visibility}`, waitForAsync(() => {
+        it(`error should be ${visibility}`, fakeAsync(async () => {
           const { spectator } = setupDirectiveWithConfig(
             opts.template,
-            givenShowWhen
+            givenShowWhen,
           );
 
-          spectator.fixture.whenStable().then(() => {
-            if (opts.action) {
-              opts.action(spectator);
-            }
+          // needed to make sure that possible child component is rendered
+          await spectator.fixture.whenRenderingDone();
 
-            wait(0).then(() => {
-              if (opts.expectedVisibility) {
-                expectErrorShouldBeVisible(spectator);
-              } else {
-                expectErrorShouldBeHidden(spectator);
-              }
-            });
-          });
+          if (opts.action) {
+            opts.action(spectator);
+            // watchedEvents$ include auditTime(0)
+            spectator.tick();
+          }
+
+          if (opts.expectedVisibility) {
+            expectErrorShouldBeVisible(spectator);
+          } else {
+            expectErrorShouldBeHidden(spectator);
+          }
+          flush();
+          discardPeriodicTasks();
         }));
       });
     });
@@ -211,65 +219,108 @@ describe(ErrorDirective.name, () => {
 
   it('should throw if no parent ngxErrors is found', () => {
     expect(() => {
-      createDirective(`<div ngxError="required">Required</div>`);
-    }).toThrow(new NoParentNgxErrorsError());
-  });
-
-  it('should throw if errorName is not provided', () => {
-    expect(() => {
-      createDirective(`
-        <div [ngxErrors]="invalidInitialVal">
-          <div ngxError>Required</div>
-        </div>`);
-    }).toThrow(new ValueMustBeStringError());
+      createDirective(
+        `<div *ngxError="'required'">${errorText('Required')}</div>`,
+      );
+    }).toThrowMatching((err: Error) => {
+      return err.message.includes(
+        'NullInjectorError: No provider for NgxErrorsBase!',
+      );
+    });
   });
 
   describe('PROP: showWhen', () => {
-    function testShowWhenAssignment(opts: {
+    function testErrorVisibilityForConfigAndAction(opts: {
       template: string;
+      controlFn: (host: TestHostComponent) => AbstractControl;
       givenConfigShowWhen: string;
-      expectedDirectiveShowWhen: string;
+      actionNotTriggeringError: ProvidedErrorStateMatcherKeys;
+      actionTriggeringError: ProvidedErrorStateMatcherKeys;
     }) {
-      it(`GIVEN: config.showWhen = "${opts.givenConfigShowWhen}", directive.showWhen should be "${opts.expectedDirectiveShowWhen}"`, () => {
+      it(`GIVEN: config.showWhen = "${opts.givenConfigShowWhen}", directive.showWhen should be "${opts.actionTriggeringError}"`, fakeAsync(() => {
         const { spectator } = setupDirectiveWithConfig(
           opts.template,
-          opts.givenConfigShowWhen
+          opts.givenConfigShowWhen,
         );
 
-        expect(opts.expectedDirectiveShowWhen).toBe(
-          spectator.directive.showWhen
-        );
-      });
+        const control = opts.controlFn(spectator.hostComponent);
+        const errorsState = spectator.inject(AllErrorsStateService);
+
+        const actions: Record<ProvidedErrorStateMatcherKeys, () => void> = {
+          dirty: () => control.markAsDirty(),
+          touched: () => control.markAsTouched(),
+          touchedAndDirty: () => {
+            control.markAsDirty();
+            control.markAsTouched();
+          },
+          formIsSubmitted: () => {
+            spectator.click('button');
+          },
+        };
+
+        function expectShouldBeShownToBe(expected: boolean) {
+          const errors = errorsState.getControlState(control)?.errors();
+          if (!errors) {
+            throw new Error('impossible case');
+          }
+
+          const key = Number(Object.keys(errors)[0]);
+          const actualShouldBeShown = errors[key];
+
+          expect(actualShouldBeShown).toBe(expected);
+        }
+
+        actions[opts.actionNotTriggeringError]();
+        spectator.tick();
+
+        expectShouldBeShownToBe(false);
+
+        actions[opts.actionTriggeringError]();
+        spectator.tick();
+
+        expectShouldBeShownToBe(true);
+
+        flush();
+      }));
     }
 
     describe('GIVEN: There is a parent formGroup', () => {
       describe('GIVEN: there is no override at the directive level', () => {
         const template = `
-            <div [formGroup]="form">
-              <div [ngxErrors]="'invalidInitialVal'">
-                <div ngxError="req"></div>
+            <form [formGroup]="form">
+              <div ngxErrors="invalidInitialVal">
+                <div *ngxError="'min'"></div>
               </div>
-            </div>`;
+              <button type="submit"></button>
+            </form>`;
 
-        testShowWhenAssignment({
+        testErrorVisibilityForConfigAndAction({
           template,
+          controlFn: (host) => host.form.controls.invalidInitialVal,
           givenConfigShowWhen: 'touched',
-          expectedDirectiveShowWhen: 'touched',
+          actionNotTriggeringError: 'dirty',
+          actionTriggeringError: 'touched',
         });
-        testShowWhenAssignment({
+        testErrorVisibilityForConfigAndAction({
           template,
+          controlFn: (host) => host.form.controls.invalidInitialVal,
           givenConfigShowWhen: 'dirty',
-          expectedDirectiveShowWhen: 'dirty',
+          actionNotTriggeringError: 'touched',
+          actionTriggeringError: 'dirty',
         });
-        testShowWhenAssignment({
+        testErrorVisibilityForConfigAndAction({
           template,
+          controlFn: (host) => host.form.controls.invalidInitialVal,
           givenConfigShowWhen: 'touchedAndDirty',
-          expectedDirectiveShowWhen: 'touchedAndDirty',
+          actionNotTriggeringError: 'touched',
+          actionTriggeringError: 'touchedAndDirty',
         });
-        testShowWhenAssignment({
+        testErrorVisibilityForConfigAndAction({
           template,
+          controlFn: (host) => host.form.controls.invalidInitialVal,
           givenConfigShowWhen: 'formIsSubmitted',
-          expectedDirectiveShowWhen: 'formIsSubmitted',
+          actionNotTriggeringError: 'dirty',
+          actionTriggeringError: 'formIsSubmitted',
         });
       });
 
@@ -277,14 +328,17 @@ describe(ErrorDirective.name, () => {
         const template = `
           <form [formGroup]="form">
             <div ngxErrors="invalidInitialVal" showWhen="touched">
-              <div ngxError="req"></div>
+              <div *ngxError="'min'">${errorText()}</div>
             </div>
+            <button type="submit"></button>
           </form>`;
 
-        testShowWhenAssignment({
+        testErrorVisibilityForConfigAndAction({
           template,
+          controlFn: (host) => host.form.controls.invalidInitialVal,
           givenConfigShowWhen: 'formIsSubmitted',
-          expectedDirectiveShowWhen: 'touched',
+          actionNotTriggeringError: 'dirty',
+          actionTriggeringError: 'touched',
         });
       });
 
@@ -292,28 +346,32 @@ describe(ErrorDirective.name, () => {
         const template = `
           <form [formGroup]="form">
             <div ngxErrors="invalidInitialVal">
-              <div ngxError="req" showWhen="touched"></div>
+              <div *ngxError="'min'; showWhen: 'touched'">${errorText()}</div>
             </div>
           </form>`;
 
-        testShowWhenAssignment({
+        testErrorVisibilityForConfigAndAction({
           template,
+          controlFn: (host) => host.form.controls.invalidInitialVal,
           givenConfigShowWhen: 'formIsSubmitted',
-          expectedDirectiveShowWhen: 'touched',
+          actionNotTriggeringError: 'dirty',
+          actionTriggeringError: 'touched',
         });
       });
     });
 
     describe('GIVEN: There is no parent formGroup', () => {
       const template = `
-        <div [ngxErrors]="validInitialVal">
-          <div ngxError="req"></div>
+        <div [ngxErrors]="invalidInitialVal">
+          <div *ngxError="'required'">${errorText()}</div>
         </div>`;
 
-      testShowWhenAssignment({
+      testErrorVisibilityForConfigAndAction({
         template,
+        controlFn: (host) => host.invalidInitialVal,
         givenConfigShowWhen: 'formIsSubmitted',
-        expectedDirectiveShowWhen: 'touched',
+        actionNotTriggeringError: 'dirty',
+        actionTriggeringError: 'touched',
       });
     });
   });
@@ -324,11 +382,21 @@ describe(ErrorDirective.name, () => {
       | 'invalidInitialVal'
       | 'withAsyncValidator';
 
+    function errorNameForControl(control: TestControlType) {
+      const map: Record<TestControlType, string> = {
+        invalidInitialVal: 'min',
+        validInitialVal: 'required',
+        withAsyncValidator: 'isNot123',
+      };
+      return map[control];
+    }
+
     function templateForTestControl(testControl: TestControlType) {
+      const errorName = errorNameForControl(testControl);
       return `
       <form [formGroup]="form">
         <div ngxErrors="${testControl}">
-          <div ngxError="req"></div>
+          <div *ngxError="'${errorName}'">${errorText()}</div>
         </div>
       </form>`;
     }
@@ -375,13 +443,13 @@ describe(ErrorDirective.name, () => {
       });
 
       describe('after async validator was done', () => {
-        it('error should be visible.', waitForAsync(() => {
+        it('error should be visible.', fakeAsync(() => {
           const controlName = 'withAsyncValidator';
 
           const template = `
           <form [formGroup]="form">
             <div ngxErrors="${controlName}">
-              <div ngxError="isNot123"></div>
+              <div *ngxError="'isNot123'">${errorText()}</div>
             </div>
           </form>`;
 
@@ -389,32 +457,33 @@ describe(ErrorDirective.name, () => {
 
           const c = spectator.hostComponent.form.get(controlName)!;
           c.markAsTouched();
+          // async validator takes 50ms
+          spectator.tick(50);
+          flush();
 
-          wait(150).then(() => {
-            expect(spectator.element).toBeVisible();
-          });
+          expect(spectator.element).toBeVisible();
         }));
       });
     });
   });
 
   describe('TEST: limiting amount of visible ngxError', () => {
-    it('GIVEN: showMaxErrors is 1, should display 1 error', async () => {
+    it('GIVEN: showMaxErrors is 1, should display 1 error', fakeAsync(() => {
       const template = `
         <ng-container [ngxErrors]="multipleErrors">
-          <div ngxError="minlength">minlength</div>
-          <div ngxError="maxlength">maxlength</div>
+          <div *ngxError="'minlength'" data-error="minlength"></div>
+          <div *ngxError="'maxlength'" data-error="maxlength"></div>
         </ng-container>`;
 
       const { spectator } = setupDirectiveWithConfig(template, 'touched', 1);
       spectator.hostComponent.multipleErrors.markAsTouched();
-      spectator.hostComponent.multipleErrors.markAsDirty();
+      spectator.tick();
+      flush();
 
-      await spectator.fixture.whenStable();
-      const errors = spectator.queryAll('[ngxerror]:not([hidden])');
+      const errors = spectator.queryAll('[data-error]');
 
       expect(errors.length).toBe(1);
-    });
+    }));
   });
 
   describe('TEST: submitting a form should display an error', () => {
@@ -423,7 +492,7 @@ describe(ErrorDirective.name, () => {
         <input type="number" formControlName="invalidInitialVal" />
 
         <div ngxErrors="invalidInitialVal">
-          <div ngxError="min"></div>
+          <div *ngxError="'min'">${errorText()}</div>
         </div>
 
         <button type="submit"></button>
@@ -449,7 +518,7 @@ describe(ErrorDirective.name, () => {
 
         <div [formGroup]="form.get('address')">
           <div ngxErrors="street">
-            <div ngxError="required">Required</div>
+            <div *ngxError="'required'">${errorText('Required')}</div>
           </div>
         </div>
 
@@ -475,7 +544,7 @@ describe(ErrorDirective.name, () => {
         <input type="text" formControlName="invalidInitialVal" />
 
         <div ngxErrors="invalidInitialVal">
-          <div ngxError="min">min 10</div>
+          <div *ngxError="'min'">${errorText('min 10')}</div>
         </div>
       </form>`;
 
@@ -549,48 +618,118 @@ describe(ErrorDirective.name, () => {
   });
 
   describe('TEST: getting error details', () => {
-    // Number should be greater than {{minError.ctx.min}}. You've typed {{minError.ctx}}.
-    const template = `
+    describe('Inside ngxError directive', () => {
+      const template = `
       <form [formGroup]="form" (ngSubmit)="submit()">
         <input type="number" formControlName="invalidInitialVal" />
 
         <div ngxErrors="invalidInitialVal">
-          <div ngxError="min" #min="ngxError">
-            Number should be greater than {{min.err.min}}. You've typed {{min.err.actual}}.
+          <div *ngxError="'min'; let err">
+            Number should be greater than {{err.min}}. You've typed {{err.actual}}.
           </div>
         </div>
-
-        <div id="error-outside" *ngIf="min.err.min">min: {{min.err.min}}</div>
 
         <button type="submit"></button>
       </form>`;
 
-    it('should access error details and can use them outside of ngxErrors', () => {
-      const { spectator } = setupDirectiveWithConfig(template, undefined);
-      spectator.click('button');
+      it('should access error details', fakeAsync(() => {
+        const { spectator } = setupDirectiveWithConfig(template, undefined);
+        spectator.click('button');
+        spectator.tick();
+        flush();
 
-      expect(spectator.element).toContainText(
-        "Number should be greater than 10. You've typed 3."
-      );
+        expect(spectator.element).toContainText(
+          "Number should be greater than 10. You've typed 3.",
+        );
+      }));
 
-      expect(spectator.query('#error-outside')).toContainText('min: 10');
+      it('should access new error details after a change', fakeAsync(() => {
+        const { spectator } = setupDirectiveWithConfig(template, undefined);
+
+        spectator.typeInElement('4', 'input');
+        spectator.blur('input');
+
+        spectator.tick(0);
+        flush();
+
+        expect(spectator.element).toContainText(
+          "Number should be greater than 10. You've typed 4.",
+        );
+
+        spectator.typeInElement('6', 'input');
+        spectator.blur('input');
+        spectator.tick(0);
+        flush();
+        spectator.detectChanges();
+
+        expect(spectator.element).toContainText(
+          "Number should be greater than 10. You've typed 6.",
+        );
+      }));
     });
 
-    it('should access new error details after a change', fakeAsync(() => {
-      const { spectator } = setupDirectiveWithConfig(template, undefined);
+    describe('Outside ngxError directive', () => {
+      const template = `
+      <form [formGroup]="form" (ngSubmit)="submit()">
+        <input type="number" formControlName="invalidInitialVal" />
 
-      spectator.typeInElement('4', 'input');
-      spectator.blur('input');
+        <div ngxErrors="invalidInitialVal">
+          <ng-template ngxError="min" ref-ngxError="ngxError"></ng-template>
+        </div>
 
-      spectator.tick(0);
-      flush();
+        <div id="error-outside-expected" *ngIf="ngxError.err.min">min: {{ngxError.err.min}}</div>
+        <div id="error-outside-actual" *ngIf="ngxError.err.min">actual: {{ngxError.err.actual}}</div>
 
-      expect(spectator.query('[ngxerror="min"]')).toContainText(
-        "Number should be greater than 10. You've typed 4."
-      );
+        <button type="submit"></button>
+      </form>`;
 
-      expect(spectator.query('#error-outside')).toContainText('min: 10');
-    }));
+      it('should access error details and can use them outside of ngxErrors', fakeAsync(() => {
+        const { spectator } = setupDirectiveWithConfig(template, undefined);
+        spectator.click('button');
+        spectator.tick();
+        flush();
+
+        expect(spectator.query('#error-outside-expected')).toContainText(
+          'min: 10',
+        );
+
+        expect(spectator.query('#error-outside-actual')).toContainText(
+          'actual: 3',
+        );
+      }));
+
+      it('should access new error details after a change ', fakeAsync(() => {
+        const { spectator } = setupDirectiveWithConfig(template, undefined);
+
+        spectator.typeInElement('4', 'input');
+        spectator.blur('input');
+
+        spectator.tick(0);
+        flush();
+
+        expect(spectator.query('#error-outside-expected')).toContainText(
+          'min: 10',
+        );
+
+        expect(spectator.query('#error-outside-actual')).toContainText(
+          'actual: 4',
+        );
+
+        spectator.typeInElement('6', 'input');
+        spectator.blur('input');
+        spectator.tick(0);
+        flush();
+        spectator.detectChanges();
+
+        expect(spectator.query('#error-outside-expected')).toContainText(
+          'min: 10',
+        );
+
+        expect(spectator.query('#error-outside-actual')).toContainText(
+          'actual: 6',
+        );
+      }));
+    });
   });
 
   describe('TEST: directive is inside of child OnPush component', () => {
@@ -607,7 +746,7 @@ describe(ErrorDirective.name, () => {
         spectator.hostComponent.ngForm.form.markAllAsTouched();
       },
       expectedVisibility: true,
-      forConfigShowWhenStates: ['touched', 'formIsSubmitted'],
+      forConfigShowWhenStates: ['touched'],
     });
 
     testErrorVisibilityForConfigShowWhenStates({
@@ -616,15 +755,7 @@ describe(ErrorDirective.name, () => {
         spectator.hostComponent.ngForm.form.markAllAsTouched();
       },
       expectedVisibility: false,
-      forConfigShowWhenStates: ['dirty', 'touchedAndDirty'],
+      forConfigShowWhenStates: ['dirty', 'touchedAndDirty', 'formIsSubmitted'],
     });
   });
 });
-
-function wait(t: number) {
-  return new Promise<void>((resolve) => {
-    setTimeout(() => {
-      resolve();
-    }, t);
-  });
-}

@@ -1,7 +1,6 @@
-import { Inject, Injectable, Optional } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 
 import {
-  CustomErrorStateMatchers,
   CUSTOM_ERROR_STATE_MATCHERS,
   IErrorStateMatcher,
 } from './custom-error-state-matchers';
@@ -12,25 +11,40 @@ import {
   ShowOnTouchedErrorStateMatcher,
 } from './error-state-matchers';
 
-@Injectable()
-export class ErrorStateMatchers {
-  private matchers: { [key: string]: IErrorStateMatcher } = {};
+export type ProvidedErrorStateMatcherKeys =
+  | 'touched'
+  | 'dirty'
+  | 'touchedAndDirty'
+  | 'formIsSubmitted';
 
-  constructor(
-    showOnTouchedErrorStateMatcher: ShowOnTouchedErrorStateMatcher,
-    showOnDirtyErrorStateMatcher: ShowOnDirtyErrorStateMatcher,
-    showOnTouchedAndDirtyErrorStateMatcher: ShowOnTouchedAndDirtyErrorStateMatcher,
-    showOnSubmittedErrorStateMatcher: ShowOnSubmittedErrorStateMatcher,
-    @Optional()
-    @Inject(CUSTOM_ERROR_STATE_MATCHERS)
-    customErrorStateMatchers: CustomErrorStateMatchers
-  ) {
-    this.matchers['touched'] = showOnTouchedErrorStateMatcher;
-    this.matchers['dirty'] = showOnDirtyErrorStateMatcher;
-    this.matchers['touchedAndDirty'] = showOnTouchedAndDirtyErrorStateMatcher;
-    this.matchers['formIsSubmitted'] = showOnSubmittedErrorStateMatcher;
-    if (customErrorStateMatchers) {
-      this.matchers = { ...this.matchers, ...customErrorStateMatchers };
+export type MatchersKeys = ProvidedErrorStateMatcherKeys | string;
+
+@Injectable({ providedIn: 'root' })
+export class ErrorStateMatchers {
+  private showOnTouchedErrorStateMatcher = inject(
+    ShowOnTouchedErrorStateMatcher,
+  );
+  private showOnDirtyErrorStateMatcher = inject(ShowOnDirtyErrorStateMatcher);
+  private showOnTouchedAndDirtyErrorStateMatcher = inject(
+    ShowOnTouchedAndDirtyErrorStateMatcher,
+  );
+  private showOnSubmittedErrorStateMatcher = inject(
+    ShowOnSubmittedErrorStateMatcher,
+  );
+  private customErrorStateMatchers = inject(CUSTOM_ERROR_STATE_MATCHERS, {
+    optional: true,
+  });
+
+  private matchers: { [key: string]: IErrorStateMatcher } = {
+    touched: this.showOnTouchedErrorStateMatcher,
+    dirty: this.showOnDirtyErrorStateMatcher,
+    touchedAndDirty: this.showOnTouchedAndDirtyErrorStateMatcher,
+    formIsSubmitted: this.showOnSubmittedErrorStateMatcher,
+  };
+
+  constructor() {
+    if (this.customErrorStateMatchers) {
+      this.matchers = { ...this.matchers, ...this.customErrorStateMatchers };
     }
   }
 

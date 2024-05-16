@@ -2,44 +2,29 @@
 import {
   AfterViewInit,
   ChangeDetectorRef,
+  computed,
   Directive,
-  HostBinding,
-  Input,
+  effect,
+  EmbeddedViewRef,
+  inject,
+  input,
   OnDestroy,
-  Optional,
+  TemplateRef,
+  ViewContainerRef,
 } from '@angular/core';
-import { AbstractControl } from '@angular/forms';
+import { toObservable } from '@angular/core/rxjs-interop';
 
-import {
-  BehaviorSubject,
-  combineLatest,
-  merge,
-  NEVER,
-  Observable,
-  of,
-  Subscription,
-  timer,
-} from 'rxjs';
-import {
-  auditTime,
-  filter,
-  first,
-  map,
-  switchMap,
-  tap,
-  share,
-} from 'rxjs/operators';
+import { combineLatest, Subscription } from 'rxjs';
+import { map, switchMap, tap } from 'rxjs/operators';
 
+import { getErrorStateMatcher } from './all-errors-state.service';
 import { ErrorStateMatchers } from './error-state-matchers.service';
-import { ErrorsConfiguration } from './errors-configuration';
-import { ErrorsDirective } from './errors.directive';
-import { extractTouchedChanges } from './misc';
-import {
-  InvalidShowWhenError,
-  NoParentNgxErrorsError,
-  ValueMustBeStringError,
-} from './ngx-errors';
-import { OverriddenShowWhen } from './overridden-show-when.service';
+import { NgxErrorsBase } from './errors-base.directive';
+import { ERROR_CONFIGURATION, ShowErrorWhen } from './errors-configuration';
+import { filterOutNullish } from './misc';
+import { ValueMustBeStringError } from './ngx-errors';
+
+let errorDirectiveId = 0;
 
 /**
  * Directive to provide a validation error for a specific error name.
@@ -56,187 +41,236 @@ import { OverriddenShowWhen } from './overridden-show-when.service';
   // eslint-disable-next-line @angular-eslint/directive-selector
   selector: '[ngxError]',
   exportAs: 'ngxError',
+  standalone: true,
 })
 export class ErrorDirective implements AfterViewInit, OnDestroy {
   private subs = new Subscription();
 
-  @HostBinding('hidden')
+  private config = inject(ERROR_CONFIGURATION);
+
+  private errorStateMatchers = inject(ErrorStateMatchers);
+
+  private errorsDirective = inject(NgxErrorsBase);
+
+  private templateRef = inject(TemplateRef);
+
+  private viewContainerRef = inject(ViewContainerRef);
+
+  private cdr = inject(ChangeDetectorRef);
+
+  private view: EmbeddedViewRef<any> | undefined;
+
+  private errorDirectiveId = ++errorDirectiveId;
+
+  errorName = input.required<string>({ alias: 'ngxError' });
+
+  showWhen = input<ShowErrorWhen>('', { alias: 'ngxErrorShowWhen' });
+
+  private computedShowWhen = computed(() => {
+    const errorDirectiveShowWhen = this.showWhen();
+    if (errorDirectiveShowWhen) {
+      return errorDirectiveShowWhen;
+    }
+
+    const errorsDirectiveShowWhen = this.errorsDirective.showWhen();
+    if (errorsDirectiveShowWhen) {
+      return errorsDirectiveShowWhen;
+    }
+
+    if (
+      this.config.showErrorsWhenInput === 'formIsSubmitted' &&
+      !this.errorsDirective.parentControlContainer
+    ) {
+      return 'touched';
+    }
+
+    return this.config.showErrorsWhenInput;
+  });
+
+  private errorStateMatcher = computed(() => {
+    const showWhen = this.computedShowWhen();
+    return getErrorStateMatcher(this.errorStateMatchers, showWhen);
+  });
+
+  private controlState$ = toObservable(this.errorsDirective.controlState).pipe(
+    filterOutNullish(),
+  );
+
+  /**
+   * Calculates whether the error could be shown based on the result of
+   * ErrorStateMatcher and whether there is an error for this particular errorName
+   * The calculation does not take into account config.showMaxErrors
+   *
+   * In addition, it observable produces a side-effect of updating NgxErrorsStateService
+   * with the information of whether this directive could be shown and a side-effect
+   * of updating err object in case it was mutated
+   */
+  private couldBeShown$ = combineLatest([
+    this.controlState$,
+    toObservable(this.errorName),
+    toObservable(this.errorStateMatcher),
+  ]).pipe(
+    switchMap(([controlState, errorName, errorStateMatcher]) =>
+      controlState.watchedEvents$.pipe(
+        map(() => ({
+          controlState,
+          errorName,
+          errorStateMatcher,
+        })),
+      ),
+    ),
+    map(({ controlState, errorName, errorStateMatcher }) => {
+      const isErrorState = errorStateMatcher.isErrorState(
+        controlState.control,
+        controlState.parentForm,
+      );
+
+      const hasError = controlState.control.hasError(errorName);
+      const couldBeShown = isErrorState && hasError;
+
+      const prevCouldBeShown = controlState.errors()[this.errorDirectiveId];
+
+      return {
+        prevCouldBeShown,
+        couldBeShown,
+        errorName,
+        controlState,
+        hasError,
+      };
+    }),
+    tap(
+      ({
+        controlState,
+        errorName,
+        prevCouldBeShown,
+        couldBeShown,
+        hasError,
+      }) => {
+        if (prevCouldBeShown !== couldBeShown) {
+          controlState.errors.update((errors) => {
+            return { ...errors, [this.errorDirectiveId]: couldBeShown };
+          });
+        }
+
+        const err = controlState.control.getError(errorName);
+
+        const errorUpdated =
+          hasError && JSON.stringify(this.err) !== JSON.stringify(err);
+
+        if (errorUpdated) {
+          this.err = err;
+          if (this.view) {
+            this.view.context.$implicit = this.err;
+            this.view.markForCheck();
+          }
+        }
+      },
+    ),
+  );
+
+  private subscribeToCouldBeShown = this.subs.add(
+    this.couldBeShown$.subscribe(),
+  );
+
+  /**
+   * Determines whether the error is shown to the user based on
+   * the value of couldBeShown and the config.showMaxErrors.
+   * In addition, this reacts to the changes in visibility for all
+   * errors associated with the control
+   */
+  private isShown = computed(() => {
+    const controlState = this.errorsDirective.controlState();
+    if (!controlState) {
+      return false;
+    }
+
+    const errors = controlState.errors();
+
+    const couldBeShown = errors[this.errorDirectiveId];
+
+    if (!couldBeShown) {
+      return false;
+    }
+
+    const { showMaxErrors } = this.config;
+    if (!showMaxErrors) {
+      return true;
+    }
+
+    // get all errors for this control that are possibly visible,
+    // take directive ids associated with them, sort them
+    // and show only these with index <= to config.showMaxErrors
+    return Object.entries(errors)
+      .reduce((acc, curr) => {
+        const [id, couldBeShown] = curr;
+        if (couldBeShown) {
+          acc.push(Number(id));
+        }
+        return acc;
+      }, [] as number[])
+      .sort()
+      .filter((_, ix) => ix < showMaxErrors)
+      .includes(this.errorDirectiveId);
+  });
+
+  private isShownEffect = effect(() => {
+    const isShown = this.isShown();
+    const control = this.errorsDirective.resolvedControl();
+
+    if (!control) {
+      return;
+    }
+
+    const prevHidden = this.hidden;
+    this.hidden = !isShown;
+
+    if (isShown) {
+      this.err = control.getError(this.errorName());
+    } else {
+      this.err = {};
+    }
+
+    if (prevHidden !== this.hidden) {
+      this.toggleVisibility();
+    }
+
+    this.cdr.detectChanges();
+  });
+
   hidden = true;
-
-  @Input('ngxError') errorName: string;
-
-  @Input() showWhen: string;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   err: any = {};
-  private err$$ = new BehaviorSubject<any>({});
-
-  constructor(
-    private config: ErrorsConfiguration,
-    private errorStateMatchers: ErrorStateMatchers,
-    private overriddenShowWhen: OverriddenShowWhen,
-    private cdr: ChangeDetectorRef,
-    // ErrorsDirective is actually required.
-    // use @Optional so that we can throw a custom error
-    @Optional() private errorsDirective: ErrorsDirective
-  ) {}
 
   ngAfterViewInit() {
     this.validateDirective();
-    this.watchForEventsTriggeringVisibilityChange();
   }
 
   ngOnDestroy() {
-    // without the timeout object gets destroyed before call finishes causing errors
-    setTimeout(() => {
-      this.errorsDirective?.visibilityChanged(
-        this.errorName,
-        this.showWhen,
-        true
-      );
-    }, 0);
-
     this.subs.unsubscribe();
   }
 
-  private watchForEventsTriggeringVisibilityChange() {
-    const ngSubmit$ = this.errorsDirective.formDirective?.form
-      ? this.errorsDirective.formDirective.form.ngSubmit.asObservable()
-      : NEVER;
-
-    let touchedChanges$: Observable<boolean>;
-
-    const sub = this.errorsDirective.control$
-      .pipe(
-        tap((control) => {
-          this.initConfig(control);
-          this.watchForVisibilityChange(control);
-        }),
-        tap((control) => {
-          touchedChanges$ = extractTouchedChanges(control);
-          this.calcShouldDisplay(control);
-        }),
-        switchMap((control) => {
-          // https://github.com/angular/angular/issues/41519
-          // control.statusChanges do not emit when there's async validator
-          // ugly workaround:
-          let asyncBugWorkaround$: Observable<any> = NEVER;
-          if (control.asyncValidator && control.status === 'PENDING') {
-            asyncBugWorkaround$ = timer(0, 50).pipe(
-              switchMap(() => of(control.status)),
-              filter((x) => x !== 'PENDING'),
-              first()
-            );
-          }
-
-          return merge(
-            control.valueChanges,
-            control.statusChanges,
-            touchedChanges$,
-            ngSubmit$,
-            asyncBugWorkaround$
-          ).pipe(
-            auditTime(0),
-            map(() => control)
-          );
-        }),
-        tap((control) => {
-          this.calcShouldDisplay(control);
-        })
-      )
-      .subscribe();
-
-    this.subs.add(sub);
-  }
-
-  private calcShouldDisplay(control: AbstractControl) {
-    const hasError = control.hasError(this.errorName);
-
-    const controlError = control.getError(this.errorName) || {};
-    if (
-      JSON.stringify(this.err$$.getValue()) !== JSON.stringify(controlError)
-    ) {
-      this.err$$.next(controlError);
-    }
-
-    const form = this.errorsDirective.formDirective?.form ?? null;
-
-    const errorStateMatcher = this.errorStateMatchers.get(this.showWhen);
-
-    if (!errorStateMatcher) {
-      throw new InvalidShowWhenError(
-        this.showWhen,
-        this.errorStateMatchers.validKeys()
-      );
-    }
-
-    const hasErrorState = errorStateMatcher.isErrorState(control, form);
-
-    const couldBeHidden = !(hasErrorState && hasError);
-
-    this.errorsDirective.visibilityChanged(
-      this.errorName,
-      this.showWhen,
-      couldBeHidden
-    );
-  }
-
-  private watchForVisibilityChange(control: AbstractControl) {
-    const key = `${this.errorName}-${this.showWhen}`;
-
-    const sub = combineLatest([
-      this.errorsDirective.visibilityForKey$(key),
-      this.err$$,
-    ])
-      .pipe(
-        tap(([hidden, err]) => {
-          this.hidden = hidden;
-
-          this.overriddenShowWhen.errorVisibilityChanged(
-            control,
-            this.errorName,
-            this.showWhen,
-            !this.hidden
-          );
-
-          this.err = err;
-
-          this.cdr.detectChanges();
-        })
-      )
-      .subscribe();
-
-    this.subs.add(sub);
-  }
-
-  private initConfig(control: AbstractControl) {
-    if (this.showWhen) {
-      this.overriddenShowWhen.add(control);
-      return;
-    }
-
-    if (this.errorsDirective.showWhen) {
-      this.showWhen = this.errorsDirective.showWhen;
-      this.overriddenShowWhen.add(control);
-      return;
-    }
-
-    this.showWhen = this.config.showErrorsWhenInput;
-
-    if (
-      this.showWhen === 'formIsSubmitted' &&
-      !this.errorsDirective.parentFormGroupDirective
-    ) {
-      this.showWhen = 'touched';
+  private toggleVisibility() {
+    if (this.hidden) {
+      if (this.view) {
+        this.view.destroy();
+        this.view = undefined;
+      }
+    } else {
+      if (this.view) {
+        this.view.context.$implicit = this.err;
+        this.view.markForCheck();
+      } else {
+        this.view = this.viewContainerRef.createEmbeddedView(this.templateRef, {
+          $implicit: this.err,
+        });
+      }
     }
   }
 
   private validateDirective() {
-    if (this.errorsDirective == null) {
-      throw new NoParentNgxErrorsError();
-    }
-
-    if (typeof this.errorName !== 'string' || this.errorName.trim() === '') {
+    const errorName = this.errorName();
+    if (typeof errorName !== 'string' || errorName.trim() === '') {
       throw new ValueMustBeStringError();
     }
   }

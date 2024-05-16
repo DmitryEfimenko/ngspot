@@ -1,16 +1,10 @@
-import { Injectable } from '@angular/core';
+import { InjectionToken, Provider } from '@angular/core';
 
-/**
- * @deprecated
- * This type is deprecated and will be removed in a future version.
- * This was deprecated because library now provides a way to add additional
- * configurations with a user-chosen key that can be any string.
- */
-export type ShowErrorWhen =
-  | 'touched'
-  | 'dirty'
-  | 'touchedAndDirty'
-  | 'formIsSubmitted';
+import { LiteralUnionOrString } from './typings';
+
+export type ShowErrorWhen = LiteralUnionOrString<
+  'touched' | 'dirty' | 'touchedAndDirty' | 'formIsSubmitted'
+>;
 
 export interface IErrorsConfiguration {
   /**
@@ -24,16 +18,41 @@ export interface IErrorsConfiguration {
    *
    * `'formIsSubmitted'` - shows an error when parent form was submitted.
    */
-  showErrorsWhenInput?: string;
+  showErrorsWhenInput?: ShowErrorWhen;
 
   /**
    * The maximum amount of errors to display per ngxErrors block.
    */
-  showMaxErrors?: number;
+  showMaxErrors?: number | null;
 }
 
-@Injectable()
-export class ErrorsConfiguration implements IErrorsConfiguration {
-  showErrorsWhenInput = 'touched';
-  showMaxErrors: number | undefined = undefined;
+export type ErrorsConfiguration = Required<IErrorsConfiguration>;
+
+const defaultConfig: ErrorsConfiguration = {
+  showErrorsWhenInput: 'touched',
+  showMaxErrors: null,
+};
+
+export const ERROR_CONFIGURATION = new InjectionToken<ErrorsConfiguration>(
+  'ERROR_CONFIGURATION',
+  {
+    factory: () => {
+      return defaultConfig;
+    },
+  },
+);
+
+function mergeErrorsConfiguration(
+  config: IErrorsConfiguration,
+): ErrorsConfiguration {
+  return { ...defaultConfig, ...config };
+}
+
+export function provideNgxErrorsConfig(
+  config: IErrorsConfiguration = defaultConfig,
+): Provider {
+  return {
+    provide: ERROR_CONFIGURATION,
+    useValue: mergeErrorsConfiguration(config),
+  };
 }

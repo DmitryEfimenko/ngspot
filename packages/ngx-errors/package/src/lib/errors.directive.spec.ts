@@ -1,6 +1,6 @@
 /* eslint-disable no-empty */
-import { Component, ViewChild } from '@angular/core';
-import { fakeAsync, flush, tick } from '@angular/core/testing';
+import { Component, ErrorHandler, ViewChild } from '@angular/core';
+import { fakeAsync, flush } from '@angular/core/testing';
 import {
   AbstractControl,
   FormControl,
@@ -11,15 +11,14 @@ import {
 } from '@angular/forms';
 
 import { createDirectiveFactory, SpectatorDirective } from '@ngneat/spectator';
-import { first } from 'rxjs/operators';
 
-import { ErrorsConfiguration } from './errors-configuration';
+import { provideNgxErrorsConfig } from './errors-configuration';
 import { ErrorsDirective } from './errors.directive';
 import {
-  ControlNotFoundError,
   NoControlError,
-  ControlInstanceError,
   NgxError,
+  ControlInstanceError,
+  ControlNotFoundError,
 } from './ngx-errors';
 
 @Component({
@@ -53,20 +52,35 @@ const createDirectiveWithReactiveForms = createDirectiveFactory({
   directive: ErrorsDirective,
   host: TestHostWithReactiveFormsComponent,
   imports: [ReactiveFormsModule],
-  providers: [ErrorsConfiguration],
+  providers: [provideNgxErrorsConfig()],
+  detectChanges: false,
 });
 
 const createDirectiveWithTemplateDrivenForms = createDirectiveFactory({
   directive: ErrorsDirective,
   host: TestHostWithTemplateDrivenFormsComponent,
   imports: [FormsModule],
-  providers: [ErrorsConfiguration],
+  providers: [provideNgxErrorsConfig()],
 });
 
-function setupWithReactiveForms(template: string) {
+function setupWithReactiveForms(
+  template: string,
+  opts?: {
+    stubErrors: boolean;
+  },
+) {
   const spectator = createDirectiveWithReactiveForms(template);
 
-  return { spectator };
+  const errorHandler = spectator.inject(ErrorHandler);
+  // eslint-disable-next-line jasmine/no-unsafe-spy
+  const handleErrorSpy = spyOn(errorHandler, 'handleError');
+  opts?.stubErrors
+    ? handleErrorSpy.and.stub()
+    : handleErrorSpy.and.callThrough();
+
+  spectator.detectChanges();
+
+  return { spectator, handleErrorSpy };
 }
 
 async function setupWithTemplateDrivenForms(template: string) {
@@ -81,37 +95,49 @@ async function setupWithTemplateDrivenForms(template: string) {
 /**
  * This function must run in the fakeAsync context
  */
-function expectNgxError(error: NgxError) {
-  expect(() => {
-    tick();
-  }).toThrow(error);
+function expectNgxError(
+  error: NgxError,
+  factoryExpectedToThrow: () => {
+    handleErrorSpy: jasmine.Spy<(error: any) => void>;
+    spectator: SpectatorDirective<any>;
+  },
+) {
+  const { handleErrorSpy, spectator } = factoryExpectedToThrow();
+  spectator.tick();
+  expect(handleErrorSpy).toHaveBeenCalledWith(error);
+}
 
-  try {
-    // flush the setTimeout inside of the ngAfterViewInit. We need to flush it the
-    // try catch block because it might throw a NoControlError error, which is
-    // an expected behavior in some cases
-    flush();
-  } catch (e) {}
+function expectNoError(
+  factoryExpectedNotToThrow: () => {
+    handleErrorSpy: jasmine.Spy<(error: any) => void>;
+  },
+) {
+  const { handleErrorSpy } = factoryExpectedNotToThrow();
+  expect(handleErrorSpy).not.toHaveBeenCalled();
 }
 
 describe(ErrorsDirective.name, () => {
   it('should throw if no control is provided', fakeAsync(() => {
-    setupWithReactiveForms(`<div [ngxErrors]="undefined"></div>`);
-    expectNgxError(new NoControlError());
+    expectNgxError(new NoControlError(), () =>
+      setupWithReactiveForms(`<div [ngxErrors]="undefined"></div>`, {
+        stubErrors: true,
+      }),
+    );
   }));
 
   describe('GIVEN: with control', () => {
     it('GIVEN: control is an instance of FormControl, should not throw', () => {
-      const { spectator } = setupWithReactiveForms(
-        `<div [ngxErrors]="control"></div>`
+      expectNoError(() =>
+        setupWithReactiveForms(`<div [ngxErrors]="control"></div>`),
       );
-
-      expect(spectator.directive.control$).toBeDefined();
     });
 
     it('GIVEN: control is NOT an instance of FormControl, should throw', fakeAsync(() => {
-      setupWithReactiveForms(`<div [ngxErrors]="{}"></div>`);
-      expectNgxError(new ControlInstanceError());
+      expectNgxError(new ControlInstanceError(), () =>
+        setupWithReactiveForms(`<div [ngxErrors]="{}"></div>`, {
+          stubErrors: true,
+        }),
+      );
     }));
   });
 
@@ -124,13 +150,9 @@ describe(ErrorsDirective.name, () => {
         ErrorsDirective,
         TestHostWithReactiveFormsComponent
       >,
-      expectedControl: AbstractControl
+      expectedControl: AbstractControl,
     ) {
-      let actualControl: AbstractControl | undefined;
-
-      spectator.directive.control$.pipe(first()).subscribe((control) => {
-        actualControl = control;
-      });
+      const actualControl = spectator.directive.resolvedControl();
 
       expect(actualControl).toBe(expectedControl);
 
@@ -144,20 +166,23 @@ describe(ErrorsDirective.name, () => {
       </div>
       `);
 
+      spectator.tick();
+
       const fName = spectator.hostComponent.form.get(
-        'firstName'
+        'firstName',
       ) as FormControl;
       expectControl(spectator, fName);
     }));
 
     it('GIVEN: control specified as string; control DOES NOT exist, should throw', fakeAsync(() => {
-      setupWithReactiveForms(`
-      <form [formGroup]="form">
-        <div ngxErrors="mistake"></div>
-      </form>
-      `);
-
-      expectNgxError(new ControlNotFoundError('mistake'));
+      const template = `
+        <form [formGroup]="form">
+          <div ngxErrors="mistake"></div>
+        </form>
+      `;
+      expectNgxError(new ControlNotFoundError('mistake'), () =>
+        setupWithReactiveForms(template, { stubErrors: true }),
+      );
     }));
 
     it('GIVEN: formGroup with nested formGroupName, control should be the "street"', fakeAsync(() => {
@@ -168,6 +193,8 @@ describe(ErrorsDirective.name, () => {
         </div>
       </form>
       `);
+
+      spectator.tick();
 
       expectControl(spectator, spectator.hostComponent.street);
     }));
@@ -180,6 +207,8 @@ describe(ErrorsDirective.name, () => {
         </div>
       </form>
       `);
+
+      spectator.tick();
 
       expectControl(spectator, spectator.hostComponent.street);
     }));
@@ -194,19 +223,15 @@ describe(ErrorsDirective.name, () => {
         ErrorsDirective,
         TestHostWithTemplateDrivenFormsComponent
       >,
-      expectedControl: AbstractControl
+      expectedControl: AbstractControl,
     ) {
-      let actualControl: AbstractControl | undefined;
-
-      spectator.directive.control$.pipe(first()).subscribe((control) => {
-        actualControl = control;
-      });
+      const actualControl = spectator.directive.resolvedControl();
 
       expect(expectedControl).toBeDefined();
       expect(actualControl).toBe(expectedControl);
     }
 
-    it('GIVEN: the use of ngModelGroup should not throw', async () => {
+    it('GIVEN: the use of ngModelGroup should not throw', fakeAsync(async () => {
       const { spectator } = await setupWithTemplateDrivenForms(`
       <form>
         <div ngModelGroup="address" #addressModelGroup="ngModelGroup">
@@ -215,10 +240,12 @@ describe(ErrorsDirective.name, () => {
       </form>
       `);
 
+      spectator.tick();
+
       expectControl(
         spectator,
-        spectator.hostComponent.form.controls['address']
+        spectator.hostComponent.form.controls['address'],
       );
-    });
+    }));
   });
 });

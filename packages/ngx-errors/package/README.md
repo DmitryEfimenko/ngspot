@@ -49,10 +49,15 @@ There are a few rules that the library follows to determine when to display erro
 
 For more info about this see [Advanced configuration](#configuration).
 
-## Installation
+## Compatibility
 
-- For Angular >= v13 use @ngspot/ngx-errors@3.x
-- For Angular < v13 use @ngspot/ngx-errors@2.x
+| Angular | @ngspot/ngx-errors |
+|---------|--------------------|
+| >17.1   | 4.x                |
+| >13.0   | 3.x                |
+| >9.1    | 2.x                |
+
+## Installation
 
 ### NPM
 
@@ -67,7 +72,7 @@ For more info about this see [Advanced configuration](#configuration).
 Import library into application module:
 
 ```ts
-import { NgxErrorsModule } from '@ngspot/ngx-errors'; // <-- import the module
+
 
 @NgModule({
   imports: [
@@ -80,14 +85,18 @@ export class MyAppModule {}
 ### Use case with a form:
 
 ```ts
+import { NGX_ERRORS_DECLARATIONS } from '@ngspot/ngx-errors'; // <-- import declarations
+
 @Component({
   selector: 'my-component',
+  standalone: true,
+  imports: [ReactiveFormsModule, NGX_ERRORS_DECLARATIONS], // <-- include imported declarations in the imports
   template: `
     <form [formGroup]="myForm">
       <input formControlName="email" type="email" />
 
       <div ngxErrors="email">
-        <div ngxError="required">Email is required</div>
+        <div *ngxError="'required'">Email is required</div>
       </div>
     </form>
   `,
@@ -108,11 +117,13 @@ export class MyComponent implements OnInit {
 ```ts
 @Component({
   selector: 'my-component',
+  standalone: true,
+  imports: [ReactiveFormsModule, NGX_ERRORS_DECLARATIONS],
   template: `
     <input [formControl]="email" placeholder="Email" type="email" />
 
     <div [ngxErrors]="email">
-      <div ngxError="required">Email is required</div>
+      <div *ngxError="'required'">Email is required</div>
     </div>
   `,
 })
@@ -126,11 +137,13 @@ export class MyComponent implements OnInit {
 ```ts
 @Component({
   selector: 'my-component',
+  standalone: true,
+  imports: [FormsModule, NGX_ERRORS_DECLARATIONS],
   template: `
     <input [(ngModel)]="email" #emailModel="ngModel" required type="email" />
 
     <div [ngxErrors]="emailModel.control">
-      <div ngxError="required">Email is required</div>
+      <div *ngxError="'required'">Email is required</div>
     </div>
   `,
 })
@@ -141,28 +154,35 @@ export class MyComponent implements OnInit {
 
 ## Configuration
 
-Configure when to show messages for whole module by using `.configure()` method:
+Configure how and when the errors should show up by using `provideNgxErrorsConfig()` function either at the application level or at the component level:
 
+At the application level:
 ```ts
-@NgModule({
-  imports: [
-    NgxErrorsModule.configure({ ... }) // <- provide configuration here
-  ],
-})
-export class MyAppModule {}
+import { provideNgxErrorsConfig } from '@ngspot/ngx-errors';
+
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideNgxErrorsConfig({
+      showErrorsWhenInput: 'dirty',
+      showMaxErrors: 1,
+    })
+  ]
+}).catch((err) =>
+  console.error(err)
+);
 ```
 
-Alternatively, use dependency injection to provide configuration at a component level:
-
+At the component level
 ```ts
-import { ErrorsConfiguration, IErrorsConfiguration } from '@ngspot/ngx-errors';
-
-const myConfig: IErrorsConfiguration = { ... }; // <- specify config
+import { provideNgxErrorsConfig } from '@ngspot/ngx-errors';
 
 @Component({
   ...
   providers: [
-    { provide: ErrorsConfiguration, useValue: myConfig }
+    provideNgxErrorsConfig({
+      showErrorsWhenInput: 'dirty',
+      showMaxErrors: 1,
+    })
   ]
 })
 export class MyComponent { }
@@ -185,7 +205,7 @@ export interface IErrorsConfiguration {
    *
    * `'formIsSubmitted'` - shows an error when parent form was submitted.
    */
-  showErrorsWhenInput: string;
+  showErrorsWhenInput?: string;
 
   /**
    * The maximum amount of errors to display per ngxErrors block.
@@ -234,15 +254,17 @@ Now the string `'myAwesome'` can be used either in the `showErrorsWhenInput` pro
 
 ### Overriding global config
 
-You can override the configuration specified at the module level by using `[showWhen]` input on `[ngxErrors]` and on `[ngxError]` directives:
+You can override the configuration specified through `provideNgxErrorsConfig()` function by using `[showWhen]` input on `[ngxErrors]` and on `[ngxError]` directives:
 
 ```html
 <div ngxErrors="control" showWhen="touchedAndDirty">
-  <div ngxError="required" showWhen="dirty">
+  <div *ngxError="'required'; showWhen: 'dirty'">
     This will be shown when control is dirty
   </div>
 
-  <div ngxError="min">This will be shown when control is touched and dirty</div>
+  <div *ngxError="'min'">
+    This will be shown when control is touched and dirty
+  </div>
 </div>
 ```
 
@@ -276,18 +298,17 @@ You can easily get access to these details in the template:
 
 ```html
 <div ngxErrors="control">
-  <div ngxError="min" #myMin="ngxError">
-    Number should be greater than {{myMin.err.min}}. You've typed
-    {{myMin.err.actual}}.
+  <div *ngxError="'min'; let err">
+    Number should be greater than {{ err.min }}. You've typed {{ err.actual }}.
   </div>
 </div>
 ```
 
-In the example above we're assigning a variable `myMin` (can be anything you want) to the directive `ngxError`. Using this variable we can access the context of the directive. The directive has property `err` that contains all the error details.
+In the example above we're accessing error context through a variable `err` (can be anything you want).
 
 ## Styling
 
-Include something similar to the following in global CSS file:
+`ngxErrors` directive can be applied to an element such as div or to an `ng-container`. If it's a div, that div can be targeted with the following CSS included in the global CSS file:
 
 ```css
 [ngxerrors] {
@@ -297,7 +318,7 @@ Include something similar to the following in global CSS file:
 
 ## Integration with @angular/material
 
-Angular Material inputs have [their own way](https://material.angular.io/components/input/overview#changing-when-error-messages-are-shown) of setting logic for determining if the input needs to be highlighted red or not. If custom behavior is needed, a developer needs to provide appropriate configuration. @ngspot/ngx-errors configures this functionality for the developer under the hood. In order for this configuration to integrate with @angular/material inputs smoothly, use package `@ngspot/ngx-errors-material`:
+Angular Material inputs have [their own way](https://material.angular.io/components/input/overview#changing-when-error-messages-are-shown) of setting logic for determining if the input needs to be highlighted red or not. If custom behavior is needed, a developer needs to provide appropriate configuration. @ngspot/ngx-errors configures this functionality for the developer under the hood. In order for this configuration to integrate with @angular/material inputs smoothly, use package `@ngspot/ngx-errors-material`. It also provides an additional optimization where `mat-form-field` component serves the purpose of `ngxErrors` directive.
 
 Install:
 
@@ -308,14 +329,39 @@ npm install @ngspot/ngx-errors-material
 Use:
 
 ```ts
-import { NgxErrorsMaterialModule } from '@ngspot/ngx-errors-material';
+import { NGX_ERRORS_MATERIAL_DECLARATIONS } from '@ngspot/ngx-errors-material'; // <-- import the declarations
 
-@NgModule({
+@Component({
+  selector: 'my-component',
+  standalone: true,
   imports: [
-    // ...
-    NgxErrorsMaterialModule
-  ]
+    ReactiveFormsModule,
+    MatInputModule,
+    NGX_ERRORS_MATERIAL_DECLARATIONS, // <-- include imported declarations
+  ],
+  template: `
+    <form [formGroup]="form">
+      <mat-form-field>
+        <mat-label>Name</mat-label>
+
+        <input matInput formControlName="name" />
+
+        <!-- 
+          Note: there's no parent ngxErrors directive.
+          mat-form-field serves the purpose ngxErrors directive.
+        -->
+        <mat-error *ngxError="'required'">Name is required</mat-error>
+      </mat-form-field>
+    </form>
+  `
 })
+export class MyComponent {
+  private fb = inject(FormBuilder);
+
+  form = this.fb.group({
+    name: this.fb.control('', { validators: [Validators.required] }),
+  });
+}
 ```
 
 ## Miscellaneous

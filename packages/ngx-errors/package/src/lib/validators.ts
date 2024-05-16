@@ -26,7 +26,7 @@ export interface DependentValidatorOptions<T> {
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function dependentValidator<T = any>(
-  opts: DependentValidatorOptions<T>
+  opts: DependentValidatorOptions<T>,
 ) {
   let subscribed = false;
 
@@ -38,7 +38,7 @@ export function dependentValidator<T = any>(
     if (!controlToWatch) {
       if (isDevMode()) {
         console.warn(
-          `dependentValidator could not find specified watchControl`
+          `dependentValidator could not find specified watchControl`,
         );
       }
       return null;

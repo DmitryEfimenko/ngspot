@@ -2,32 +2,18 @@
 import {
   AfterViewInit,
   Directive,
-  Input,
-  Optional,
-  SkipSelf,
-  OnDestroy,
+  signal,
+  input,
+  computed,
 } from '@angular/core';
 import {
   AbstractControl,
   FormArray,
   FormControl,
   FormGroup,
-  FormGroupDirective,
-  FormGroupName,
 } from '@angular/forms';
 
-import { BehaviorSubject, combineLatest, Subscription } from 'rxjs';
-import {
-  distinctUntilChanged,
-  map,
-  shareReplay,
-  filter,
-  tap,
-} from 'rxjs/operators';
-
-import { ErrorsConfiguration } from './errors-configuration';
-import { NgxErrorsFormDirective } from './form.directive';
-import { filterOutNullish } from './misc';
+import { NgxErrorsBase } from './errors-base.directive';
 import {
   ControlInstanceError,
   ControlNotFoundError,
@@ -76,151 +62,63 @@ import {
 @Directive({
   selector: '[ngxErrors]',
   exportAs: 'ngxErrors',
+  standalone: true,
+  providers: [{ provide: NgxErrorsBase, useExisting: ErrorsDirective }],
 })
-export class ErrorsDirective implements AfterViewInit, OnDestroy {
-  private subs = new Subscription();
+export class ErrorsDirective extends NgxErrorsBase implements AfterViewInit {
+  controlInput = input.required<AbstractControl | string>({
+    alias: 'ngxErrors',
+  });
 
-  private control$$ = new BehaviorSubject<AbstractControl | undefined>(
-    undefined
-  );
-  control$ = this.control$$.asObservable().pipe(filterOutNullish());
+  resolvedControl = computed(() => {
+    const controlInput = this.controlInput();
 
-  private _controlInput$ = new BehaviorSubject<
-    AbstractControl | string | undefined
-  >(undefined);
-  private afterViewInit$ = new BehaviorSubject(false);
-
-  @Input('ngxErrors')
-  set _control(val: AbstractControl | string | undefined) {
-    if (val != null) {
-      this._controlInput$.next(val);
-    }
-  }
-
-  @Input() showWhen: string;
-
-  private errorsCouldBeHidden$$ = new BehaviorSubject<Record<string, boolean>>(
-    {}
-  );
-
-  private errorsVisibility$ = this.errorsCouldBeHidden$$.asObservable().pipe(
-    map((errorsCouldBeHidden) => {
-      const arr = [];
-      let visibleCount = 0;
-      for (const key in errorsCouldBeHidden) {
-        if (Object.prototype.hasOwnProperty.call(errorsCouldBeHidden, key)) {
-          const errorCouldBeHidden = errorsCouldBeHidden[key];
-          if (!errorCouldBeHidden) {
-            visibleCount++;
-          }
-
-          const visible =
-            !errorCouldBeHidden &&
-            (!this.config.showMaxErrors ||
-              visibleCount <= this.config.showMaxErrors);
-
-          arr.push({ key, hidden: !visible });
-        }
-      }
-      return arr;
-    }),
-    shareReplay(1)
-  );
-
-  constructor(
-    @Optional()
-    @SkipSelf()
-    public formDirective: NgxErrorsFormDirective | null,
-    @Optional()
-    @SkipSelf()
-    public parentFormGroupDirective: FormGroupDirective | null,
-    @Optional()
-    @SkipSelf()
-    private parentFormGroupName: FormGroupName | null,
-    private config: ErrorsConfiguration
-  ) {
     // initialize directive only after control input was set AND after
     // afterViewInit since parentFormGroupDirective might not be resolved
     // before that
-    const $ = combineLatest(
-      this._controlInput$.pipe(filterOutNullish()),
-      this.afterViewInit$.pipe(filter((hasInit) => hasInit === true))
-    ).pipe(
-      tap(([control]) => {
-        this.initDirective(control);
-      })
-    );
-
-    this.subs.add($.subscribe());
-  }
-
-  ngAfterViewInit() {
-    this.afterViewInit$.next(true);
-
-    // Use of the setTimeout to ensure that the @Input _control was surely set
-    // in the all cases. In particular the edge-case where ngModelGroup
-    // declared via template driven forms results in the control being
-    // set later than ngAfterViewInit life-cycle hook is called
-    setTimeout(() => {
-      this.validateDirective();
-    }, 0);
-  }
-
-  ngOnDestroy() {
-    this.subs.unsubscribe();
-  }
-
-  visibilityForKey$(key: string) {
-    return this.errorsVisibility$.pipe(
-      map((errors) => errors.find((error) => error.key === key)),
-      filterOutNullish(),
-      map((error) => error.hidden),
-      distinctUntilChanged()
-    );
-  }
-
-  visibilityChanged(errorName: string, showWhen: string, hidden: boolean) {
-    const key = `${errorName}-${showWhen}`;
-    const val = this.errorsCouldBeHidden$$.getValue();
-    if (val[key] !== hidden) {
-      const newVal = { ...val, [key]: hidden };
-      this.errorsCouldBeHidden$$.next(newVal);
-    }
-  }
-
-  private validateDirective() {
-    if (!this._controlInput$.value) {
-      throw new NoControlError();
-    }
-  }
-
-  private initDirective(_control: AbstractControl | string) {
-    if (typeof _control === 'string') {
-      if (!this.parentFormGroupDirective) {
-        throw new ParentFormGroupNotFoundError(_control);
-      }
-
-      const control = !this.parentFormGroupName
-        ? this.parentFormGroupDirective.form.get(_control)
-        : this.parentFormGroupName.control.get(_control);
-
-      if (control == null) {
-        throw new ControlNotFoundError(_control);
-      }
-
-      this.control$$.next(control);
+    if (!this.afterViewInitComplete()) {
       return;
     }
 
-    if (!this.isAbstractControl(_control)) {
+    if (!controlInput) {
+      throw new NoControlError();
+    }
+
+    if (typeof controlInput === 'string') {
+      if (!this.parentControlContainer) {
+        throw new ParentFormGroupNotFoundError(controlInput);
+      }
+
+      const control = this.parentControlContainer.control?.get(controlInput);
+
+      if (control == null) {
+        throw new ControlNotFoundError(controlInput);
+      }
+
+      return control;
+    }
+
+    if (!this.isAbstractControl(controlInput)) {
       throw new ControlInstanceError();
     }
 
-    this.control$$.next(_control);
+    return controlInput;
+  });
+
+  private afterViewInitComplete = signal(false);
+
+  ngAfterViewInit() {
+    setTimeout(() => {
+      // Use of the setTimeout to ensure that the controlInput was surely set
+      // in all cases. In particular the edge-case where ngModelGroup
+      // declared via template driven forms results in the control being
+      // set later than ngAfterViewInit life-cycle hook is called
+      this.afterViewInitComplete.set(true);
+    }, 0);
   }
 
   private isAbstractControl(
-    control: AbstractControl | string
+    control: AbstractControl | string,
   ): control is AbstractControl {
     return (
       control instanceof FormControl ||

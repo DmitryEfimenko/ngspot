@@ -3,11 +3,11 @@ import { AbstractControl, FormGroupDirective, NgForm } from '@angular/forms';
 
 import { IErrorStateMatcher } from './custom-error-state-matchers';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ShowOnTouchedErrorStateMatcher implements IErrorStateMatcher {
   isErrorState(
     control: AbstractControl | null,
-    form: FormGroupDirective | NgForm | null
+    form: FormGroupDirective | NgForm | null,
   ): boolean {
     return !!(
       control &&
@@ -17,11 +17,11 @@ export class ShowOnTouchedErrorStateMatcher implements IErrorStateMatcher {
   }
 }
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ShowOnDirtyErrorStateMatcher implements IErrorStateMatcher {
   isErrorState(
     control: AbstractControl | null,
-    form: FormGroupDirective | NgForm | null
+    form: FormGroupDirective | NgForm | null,
   ): boolean {
     return !!(
       control &&
@@ -31,13 +31,13 @@ export class ShowOnDirtyErrorStateMatcher implements IErrorStateMatcher {
   }
 }
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ShowOnTouchedAndDirtyErrorStateMatcher
   implements IErrorStateMatcher
 {
   isErrorState(
     control: AbstractControl | null,
-    form: FormGroupDirective | NgForm | null
+    form: FormGroupDirective | NgForm | null,
   ): boolean {
     return !!(
       control &&
@@ -47,11 +47,11 @@ export class ShowOnTouchedAndDirtyErrorStateMatcher
   }
 }
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ShowOnSubmittedErrorStateMatcher implements IErrorStateMatcher {
   isErrorState(
     control: AbstractControl | null,
-    form: FormGroupDirective | NgForm | null
+    form: FormGroupDirective | NgForm | null,
   ): boolean {
     return !!(control && control.invalid && form && form.submitted);
   }

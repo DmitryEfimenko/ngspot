@@ -4,7 +4,7 @@ import { AbstractControl, FormGroupDirective, NgForm } from '@angular/forms';
 export interface IErrorStateMatcher {
   isErrorState(
     control: AbstractControl | null,
-    form: FormGroupDirective | NgForm | null
+    form: FormGroupDirective | NgForm | null,
   ): boolean;
 }
 
