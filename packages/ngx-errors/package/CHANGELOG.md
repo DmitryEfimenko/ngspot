@@ -2,6 +2,20 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [4.0.0](https://github.com/DmitryEfimenko/ngspot/compare/ngx-errors-3.2.3...ngx-errors-4.0.0) (2024-05-16)
+
+
+### ⚠ BREAKING CHANGES
+
+* **ngx-errors:** 🧨 Require Angular 17.1; Removed NgModules and use declarations variable
+instead; ngxError directive is now structural - removes error from the
+DOM when invisible
+
+### Features
+
+* **ngspot:** 🔥 update repo to ng17 ([895f811](https://github.com/DmitryEfimenko/ngspot/commit/895f81149af5be2460fbe8454b12ab98b985b855))
+* **ngx-errors:** 🔥 angular 17.1 compat ([49ddc39](https://github.com/DmitryEfimenko/ngspot/commit/49ddc39a965b1f6661f3d5d73a43c147df72c8fc))
+
 ### [3.2.3](https://github.com/DmitryEfimenko/ngspot/compare/ngx-errors-3.2.2...ngx-errors-3.2.3) (2024-05-03)
 
 ### [3.2.2](https://github.com/DmitryEfimenko/ngspot/compare/ngx-errors-3.2.1...ngx-errors-3.2.2) (2024-05-02)
