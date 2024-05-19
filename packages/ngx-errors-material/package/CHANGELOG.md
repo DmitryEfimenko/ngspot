@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [4.0.1-rc.0](https://github.com/DmitryEfimenko/ngspot/compare/ngx-errors-material-4.0.0...ngx-errors-material-4.0.1-rc.0) (2024-05-19)
+
+
+### Bug Fixes
+
+* 🐞 re-exports from ngx-errors don't work ([055dc11](https://github.com/DmitryEfimenko/ngspot/commit/055dc112ea11e8c8e652ef8b4f6a682910c131e5))
+
 ## [4.0.0](https://github.com/DmitryEfimenko/ngspot/compare/ngx-errors-material-3.0.0...ngx-errors-material-4.0.0) (2024-05-16)
 
 
