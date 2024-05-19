@@ -41,8 +41,12 @@ One time config: `git config --global push.followTags true`
 
 1. Switch to main branch: `git checkout main`
 1. Make sure you have latest: `git pull` and `npm install`
-1. Run `npm run nx -- version <project> -- --dryRun true`. If releasing for the first time, consider adding an override flag at the end of the command: `--releaseAs=major` (or `minor`, or `patch`)
+1. Run `npm run nx -- version <project> -- --dryRun true`.
+  * If reported version is incorrect, see *Debugging release (commit tag) section
+  * If releasing a release candidate, add options `--releaseAs=prerelease --preid=rc`. Don't forget to include `--tag=next` when publishing package.
+  * If releasing for the first time, consider adding an override flag at the end of the command: `--releaseAs=major` (or `minor`, or `patch`)
 1. Make sure that CHANGELOG looks right and run the command above without `--dryRun ` option
+  * If CHANGELOG needs to be updated, save the needed changes in the CHANGELOG, run `git add .`, `git commit --amend`, and move the tag to the latest commit. See *Debugging release (commit tag) section
 1. Run `npm run nx -- build <project>`
 1. Run `npm run nx -- publish <project> [--tag=next] [--verbose=true]`
 1. Repeat for each `<package-worked-on>`
@@ -114,6 +118,30 @@ Example with `@angular/material`. Instead of running `ng add @angular/material`,
 npm i @angular/material [-D]
 npm run nx -- g @angular/material:ng-add --project=demo
 ```
+
+## Debugging release (commit tag)
+
+Issue can appear when performing `git commit --amend`. The tag won't be moved automatically on a new commit hash. To move it:
+
+```sh
+git tag -d <tagname>                  # delete the old tag locally
+git push origin :refs/tags/<tagname>  # delete the old tag remotely
+git tag <tagname> <commitId>          # make a new tag locally
+git push origin <tagname>             # push the new local tag to the remote 
+```
+Example:
+```sh
+git tag -d ngx-errors-material-4.0.0
+git push origin :refs/tags/ngx-errors-material-4.0.0
+git tag ngx-errors-material-4.0.0 4a4838b26b68c596085b3d8ba37874208758cb1e
+git push origin ngx-errors-material-4.0.0
+```
+
+### Additional commands:
+
+* list tags: `git tag --sort=-creatordate`
+* list tags for prefix: `git tag --sort=-creatordate -l 'ngx-errors-material*'`
+* list commits with corresponding tags: `git show-ref --tags -d`
 
 ## Development server
 
