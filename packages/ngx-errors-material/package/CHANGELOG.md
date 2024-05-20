@@ -2,6 +2,8 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [4.0.1](https://github.com/DmitryEfimenko/ngspot/compare/ngx-errors-material-4.0.1-rc.1...ngx-errors-material-4.0.1) (2024-05-20)
+
 ## [4.0.1-rc.1](https://github.com/DmitryEfimenko/ngspot/compare/ngx-errors-material-4.0.1-rc.0...ngx-errors-material-4.0.1-rc.1) (2024-05-20)
 
 
