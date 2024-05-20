@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [4.0.1-rc.1](https://github.com/DmitryEfimenko/ngspot/compare/ngx-errors-material-4.0.1-rc.0...ngx-errors-material-4.0.1-rc.1) (2024-05-20)
+
+
+### Bug Fixes
+
+* 🐞 NgxErrorsFormDirective provider mis ([4d43371](https://github.com/DmitryEfimenko/ngspot/commit/4d43371a429f586f4f27f423e79001268744e34e))
+
 ## [4.0.1-rc.0](https://github.com/DmitryEfimenko/ngspot/compare/ngx-errors-material-4.0.0...ngx-errors-material-4.0.1-rc.0) (2024-05-19)
 
 
