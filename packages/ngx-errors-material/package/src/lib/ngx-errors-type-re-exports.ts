@@ -3,6 +3,7 @@ import { Directive } from '@angular/core';
 import {
   ErrorDirective,
   ErrorsDirective,
+  NgxErrorsBase,
   NgxErrorsFormDirective,
 } from '@ngspot/ngx-errors';
 
@@ -19,6 +20,7 @@ export class TempErrorDirective extends ErrorDirective {}
   selector: '[ngxErrors]',
   exportAs: 'ngxErrors',
   standalone: true,
+  providers: [{ provide: NgxErrorsBase, useExisting: TempErrorsDirective }],
 })
 export class TempErrorsDirective extends ErrorsDirective {}
 
@@ -27,5 +29,11 @@ export class TempErrorsDirective extends ErrorsDirective {}
   selector: 'form',
   exportAs: 'ngxErrorsForm',
   standalone: true,
+  providers: [
+    {
+      provide: NgxErrorsFormDirective,
+      useExisting: TempNgxErrorsFormDirective,
+    },
+  ],
 })
 export class TempNgxErrorsFormDirective extends NgxErrorsFormDirective {}

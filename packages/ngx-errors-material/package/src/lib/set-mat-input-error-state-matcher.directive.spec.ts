@@ -2,16 +2,18 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatButtonHarness } from '@angular/material/button/testing';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatFormFieldHarness } from '@angular/material/form-field/testing';
 import { MatInputModule } from '@angular/material/input';
 
 import { createDirectiveFactory } from '@ngneat/spectator';
+import { ShowErrorWhen } from '@ngspot/ngx-errors';
 
-import {
-  NGX_ERRORS_MATERIAL_DECLARATIONS,
-  provideNgxErrorsConfig,
-} from './ngx-errors-material.module';
+import { provideNgxErrorsConfig } from '../index';
+
+import { NGX_ERRORS_MATERIAL_DECLARATIONS } from './ngx-errors-material-declarations';
 import { SetMatInputErrorStateMatcherDirective } from './set-mat-input-error-state-matcher.directive';
 
 @Component({
@@ -32,6 +34,7 @@ describe(SetMatInputErrorStateMatcherDirective.name, () => {
     imports: [
       NGX_ERRORS_MATERIAL_DECLARATIONS,
       MatInputModule,
+      MatButtonModule,
       MatFormFieldModule,
       ReactiveFormsModule,
     ],
@@ -80,11 +83,16 @@ describe(SetMatInputErrorStateMatcherDirective.name, () => {
 
       return result;
     }
+
+    async submitForm() {
+      const button = await this.loader.getHarness(MatButtonHarness);
+      await button.click();
+    }
   }
 
   interface SetupOptions {
     withTemplateShowWhenOverride?: string;
-    configShowWhen?: string;
+    configShowWhen?: ShowErrorWhen;
     withoutNgxErrors?: boolean;
   }
 
@@ -107,6 +115,8 @@ describe(SetMatInputErrorStateMatcherDirective.name, () => {
           <input matInput formControlName="name" />
 
           ${!options.withoutNgxErrors ? ngxErrorBlock : ''}
+
+          <button type="submit" mat-button>Submit</button>
         </mat-form-field>
       </form>
     `;
@@ -181,6 +191,18 @@ describe(SetMatInputErrorStateMatcherDirective.name, () => {
       });
 
       await ctx.dirtyInput();
+
+      expect(await ctx.hasMaterialErrorState()).toBe(true);
+    });
+  });
+
+  describe('GIVEN: configShowWhen is "formIsSubmitted"', () => {
+    it('WHEN: form is submitted; EXPECT: error state.', async () => {
+      const { ctx } = await setup({
+        configShowWhen: 'formIsSubmitted',
+      });
+
+      await ctx.submitForm();
 
       expect(await ctx.hasMaterialErrorState()).toBe(true);
     });
