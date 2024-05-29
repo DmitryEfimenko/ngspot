@@ -26,14 +26,14 @@ const withoutModuleTs =
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <ngs-code-snippets
-      header="Without NgxErrorsMaterialModule module"
+      header="Without ngx-errors-material lib"
       [snippets]="snippets['withoutModule']"
       [expanded]="false"
     >
       <ng-container *ngsSnippetDescription>
         This example demonstrates behavior of material error when
-        NgxErrorsMaterialModule module is not used and custom error
-        configuration is provided. Notice the use of the
+        ngx-errors-material lib is not used and custom error configuration is
+        provided. Notice the use of the
         <pre>{{ configSample | json }}</pre>
         configuration. According to this configuration, the error should not be
         reported unless the input was modified by the user. However, just

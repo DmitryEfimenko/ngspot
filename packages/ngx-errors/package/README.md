@@ -69,15 +69,35 @@ For more info about this see [Advanced configuration](#configuration).
 
 ## Usage
 
-Import library into application module:
+### For applications using NgModules:
+
+Import `NGX_ERRORS_DECLARATIONS` into application module:
 
 ```ts
-
+import { NGX_ERRORS_DECLARATIONS } from '@ngspot/ngx-errors'
 
 @NgModule({
   imports: [
-    NgxErrorsModule, // <-- include imported module in app module
+    NGX_ERRORS_DECLARATIONS, // <-- include
   ],
+})
+export class MyAppModule {}
+```
+
+### For applications using standalone components:
+
+Import `NGX_ERRORS_DECLARATIONS` into component:
+
+```ts
+import { NGX_ERRORS_DECLARATIONS } from '@ngspot/ngx-errors'
+
+@Component({
+  selector: 'my-component',
+  standalone: true,
+  imports: [
+    NGX_ERRORS_DECLARATIONS, // <-- include
+  ],
+  template: `...`
 })
 export class MyAppModule {}
 ```

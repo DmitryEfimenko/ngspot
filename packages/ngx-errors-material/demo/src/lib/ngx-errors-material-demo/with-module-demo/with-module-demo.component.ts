@@ -21,18 +21,18 @@ const withModuleTs = require('raw-loader!./snippet-with-module.txt').default;
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <ngs-code-snippets
-      header="With NgxErrorsMaterialModule module"
+      header="With ngx-errors-material lib"
       [snippets]="snippets['withModule']"
       [expanded]="false"
     >
       <ng-container *ngsSnippetDescription>
         This example demonstrates behavior of material error when
-        NgxErrorsMaterialModule module is used and custom error configuration is
+        ngx-errors-material library is used and custom error configuration is
         provided. Notice the use of the
         <pre>{{ configSample | json }}</pre>
         configuration. According to this configuration, the error should not be
         reported unless the input was modified by the user. Now, because
-        NgxErrorsMaterialModule is used, just focusing on the input and
+        ngx-errors-material lib is used, just focusing on the input and
         un-focusing (marking input as touched) will NOT change the color of the
         label to the error state while the error is not yet shown.
       </ng-container>
