@@ -1,6 +1,7 @@
-# Changelog
+### 3.0.2 (2024-11-12)
 
-This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
+### Bug Fixes
+
 
 ### [3.0.1](https://github.com/DmitryEfimenko/ngspot/compare/expandable-input-3.0.0...expandable-input-3.0.1) (2023-08-06)
 
