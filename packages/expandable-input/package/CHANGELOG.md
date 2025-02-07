@@ -1,3 +1,26 @@
+## 3.0.3 (2025-02-07)
+
+
+### 🚀 Features
+
+- ⚠️  **ng-superclass:** 🔥 improve FormComponentSuperclass ([#13](https://github.com/DmitryEfimenko/ngspot/pull/13))
+
+- **ngspot:** 🔥 update repo to ng17 ([895f811](https://github.com/DmitryEfimenko/ngspot/commit/895f811))
+
+- **expandable-input:** 🔥 angular v >15 compat ([#17](https://github.com/DmitryEfimenko/ngspot/pull/17))
+
+
+### 🩹 Fixes
+
+- peer deps ([0fd9d5d](https://github.com/DmitryEfimenko/ngspot/commit/0fd9d5d))
+
+- **expandable-input:** 🐞 apply display none when collapsed ([37c5bf1](https://github.com/DmitryEfimenko/ngspot/commit/37c5bf1))
+
+
+#### ⚠️  Breaking Changes
+
+- **ng-superclass:** 🧨
+
 ### 3.0.2 (2024-11-12)
 
 ### Bug Fixes

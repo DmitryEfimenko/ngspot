@@ -1,3 +1,17 @@
+## 4.0.1 (2025-02-07)
+
+
+### 🚀 Features
+
+- **ngspot:** 🔥 update repo to ng17 ([895f811](https://github.com/DmitryEfimenko/ngspot/commit/895f811))
+
+- ⚠️  **ngx-errors:** 🔥 angular 17.1 compat ([49ddc39](https://github.com/DmitryEfimenko/ngspot/commit/49ddc39))
+
+
+#### ⚠️  Breaking Changes
+
+- **ngx-errors:** 🧨 Require Angular 17.1; Removed NgModules and use declarations variable
+
 ## [4.0.0](https://github.com/DmitryEfimenko/ngspot/compare/ngx-errors-3.2.3...ngx-errors-4.0.0) (2024-05-16)
 
 
