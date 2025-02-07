@@ -1,5 +1,29 @@
 {
+  "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "extends": "nx/presets/core.json",
+  "release": {
+    "groups": {
+      "expandable-input": {
+        "projects": ["expandable-input"],
+        "releaseTagPattern": "{projectName}-{version}"
+      }
+    },
+    "projectsRelationship": "independent",
+    "releaseTagPattern": "{projectName}-{version}",
+    "version": {
+      "conventionalCommits": true
+    },
+    "changelog": {
+      "projectChangelogs": {
+        "createRelease": "github",
+        "renderOptions": {
+          "authors": false,
+          "commitReferences": true,
+          "versionTitleDate": true
+        }
+      }
+    }
+  },
   "generators": {
     "@nx/angular:application": {
       "style": "scss",
@@ -15,7 +39,6 @@
       "style": "scss"
     }
   },
-  "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "namedInputs": {
     "default": ["{projectRoot}/**/*", "sharedGlobals"],
     "sharedGlobals": [],

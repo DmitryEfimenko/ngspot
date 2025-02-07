@@ -1,7 +1,3 @@
-# Changelog
-
-This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
-
 ### [1.2.1](https://github.com/DmitryEfimenko/ngspot/compare/remote-data-1.2.0...remote-data-1.2.1) (2022-06-22)
 
 

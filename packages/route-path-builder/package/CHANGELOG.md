@@ -1,7 +1,3 @@
-# Changelog
-
-This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
-
 ### [2.0.1](https://github.com/DmitryEfimenko/ngspot/compare/route-path-builder-2.0.0...route-path-builder-2.0.1) (2023-08-20)
 
 
