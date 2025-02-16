@@ -66,7 +66,7 @@ nx g @nx/js:lib my-lib --publishable --importPath="@ngspot/my-lib"
 [Docs](https://nx.dev/packages/angular/generators/library)
 
 ```sh
-nx g @nx/angular:library my-lib --publishable --importPath="@ngspot/my-lib" --changeDetection="OnPush" --prefix="ngs" --standalone --style="scss"
+nx g @nx/angular:library my-lib --publishable --importPath="@ngspot/my-lib" --changeDetection="OnPush" --standalone --style="scss"
 ```
 
 Then move it to `package` folder:

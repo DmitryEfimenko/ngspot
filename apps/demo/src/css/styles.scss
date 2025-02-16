@@ -31,5 +31,17 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: var(--primary-300); 
+  background-color: var(--primary-300);
+}
+
+:root {
+  view-transition-name: none;
+}
+
+* {
+  view-transition-capture-mode: flat;
+}
+
+html::view-transition {
+  pointer-events: none;
 }

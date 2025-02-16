@@ -11,7 +11,7 @@
     "strictPropertyInitialization": false,
     "target": "es2015",
     "module": "esnext",
-    "lib": ["es2017", "dom"],
+    "lib": ["es2018", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
@@ -54,6 +54,12 @@
       "@ngspot/rxjs/operators": ["packages/rxjs/operators/index.ts"],
       "@ngspot/table-of-contents": [
         "packages/table-of-contents/package/src/index.ts"
+      ],
+      "@ngspot/view-transition": [
+        "packages/view-transition/package/src/index.ts"
+      ],
+      "@ngspot/view-transition-demo": [
+        "packages/view-transition/demo/src/index.ts"
       ]
     }
   },

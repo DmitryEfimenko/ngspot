@@ -1,0 +1,11 @@
+<button mat-raised-button (click)="toggleShape()">Toggle position</button>
+
+<hr class="my-4" />
+
+<div class="relative">
+  <ng-container *vt="position(); let position">
+    <div class="box" vtName="position" [class]="position">
+      <span>{{ position }}</span>
+    </div>
+  </ng-container>
+</div>

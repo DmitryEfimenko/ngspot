@@ -1,0 +1,55 @@
+{
+  "name": "view-transition",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/view-transition/package/src",
+  "prefix": "lib",
+  "projectType": "library",
+  "tags": ["lib", "lib:view-transition"],
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:package",
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+      "options": {
+        "project": "packages/view-transition/package/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "packages/view-transition/package/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "packages/view-transition/package/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    },
+    "publish": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node tools/scripts/publish.mjs {args.tag} {args.verbose}"
+      },
+      "dependsOn": [
+        {
+          "target": "build"
+        }
+      ]
+    },
+    "version": {
+      "executor": "@jscutlery/semver:version",
+      "options": {
+        "preset": "conventional"
+      }
+    },
+    "test": {
+      "executor": "@angular-devkit/build-angular:karma",
+      "options": {
+        "tsConfig": "packages/view-transition/package/tsconfig.spec.json",
+        "karmaConfig": "packages/view-transition/package/karma.conf.js",
+        "polyfills": ["zone.js", "zone.js/testing"]
+      }
+    }
+  }
+}

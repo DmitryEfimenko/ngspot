@@ -27,6 +27,7 @@ module.exports = {
     'route-path-builder',
     'ngx-errors',
     'ngx-errors-material',
+    'view-transition',
   ],
   types: {
     chore: {

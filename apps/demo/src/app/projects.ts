@@ -8,6 +8,12 @@ export interface Project {
 
 export const PROJECTS: Project[] = [
   {
+    name: 'view-transition',
+    package: () => import('@ngspot/view-transition-demo'),
+    githubLink:
+      'https://github.com/DmitryEfimenko/ngspot/tree/main/packages/view-transition/package',
+  },
+  {
     name: 'ngx-errors',
     package: () => import('@ngspot/ngx-errors-demo'),
     githubLink:

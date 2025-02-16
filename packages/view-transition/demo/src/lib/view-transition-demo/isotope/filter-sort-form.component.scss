@@ -1,0 +1,38 @@
+:host {
+  display: block;
+}
+
+fieldset {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 2ch;
+  max-inline-size: max-content;
+  border: none;
+  padding: 0;
+}
+
+legend {
+  padding: 0;
+  font-weight: bolder;
+  margin-block-end: .5ch;
+}
+
+label {
+  display: flex;
+  align-items: center;
+  gap: .5ch;
+  text-transform: capitalize;
+}
+
+label:has(:checked) {
+  color: Highlight;
+  color: AccentColor;
+  text-decoration: underline Highlight;
+}
+
+@media (prefers-color-scheme: light) {
+  label:has(:checked) {
+    color: LinkText;
+    color: AccentColor;
+  }
+}

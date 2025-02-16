@@ -1,0 +1,32 @@
+{
+  "name": "@ngspot/view-transition",
+  "version": "0.0.0",
+  "peerDependencies": {
+    "@angular/core": ">=17.1.0",
+    "@angular/forms": ">=17.1.0",
+    "rxjs": ">=7"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "sideEffects": false,
+  "author": {
+    "name": "Dmitry Efimenko",
+    "email": "dmitrief@gmail.com"
+  },
+  "keywords": [
+    "angular",
+    "view transition API",
+    "animations"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/DmitryEfimenko/ngspot/tree/main/packages/view-transition",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DmitryEfimenko/ngspot",
+    "directory": "packages/view-transition"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

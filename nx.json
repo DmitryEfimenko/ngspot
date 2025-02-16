@@ -38,6 +38,10 @@
       "rxjs": {
         "projects": ["rxjs"],
         "releaseTagPattern": "{projectName}-{version}"
+      },
+      "view-transition": {
+        "projects": ["view-transition"],
+        "releaseTagPattern": "{projectName}-{version}"
       }
     },
     "projectsRelationship": "independent",
@@ -98,6 +102,11 @@
     "@nx/eslint:lint": {
       "inputs": ["default", "{workspaceRoot}/.eslintrc.json"],
       "cache": true
+    },
+    "@nx/angular:ng-packagr-lite": {
+      "cache": true,
+      "dependsOn": ["^build"],
+      "inputs": ["production", "^production"]
     }
   },
   "pluginsConfig": {

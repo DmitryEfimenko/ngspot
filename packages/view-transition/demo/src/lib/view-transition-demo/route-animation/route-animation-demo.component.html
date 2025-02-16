@@ -1,0 +1,22 @@
+<div class="flex flex-wrap justify-center gap-6">
+  @for (img of imagesMetadata; track img.title) {
+    <mat-card>
+      <mat-card-header class="mb-3">
+        <mat-card-title class="truncate">
+          {{ img.title }}
+        </mat-card-title>
+      </mat-card-header>
+
+      <a [routerLink]="img.id">
+        <img
+          mat-card-image
+          width="200"
+          height="150"
+          vtNameForRouterLink="image"
+          alt="{{ img.title }}"
+          [ngSrc]="img.src"
+        />
+      </a>
+    </mat-card>
+  }
+</div>

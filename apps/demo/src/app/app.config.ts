@@ -8,10 +8,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   provideRouter,
   withEnabledBlockingInitialNavigation,
+  withViewTransitions,
+  withComponentInputBinding,
 } from '@angular/router';
 
 import { NgxGoogleAnalyticsModule } from 'ngx-google-analytics';
 import { HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
+
+import { onViewTransitionCreated } from '@ngspot/view-transition';
 
 import { environment } from '../environments/environment';
 
@@ -50,7 +54,12 @@ const analyticsProviders: Provider[] | EnvironmentProviders[] =
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideRouter(appRoutes, withEnabledBlockingInitialNavigation()),
+    provideRouter(
+      appRoutes,
+      withEnabledBlockingInitialNavigation(),
+      withComponentInputBinding(),
+      withViewTransitions({ onViewTransitionCreated }),
+    ),
     importProvidersFrom(BrowserAnimationsModule),
     highlightOptions,
     ...customIconsProviders,

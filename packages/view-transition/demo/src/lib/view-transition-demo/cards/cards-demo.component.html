@@ -1,0 +1,17 @@
+<button class="add-btn" type="button" (click)="addCard()">
+  <span class="sr-only">Add</span>
+</button>
+
+<div class="cards-container">
+  <ng-container *vt="cards(); let cardsVal">
+    @for (card of cardsVal; track card.id) {
+      <ngs-card
+        [card]="card"
+        [vtId]="card.id"
+        [vtNameForActive]="'targeted-card'"
+        [vtNameForPassive]="'card-' + card.id"
+        (deleteCard)="deleteCard($event)"
+      />
+    }
+  </ng-container>
+</div>

@@ -1,0 +1,9 @@
+<ngs-filter-sort-form class="mb-4" (queryChanged)="query.set($event)" />
+
+<div class="container">
+  <ng-container *vt="filteredAndSortedElements(); let els">
+    @for (el of els; track el.abbr) {
+      <ngs-card class="card" [element]="el" [vtName]="'card-' + el.index" />
+    }
+  </ng-container>
+</div>

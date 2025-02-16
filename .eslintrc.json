@@ -34,7 +34,8 @@
                   "lib:demo",
                   "lib:common",
                   "lib:ng-superclass",
-                  "lib:ng-superclass-material"
+                  "lib:ng-superclass-material",
+                  "lib:view-transition"
                 ]
               },
               {
@@ -104,7 +105,9 @@
               "caseInsensitive": true
             }
           }
-        ]
+        ],
+        "@angular-eslint/directive-class-suffix": "off",
+        "@angular-eslint/no-host-metadata-property": "off"
       }
     },
     {

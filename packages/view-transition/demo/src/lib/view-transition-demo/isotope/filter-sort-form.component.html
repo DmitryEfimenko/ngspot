@@ -1,0 +1,56 @@
+<form>
+  <div class="flex gap-20">
+    <fieldset>
+      <legend>Filter</legend>
+
+      <label>
+        <input type="radio" name="filter" value="all" [(ngModel)]="vm.filter" />
+        Show All
+      </label>
+
+      <label>
+        <input
+          type="radio"
+          name="filter"
+          value="metal"
+          [(ngModel)]="vm.filter"
+        />
+        Metal
+      </label>
+
+      <label>
+        <input
+          type="radio"
+          name="filter"
+          value="transition"
+          [(ngModel)]="vm.filter"
+        />
+        Transition
+      </label>
+
+      <label>
+        <input type="radio" name="filter" value="ium" [(ngModel)]="vm.filter" />
+        -ium
+      </label>
+    </fieldset>
+
+    <fieldset>
+      <legend>Sort</legend>
+
+      <label>
+        <input type="radio" name="sort" value="name" [(ngModel)]="vm.sort" />
+        Name
+      </label>
+
+      <label>
+        <input type="radio" name="sort" value="symbol" [(ngModel)]="vm.sort" />
+        Symbol
+      </label>
+
+      <label>
+        <input type="radio" name="sort" value="number" [(ngModel)]="vm.sort" />
+        Number
+      </label>
+    </fieldset>
+  </div>
+</form>
