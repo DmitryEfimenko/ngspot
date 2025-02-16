@@ -10,7 +10,7 @@ import {
 @Component({
   selector: 'ngs-without-module-demo-result',
   standalone: true,
-  imports: [ReactiveFormsModule, MatInputModule, NGX_ERRORS_DECLARATIONS],
+  imports: [ReactiveFormsModule, MatInputModule, ...NGX_ERRORS_DECLARATIONS],
   providers: [provideNgxErrorsConfig({ showErrorsWhenInput: 'dirty' })],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `

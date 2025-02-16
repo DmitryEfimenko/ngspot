@@ -32,7 +32,7 @@ describe(SetMatInputErrorStateMatcherDirective.name, () => {
   const createDirective = createDirectiveFactory({
     directive: SetMatInputErrorStateMatcherDirective,
     imports: [
-      NGX_ERRORS_MATERIAL_DECLARATIONS,
+      ...NGX_ERRORS_MATERIAL_DECLARATIONS,
       MatInputModule,
       MatButtonModule,
       MatFormFieldModule,

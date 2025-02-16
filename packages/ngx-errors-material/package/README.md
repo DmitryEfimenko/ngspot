@@ -32,7 +32,7 @@ import { NGX_ERRORS_MATERIAL_DECLARATIONS } from '@ngspot/ngx-errors-material'; 
   imports: [
     ReactiveFormsModule,
     MatInputModule,
-    NGX_ERRORS_MATERIAL_DECLARATIONS, // <-- include imported declarations
+    ...NGX_ERRORS_MATERIAL_DECLARATIONS, // <-- include imported declarations
   ],
   template: `
     <form [formGroup]="form">

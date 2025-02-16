@@ -13,7 +13,7 @@ import {
   imports: [
     ReactiveFormsModule,
     MatInputModule,
-    NGX_ERRORS_MATERIAL_DECLARATIONS,
+    ...NGX_ERRORS_MATERIAL_DECLARATIONS,
   ],
   providers: [provideNgxErrorsConfig({ showErrorsWhenInput: 'dirty' })],
   changeDetection: ChangeDetectionStrategy.OnPush,
