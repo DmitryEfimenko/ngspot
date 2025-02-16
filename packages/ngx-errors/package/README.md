@@ -78,7 +78,7 @@ import { NGX_ERRORS_DECLARATIONS } from '@ngspot/ngx-errors'
 
 @NgModule({
   imports: [
-    NGX_ERRORS_DECLARATIONS, // <-- include
+    ...NGX_ERRORS_DECLARATIONS, // <-- include
   ],
 })
 export class MyAppModule {}
@@ -95,7 +95,7 @@ import { NGX_ERRORS_DECLARATIONS } from '@ngspot/ngx-errors'
   selector: 'my-component',
   standalone: true,
   imports: [
-    NGX_ERRORS_DECLARATIONS, // <-- include
+    ...NGX_ERRORS_DECLARATIONS, // <-- include
   ],
   template: `...`
 })
@@ -110,7 +110,7 @@ import { NGX_ERRORS_DECLARATIONS } from '@ngspot/ngx-errors'; // <-- import decl
 @Component({
   selector: 'my-component',
   standalone: true,
-  imports: [ReactiveFormsModule, NGX_ERRORS_DECLARATIONS], // <-- include imported declarations in the imports
+  imports: [ReactiveFormsModule, ...NGX_ERRORS_DECLARATIONS], // <-- include imported declarations in the imports
   template: `
     <form [formGroup]="myForm">
       <input formControlName="email" type="email" />
@@ -138,7 +138,7 @@ export class MyComponent implements OnInit {
 @Component({
   selector: 'my-component',
   standalone: true,
-  imports: [ReactiveFormsModule, NGX_ERRORS_DECLARATIONS],
+  imports: [ReactiveFormsModule, ...NGX_ERRORS_DECLARATIONS],
   template: `
     <input [formControl]="email" placeholder="Email" type="email" />
 
@@ -158,7 +158,7 @@ export class MyComponent implements OnInit {
 @Component({
   selector: 'my-component',
   standalone: true,
-  imports: [FormsModule, NGX_ERRORS_DECLARATIONS],
+  imports: [FormsModule, ...NGX_ERRORS_DECLARATIONS],
   template: `
     <input [(ngModel)]="email" #emailModel="ngModel" required type="email" />
 
@@ -357,7 +357,7 @@ import { NGX_ERRORS_MATERIAL_DECLARATIONS } from '@ngspot/ngx-errors-material'; 
   imports: [
     ReactiveFormsModule,
     MatInputModule,
-    NGX_ERRORS_MATERIAL_DECLARATIONS, // <-- include imported declarations
+    ...NGX_ERRORS_MATERIAL_DECLARATIONS, // <-- include imported declarations
   ],
   template: `
     <form [formGroup]="form">

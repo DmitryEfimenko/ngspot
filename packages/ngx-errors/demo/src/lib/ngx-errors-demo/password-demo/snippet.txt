@@ -8,7 +8,7 @@ import { StrongPasswordDirective } from '../strong-password-validator/strong-pas
 @Component({
   selector: 'ngs-password-demo-result',
   standalone: true,
-  imports: [FormsModule, NGX_ERRORS_DECLARATIONS, StrongPasswordDirective],
+  imports: [FormsModule, ...NGX_ERRORS_DECLARATIONS, StrongPasswordDirective],
   changeDetection: ChangeDetectionStrategy.OnPush,
   styles: [
     `

@@ -6,7 +6,7 @@ import { NGX_ERRORS_DECLARATIONS } from '@ngspot/ngx-errors';
 @Component({
   selector: 'ngs-error-context-result',
   standalone: true,
-  imports: [FormsModule, NGX_ERRORS_DECLARATIONS],
+  imports: [FormsModule, ...NGX_ERRORS_DECLARATIONS],
   changeDetection: ChangeDetectionStrategy.OnPush,
   styles: [
     `

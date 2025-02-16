@@ -6,7 +6,7 @@ import { NGX_ERRORS_DECLARATIONS } from '@ngspot/ngx-errors';
 @Component({
   selector: 'ngs-reactive-forms-demo-result',
   standalone: true,
-  imports: [ReactiveFormsModule, NGX_ERRORS_DECLARATIONS],
+  imports: [ReactiveFormsModule, ...NGX_ERRORS_DECLARATIONS],
   changeDetection: ChangeDetectionStrategy.OnPush,
   styles: [
     `

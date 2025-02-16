@@ -114,7 +114,7 @@ function errorText(text?: string) {
     </div>
   `,
   standalone: true,
-  imports: [FormsModule, NGX_ERRORS_DECLARATIONS],
+  imports: [FormsModule, ...NGX_ERRORS_DECLARATIONS],
   changeDetection: ChangeDetectionStrategy.OnPush,
   viewProviders: [formViewProvider],
 })
