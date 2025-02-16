@@ -6,12 +6,48 @@
       "expandable-input": {
         "projects": ["expandable-input"],
         "releaseTagPattern": "{projectName}-{version}"
+      },
+      "ngx-errors": {
+        "projects": ["ngx-errors"],
+        "releaseTagPattern": "{projectName}-{version}"
+      },
+      "ngx-errors-material": {
+        "projects": ["ngx-errors-material"],
+        "releaseTagPattern": "{projectName}-{version}"
+      },
+      "ng-superclass": {
+        "projects": ["ng-superclass"],
+        "releaseTagPattern": "{projectName}-{version}"
+      },
+      "ng-superclass-material": {
+        "projects": ["ng-superclass-material"],
+        "releaseTagPattern": "{projectName}-{version}"
+      },
+      "remote-data": {
+        "projects": ["remote-data"],
+        "releaseTagPattern": "{projectName}-{version}"
+      },
+      "remote-data-rx": {
+        "projects": ["remote-data-rx"],
+        "releaseTagPattern": "{projectName}-{version}"
+      },
+      "route-path-builder": {
+        "projects": ["route-path-builder"],
+        "releaseTagPattern": "{projectName}-{version}"
+      },
+      "rxjs": {
+        "projects": ["rxjs"],
+        "releaseTagPattern": "{projectName}-{version}"
       }
     },
     "projectsRelationship": "independent",
     "releaseTagPattern": "{projectName}-{version}",
     "version": {
-      "conventionalCommits": true
+      "preVersionCommand": "npx nx run-many -t build",
+      "generatorOptions": {
+        "packageRoot": "dist/packages/{projectName}/package",
+        "currentVersionResolver": "registry"
+      }
     },
     "changelog": {
       "projectChangelogs": {
