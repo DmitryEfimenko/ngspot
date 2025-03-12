@@ -1,6 +1,6 @@
 {
   "name": "@ngspot/view-transition",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "peerDependencies": {
     "@angular/core": ">=17.1.0",
     "@angular/forms": ">=17.1.0",
