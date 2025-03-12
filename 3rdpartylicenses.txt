@@ -124,6 +124,11 @@ MIT
 
 @ngspot/table-of-contents
 
+@ngspot/view-transition
+MIT
+
+@ngspot/view-transition-demo
+
 highlight.js
 BSD-3-Clause
 BSD 3-Clause License
