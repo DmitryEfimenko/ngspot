@@ -1,3 +1,10 @@
+## 4.0.3 (2025-03-12)
+
+
+### 🩹 Fixes
+
+- **ngx-errors:** 🐞 wrong files published to npm ([365ec56](https://github.com/DmitryEfimenko/ngspot/commit/365ec56))
+
 ## 4.0.2 (2025-03-12)
 
 This was a version bump only for ngx-errors to align it with other projects, there were no code changes.
