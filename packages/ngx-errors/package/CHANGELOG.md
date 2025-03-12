@@ -1,3 +1,7 @@
+## 4.0.2 (2025-03-12)
+
+This was a version bump only for ngx-errors to align it with other projects, there were no code changes.
+
 ## 4.0.1 (2025-02-07)
 
 
