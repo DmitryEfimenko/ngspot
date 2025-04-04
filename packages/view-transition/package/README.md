@@ -121,7 +121,7 @@ Besides shorter syntax, using `vtName` directive provides a few additional benef
 Library provides `ViewTransitionService`, which has `run()` method.
 Under the hood this method is called by `*vt` directive to schedule an animation.
 
-In case you're not using the `*vt` directive, to trigger animation manually, you can call this method for a change in state that you know will result in change in DOM:
+In case you need to trigger animation manually, you can call this method for a change in state that you know will result in change in DOM:
 
 ```ts
 class MyComponent {
@@ -145,11 +145,13 @@ class MyComponent {
 }
 ```
 
+> **Important!**: Keep in mind that usting the `*vt` and `vtName `directives together has an additional benefit of cleaning up "enabling" only the view transitions associated with the change in `*vt` directive. Forgoing the usage of `*vt` directive means that the elements will always have the `view-transition-name` set to the provided value - whether they are expected to be animated or not.
+
 ### Targeting specific elements in a for loop
 
 A lot of the times there is a need to give an element a distinct `view-transition-name`. This scenario is common for when dealing with an array of elements that already have a `view-transition-name` assigned, but an action on one of these elements is to be performed, which would require a change in `view-transition-name` for that element only.
 
-To handle this scenario the `ViewTransitionService` provides a method: `setTransitionActiveElementId(id: string | number)`. This goes together with `vtNameForActive` directive.
+To handle this scenario the `ViewTransitionService` provides a method: `setActiveViewTransitionNames(...names: string[])`. This goes together with `vtNameForActive` directive.
 
 ```ts
 class MyComponent {
@@ -164,7 +166,7 @@ class MyComponent {
   isReady = signal(false);
 
   setReady() {
-    this.viewTransitionService.setTransitionActiveElementId(2);
+    this.viewTransitionService.setActiveViewTransitionNames('passive-item-2');
     this.items.update((items) => {
       return items.map((item) => {
         if (item.id === 2) {
@@ -183,7 +185,6 @@ class MyComponent {
     <div
       [vtNameForPassive]="`passive-item-` + item.id"
       [vtNameForActive]="'active-item-animation'"
-      [vtId]="item.id"
     >
       {{ item.name }}
     </div>
@@ -195,7 +196,7 @@ With the code above, once `setReady` method is called, the following sequence of
 - a change in `items` signal will trigger `*vt` directive to start a new view transition.
 - after the animation is complete, the active item is disabled back to the passive mode.
 
-Note, the `vtNameForPassive` directive is the same thing as `vtName` directive. It's only encouraged to use it for readability purposes when `vtNameForActive` directive is used.
+Note, the `vtNameForPassive` directive is the same thing as `vtName` directive. It's only encouraged to use it for readability purposes together with `vtNameForActive` directive.
 
 
 ### Targeting many elements in the loop
@@ -221,6 +222,10 @@ However, in order to avoid unnecessary view transition runs, there should be a m
 // other styles targeting `my-item`
 ```
 
+### `vtClassForActive` directive
+When `ViewTransitionService.setActiveViewTransitionNames(name)` method is called, and the name matches to the value of the `[vtName]` directive on that element, the `vtClassForActive` directive will:
+* remove the class that was set by `vtClass` on that element if it was provided
+* add the class provided by the `vtClassForActive` directive
 
 ## Route navigation animations
 

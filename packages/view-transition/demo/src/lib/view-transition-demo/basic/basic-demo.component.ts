@@ -14,7 +14,7 @@ import { VIEW_TRANSITION_DIRECTIVES } from '@ngspot/view-transition';
 export class ViewTransitionBasicDemoComponent {
   position = signal<'left' | 'right'>('left');
 
-  toggleShape() {
+  togglePosition() {
     this.position.set(this.position() === 'left' ? 'right' : 'left');
   }
 }

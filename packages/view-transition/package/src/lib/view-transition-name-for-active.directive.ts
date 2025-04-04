@@ -1,17 +1,10 @@
-import {
-  computed,
-  Directive,
-  effect,
-  ElementRef,
-  inject,
-  input,
-} from '@angular/core';
+import { Directive, effect, ElementRef, inject, input } from '@angular/core';
 
-import { ViewTransitionService } from './view-transition.service';
+import { ViewTransitionNameForPassiveBase } from './view-transition-name-for-passive.directive';
 
 /**
- * Directive that sets view transition name when `[vtId]` matches
- * the `id` set by `ViewTransitionService.setTransitionActiveElementId()` method.
+ * Directive that sets view transition name when the passive vtName value matches
+ * the name set by `ViewTransitionService.setActiveViewTransitionNames()` method.
  *
  * If the element also has the `[vtName]` or [vtNameForPassive] directive,
  * the view transition name will be set the value provided the `[vtNameForActive]` directive.
@@ -20,7 +13,6 @@ import { ViewTransitionService } from './view-transition.service';
  * ```html
  * \@for (let item of items; trackBy: item.id) {
  *   <div
- *     [vtId]="'item-' + item.id"
  *     [vtNameForActive]="'my-custom-animation'"
  *     [vtNameForPassive]="'animate-item-' + item.id"
  *   >
@@ -32,10 +24,11 @@ import { ViewTransitionService } from './view-transition.service';
  * the view transition name will be set to `animate-item-1`.
  *
  * ```ts
- * viewTransitionService.setTransitionActiveElementId(`item-1`);
+ * viewTransitionService.setActiveViewTransitionNames(`animate-item-1`);
  * ```
  * After the above method is called, the view transition name will
- * be set to `my-custom-animation` because `item-1` matches the `[vtId]` value.
+ * be set to `my-custom-animation` because `animate-item-1` matches the
+ * `[vtNameForPassive]` value.
  *
  * This way you can target that specific view transition name in the CSS.
  */
@@ -45,20 +38,17 @@ import { ViewTransitionService } from './view-transition.service';
 })
 export class ViewTransitionForActive {
   private el = inject<ElementRef<HTMLElement>>(ElementRef);
-  private readonly viewTransitionService = inject(ViewTransitionService);
+
+  private viewTransitionNameForPassive = inject(
+    ViewTransitionNameForPassiveBase,
+    { self: true },
+  );
 
   name = input.required<string>({ alias: 'vtNameForActive' });
-  vtId = input.required<number | string>();
-
-  isActive = computed(() => {
-    return (
-      this.viewTransitionService.transitionActiveElementId() === this.vtId()
-    );
-  });
 
   #ef = effect(() => {
     const name = this.name();
-    const isActive = this.isActive();
+    const isActive = this.viewTransitionNameForPassive.isActive();
 
     this.updateViewTransitionName(isActive, name);
   });

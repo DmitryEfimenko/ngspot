@@ -39,16 +39,14 @@ One time config: `git config --global push.followTags true`
 
 #### **[For maintainer]** Release a new version
 
-1. Switch to main branch: `git checkout main`
-1. Make sure you have latest: `git pull` and `npm install`
-1. Run `npm run nx -- version <project> -- --dryRun true`.
+1. Switch to main branch: `git checkout main`.
+1. Make sure you have latest: `git pull` and `npm install`.
+1. Update the version in the package's package.json file to the next version.
+1. Run the corresponding package dry release script `npm run release:[package]:dry`.
   * If reported version is incorrect, see *Debugging release (commit tag) section
-  * If releasing a release candidate, add options `--releaseAs=prerelease --preid=rc`. Don't forget to include `--tag=next` when publishing package.
-  * If releasing for the first time, consider adding an override flag at the end of the command: `--releaseAs=major` (or `minor`, or `patch`)
-1. Make sure that CHANGELOG looks right and run the command above without `--dryRun ` option
+1. Make sure that CHANGELOG looks right and run the release command without the `:dry` suffix
   * If CHANGELOG needs to be updated, save the needed changes in the CHANGELOG, run `git add .`, `git commit --amend`, and move the tag to the latest commit. See *Debugging release (commit tag) section
 1. Run `npm run nx -- build <project>`
-1. Run `npm run nx -- publish <project> [--tag=next] [--verbose=true]`
 1. Repeat for each `<package-worked-on>`
 1. Run `git push`
 1. Run `git push origin --tags`
