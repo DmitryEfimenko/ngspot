@@ -12,7 +12,7 @@ import {
   tap,
 } from 'rxjs';
 
-import { Callback, RunOptions, TransitionActiveElementId } from './model';
+import { Callback, RunOptions, ActiveViewTransitionName } from './model';
 
 @Injectable({
   providedIn: 'root',
@@ -27,30 +27,30 @@ export class ViewTransitionService {
 
   currentViewTransition: ViewTransition | null = null;
   currentRouteTransition = signal<ViewTransitionInfo | null>(null);
-  transitionActiveElementId = signal<string | number | null>(null);
+  activeViewTransitionNames = signal<ActiveViewTransitionName[] | null>(null);
 
   private transitionActive = false;
   private viewTransitionStarted = false;
-  private pendingCallbacks: Array<{
-    callback: () => void;
+  private pendingStateChangeFns: Array<{
+    stateChangeFn: () => void;
     options?: RunOptions;
   }> = [];
 
   /**
+   * Executes the provided function in a view transition. If a view transition is already in progress,
+   * the function will be buffered and executed in the order it was called as a part of the existing transition
+   * if possible. Otherwise, it will be executed in a new transition.
    *
-   * @param callback Function to run that will result in DOM manipulation.
+   * @param stateChangeFn Function to run that will result in DOM manipulation.
    * This function will be scheduled to run in the callback of `startViewTransition` function.
    * This function can be called by multiple sources, and will be buffered and executed in order it was called.
-   *
-   * @param options
-   * @returns
    */
-  run(callback: Callback, options?: RunOptions): void {
+  run(stateChangeFn: Callback, options?: RunOptions): void {
     const reducedMotionQuery = '(prefers-reduced-motion: reduce)';
     const disableAnimations = window.matchMedia(reducedMotionQuery).matches;
 
     if (disableAnimations) {
-      callback();
+      stateChangeFn();
       return;
     }
 
@@ -58,13 +58,13 @@ export class ViewTransitionService {
 
     if (this.currentRouteTransition()) {
       this.ngZone.run(() => {
-        this.log('callback()', options);
-        callback();
+        this.log('stateChangeFn()', options);
+        stateChangeFn();
       });
       return;
     }
 
-    this.pendingCallbacks.push({ callback, options });
+    this.pendingStateChangeFns.push({ stateChangeFn, options });
 
     if (!this.transitionActive) {
       this.startTransition(options);
@@ -73,7 +73,7 @@ export class ViewTransitionService {
       // This ensures correct callback order execution
       Promise.resolve().then(() => {
         this.log('flushPendingCallbacks pending', options);
-        this.flushPendingCallbacks();
+        this.flushPendingStateChangeFns();
       });
     }
   }
@@ -87,8 +87,8 @@ export class ViewTransitionService {
    *
    * For more info see documentation for `[vtNameForActive]` directive.
    */
-  setTransitionActiveElementId(id: TransitionActiveElementId) {
-    this.transitionActiveElementId.set(id);
+  setActiveViewTransitionNames(...names: ActiveViewTransitionName[]) {
+    this.activeViewTransitionNames.set(names);
   }
 
   /**
@@ -160,7 +160,7 @@ export class ViewTransitionService {
           this.log('flushPendingCallbacks immediate', options);
 
           // When the transition callback starts, we re-enter Angular zone.
-          this.flushPendingCallbacks();
+          this.flushPendingStateChangeFns();
 
           await createRenderPromise(this.injector);
 
@@ -182,11 +182,11 @@ export class ViewTransitionService {
           this.transitionActive = false;
 
           // If new callbacks have been buffered during/after the transition, start a new cycle.
-          if (this.pendingCallbacks.length > 0) {
+          if (this.pendingStateChangeFns.length > 0) {
             this.log(
               'startTransition pending',
               options,
-              this.pendingCallbacks.length,
+              this.pendingStateChangeFns.length,
             );
             // wait a microtask to allow DOM to settle so that
             // a clean snapshot of new state can be taken
@@ -204,26 +204,26 @@ export class ViewTransitionService {
 
       this.currentViewTransition.finished.finally(() => {
         this.currentViewTransition = null;
-        this.transitionActiveElementId.set(null);
+        this.activeViewTransitionNames.set(null);
       });
     });
   }
 
-  private flushPendingCallbacks(): void {
-    // Flush buffered callbacks in FIFO order.
-    if (this.pendingCallbacks.length > 0) {
-      const callbacks = [...this.pendingCallbacks];
-      this.pendingCallbacks = [];
-      callbacks.forEach(({ callback, options }) => {
+  private flushPendingStateChangeFns(): void {
+    // Flush buffered stateChangeFns in FIFO order.
+    if (this.pendingStateChangeFns.length > 0) {
+      const stateChangeFns = [...this.pendingStateChangeFns];
+      this.pendingStateChangeFns = [];
+      stateChangeFns.forEach(({ stateChangeFn, options }) => {
         this.ngZone.run(() => {
-          this.log('callback()', options);
-          callback();
+          this.log('stateChangeFn()', options);
+          stateChangeFn();
         });
       });
     }
   }
 
-  private documentStartViewTransition(callback: () => Promise<void>) {
+  private documentStartViewTransition(callback: Callback<void>) {
     return this.document.startViewTransition(callback);
   }
 
@@ -234,8 +234,8 @@ export class ViewTransitionService {
 
     let prefix = `[vt]`;
 
-    if (this.transitionActiveElementId()) {
-      prefix = prefix.concat(` [${this.transitionActiveElementId()}]`);
+    if (this.activeViewTransitionNames()) {
+      prefix = prefix.concat(` [${this.activeViewTransitionNames()}]`);
     }
 
     if (options?.debugName) {

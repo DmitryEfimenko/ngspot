@@ -1,7 +1,3 @@
-<button class="add-btn" type="button" (click)="addCard()">
-  <span class="sr-only">Add</span>
-</button>
-
 <div class="cards-container">
   <ng-container *vt="cards(); let cardsVal">
     @for (card of cardsVal; track card.id) {
@@ -9,7 +5,9 @@
         [card]="card"
         [vtNameForActive]="'targeted-card'"
         [vtNameForPassive]="'card-' + card.id"
-        (deleteCard)="deleteCard($event)"
+        [vtClassForActive]="'targeted-card'"
+        (up)="moveUp($event)"
+        (down)="moveDown($event)"
       />
     }
   </ng-container>

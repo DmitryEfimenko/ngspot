@@ -10,7 +10,6 @@ import {
   signal,
 } from '@angular/core';
 
-import { ViewTransitionForActive } from './view-transition-name-for-active.directive';
 import { ViewTransitionRenderer } from './view-transition.directive';
 import { ViewTransitionService } from './view-transition.service';
 
@@ -26,11 +25,6 @@ export abstract class ViewTransitionNameForPassiveBase {
     skipSelf: true,
   });
 
-  private viewTransitionForActive = inject(ViewTransitionForActive, {
-    optional: true,
-    self: true,
-  });
-
   abstract name: InputSignal<string>;
   abstract enabledInput: InputSignal<boolean>;
 
@@ -44,18 +38,20 @@ export abstract class ViewTransitionNameForPassiveBase {
     );
   });
 
-  private hasActiveViewTransition = computed(() => {
-    return (
-      !!this.viewTransitionForActive && this.viewTransitionForActive.isActive()
-    );
+  isActive = computed(() => {
+    const name = this.name();
+    const activeVTNames =
+      this.viewTransitionService.activeViewTransitionNames();
+
+    return activeVTNames?.includes(name) ?? false;
   });
 
   #ef = effect(() => {
     const name = this.enabled() ? this.name() : 'none';
 
-    const hasActiveViewTransition = this.hasActiveViewTransition();
+    const isActive = this.isActive();
 
-    this.updateViewTransitionName(name, hasActiveViewTransition);
+    this.updateViewTransitionName(name, isActive);
   });
 
   constructor() {
@@ -66,12 +62,9 @@ export abstract class ViewTransitionNameForPassiveBase {
     });
   }
 
-  private updateViewTransitionName(
-    name: string,
-    hasActiveViewTransition: boolean,
-  ) {
-    if (hasActiveViewTransition) {
-      // let the active directive handle manage the name
+  private updateViewTransitionName(name: string, isActive: boolean) {
+    if (isActive) {
+      // let the active directive manage the name
       return;
     }
 
@@ -89,7 +82,8 @@ export abstract class ViewTransitionNameForPassiveBase {
  * If this directive is used together with `[vtNameForActive]` directive,
  * the view-transition-name will be set to the value provided by this directive
  * by default, but will be overridden by the `[vtNameForActive]` directive
- * once the [vtId] matches the id set by `ViewTransitionService.setTransitionActiveElementId()`.
+ * once the `view-transition-name` matches the id set by
+ * `ViewTransitionService.setActiveViewTransitionNames()`.
  *
  * If this directive is used inside of the `*vt` directive, the `view-transition-name`
  * style will be set to `"none"` when view transition is not running.
@@ -107,6 +101,12 @@ export abstract class ViewTransitionNameForPassiveBase {
 @Directive({
   selector: '[vtName]',
   standalone: true,
+  providers: [
+    {
+      provide: ViewTransitionNameForPassiveBase,
+      useExisting: ViewTransitionNameForPassiveShorthand,
+    },
+  ],
 })
 export class ViewTransitionNameForPassiveShorthand extends ViewTransitionNameForPassiveBase {
   override name = input.required<string>({ alias: 'vtName' });
@@ -121,6 +121,12 @@ export class ViewTransitionNameForPassiveShorthand extends ViewTransitionNameFor
 @Directive({
   selector: '[vtNameForPassive]',
   standalone: true,
+  providers: [
+    {
+      provide: ViewTransitionNameForPassiveBase,
+      useExisting: ViewTransitionNameForPassiveExplicit,
+    },
+  ],
 })
 export class ViewTransitionNameForPassiveExplicit extends ViewTransitionNameForPassiveBase {
   override name = input.required<string>({ alias: 'vtNameForPassive' });

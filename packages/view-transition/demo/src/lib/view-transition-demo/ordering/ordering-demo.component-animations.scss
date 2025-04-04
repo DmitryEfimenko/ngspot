@@ -1,0 +1,37 @@
+::ng-deep {
+  @layer reorder-cards {
+    @supports (view-transition-class: card) {
+      .targeted-card {
+        // make sure that the card that was clicked on is on top of the others
+        z-index: 1;
+      }
+
+      ngs-card {
+        view-transition-class: card;
+      }
+
+      /* Without view-transition-class you had to write a selector that targets all cards … and that selector needed updating whenever you added/removed a card */
+      ::view-transition-group(*.card) {
+        animation-duration: 0.5s;
+      }
+    }
+  }
+
+  @layer move-card {
+    @keyframes size-up-and-down {
+      0% {
+        transform: scaleX(100%);
+      }
+      30% {
+        transform: scaleX(120%);
+      }
+      90% {
+        transform: scaleX(100%);
+      }
+    }
+
+    ::view-transition-image-pair(targeted-card) {
+      animation: size-up-and-down ease-in 0.5s;
+    }
+  }
+}

@@ -1,13 +1,6 @@
-import {
-  computed,
-  Directive,
-  effect,
-  ElementRef,
-  inject,
-  input,
-} from '@angular/core';
+import { Directive, effect, ElementRef, inject, input } from '@angular/core';
 
-import { ClassForActiveViewTransition } from './class-for-active.directive';
+import { ViewTransitionNameForPassiveBase } from './view-transition-name-for-passive.directive';
 
 @Directive({
   selector: '[vtClassForPassive]',
@@ -16,37 +9,25 @@ import { ClassForActiveViewTransition } from './class-for-active.directive';
 export class ClassForPassiveViewTransition {
   private el = inject<ElementRef<HTMLElement>>(ElementRef);
 
-  private classForActiveViewTransition = inject(ClassForActiveViewTransition, {
-    optional: true,
-    self: true,
-  });
+  private viewTransitionNameForPassive = inject(
+    ViewTransitionNameForPassiveBase,
+    { self: true },
+  );
 
   name = input.required<string>({ alias: 'vtClassForPassive' });
 
-  private hasActiveViewTransition = computed(() => {
-    return (
-      !!this.classForActiveViewTransition &&
-      this.classForActiveViewTransition.isActive()
-    );
-  });
-
   #ef = effect(() => {
     const name = this.name();
-    const hasActiveViewTransition = this.hasActiveViewTransition();
+    const isActive = this.viewTransitionNameForPassive.isActive();
 
-    this.updateCssClass(name, hasActiveViewTransition);
+    this.updateCssClass(name, isActive);
   });
 
-  private updateCssClass(name: string, hasActiveViewTransition: boolean) {
-    if (hasActiveViewTransition) {
-      // let the active directive handle manage the name
-      return;
+  private updateCssClass(name: string, isActive: boolean) {
+    if (isActive) {
+      this.el.nativeElement.classList.add(name);
+    } else {
+      this.el.nativeElement.classList.remove(name);
     }
-
-    if (!this.el.nativeElement.classList) {
-      return;
-    }
-
-    this.el.nativeElement.classList.add(name);
   }
 }

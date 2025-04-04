@@ -5,4 +5,4 @@ export interface RunOptions {
 
 export type Callback<T = unknown> = () => T;
 
-export type TransitionActiveElementId = string | number | null;
+export type ActiveViewTransitionName = string;

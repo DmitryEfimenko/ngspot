@@ -4,6 +4,7 @@ import {
   Directive,
   inject,
   input,
+  OnChanges,
   SimpleChange,
   TemplateRef,
   ViewContainerRef,
@@ -53,7 +54,7 @@ const initialPrevWatch = '__initialPrevWatch__';
   selector: '[vt]',
   standalone: true,
 })
-export class ViewTransitionRenderer<T> {
+export class ViewTransitionRenderer<T> implements OnChanges {
   private viewTransitionService = inject(ViewTransitionService);
   private document = inject<DocumentWithViewTransition>(DOCUMENT);
   private templateRef = inject(TemplateRef);
@@ -85,24 +86,20 @@ export class ViewTransitionRenderer<T> {
     const vmWatchNotProvided = this.vtWatch() === initialPrevWatch;
     const watchChanged = this.vtWatch() !== this.prevWatch;
 
-    const shouldAnimate =
-      !changes.trackingData.firstChange && (vmWatchNotProvided || watchChanged);
+    // assign these variables outside of the run callback to avoid closure issues
+    const firstChange = changes.trackingData.firstChange;
+    const currentValue = changes.trackingData.currentValue;
+    const debugName = this.vtName();
+
+    const shouldAnimate = !firstChange && (vmWatchNotProvided || watchChanged);
 
     this.prevWatch = this.vtWatch();
 
     if (!this.document.startViewTransition || !shouldAnimate) {
-      this.render(
-        changes.trackingData.firstChange,
-        changes.trackingData.currentValue,
-      );
+      this.render(firstChange, currentValue);
 
       return;
     }
-
-    // assign these variables outside of the callback to avoid closure issues
-    const firstChange = changes.trackingData.firstChange;
-    const currentValue = changes.trackingData.currentValue;
-    const debugName = this.vtName();
 
     this.isRunningTransition = true;
     this.setEnabledForAllVtNames(true);

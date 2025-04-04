@@ -7,7 +7,7 @@ import { ROUTED_TABS_DECLARATIONS } from '@ngspot/common/routed-tabs';
 import { ViewTransitionBasicDemoComponent } from './basic/basic-demo.component';
 import { ViewTransitionCardsDemoComponent } from './cards/cards-demo.component';
 import { ViewTransitionIsotopeDemoComponent } from './isotope/isotope-demo.component';
-import { ViewTransitionRouteAnimationDemoComponent } from './route-animation/route-animation-demo.component';
+import { ViewTransitionOrderingDemoComponent } from './ordering/ordering-demo.component';
 
 @Component({
   selector: 'ngs-ngx-errors-demo',
@@ -18,7 +18,7 @@ import { ViewTransitionRouteAnimationDemoComponent } from './route-animation/rou
     ViewTransitionBasicDemoComponent,
     ViewTransitionCardsDemoComponent,
     ViewTransitionIsotopeDemoComponent,
-    ViewTransitionRouteAnimationDemoComponent,
+    ViewTransitionOrderingDemoComponent,
     RouterOutlet,
   ],
   template: `
@@ -33,6 +33,12 @@ import { ViewTransitionRouteAnimationDemoComponent } from './route-animation/rou
         <ngs-demo-main-content>
           https://view-transitions.chrome.dev/cards/spa/
           <ngs-vt-cards-demo />
+        </ngs-demo-main-content>
+      </ng-container>
+
+      <ng-container *ngsRoutedTab="'ordering'; label: 'Ordering'">
+        <ngs-demo-main-content>
+          <ngs-vt-ordering-demo />
         </ngs-demo-main-content>
       </ng-container>
 

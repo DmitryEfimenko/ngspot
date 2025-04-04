@@ -1,13 +1,6 @@
-import {
-  computed,
-  Directive,
-  effect,
-  ElementRef,
-  inject,
-  input,
-} from '@angular/core';
+import { Directive, effect, ElementRef, inject, input } from '@angular/core';
 
-import { ViewTransitionService } from './view-transition.service';
+import { ViewTransitionNameForPassiveBase } from './view-transition-name-for-passive.directive';
 
 @Directive({
   selector: '[vtClassForActive]',
@@ -15,20 +8,17 @@ import { ViewTransitionService } from './view-transition.service';
 })
 export class ClassForActiveViewTransition {
   private el = inject<ElementRef<HTMLElement>>(ElementRef);
-  private readonly viewTransitionService = inject(ViewTransitionService);
+
+  private viewTransitionNameForPassive = inject(
+    ViewTransitionNameForPassiveBase,
+    { self: true },
+  );
 
   name = input.required<string>({ alias: 'vtClassForActive' });
-  vtId = input.required<number | string>();
-
-  isActive = computed(() => {
-    return (
-      this.viewTransitionService.transitionActiveElementId() === this.vtId()
-    );
-  });
 
   #ef = effect(() => {
     const name = this.name();
-    const isActive = this.isActive();
+    const isActive = this.viewTransitionNameForPassive.isActive();
 
     this.updateCssClass(isActive, name);
   });

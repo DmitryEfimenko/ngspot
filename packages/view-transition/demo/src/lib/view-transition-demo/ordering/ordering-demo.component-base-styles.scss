@@ -1,0 +1,36 @@
+:host {
+  display: grid;
+  height: 70dvh;
+  place-items: center;
+  padding: 2rem 0;
+  font-family: system-ui, sans-serif;
+  width: 100%;
+}
+
+.cards-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  gap: 2rem;
+  padding: 1rem 2rem;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.add-btn {
+  --icon: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgaGVpZ2h0PSI1MTIiIHZpZXdCb3g9IjAgMCA1MTIgNTEyIiB3aWR0aD0iNTEyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjx0aXRsZS8+PGxpbmUgc3R5bGU9ImZpbGw6bm9uZTtzdHJva2U6IzAwMDtzdHJva2UtbGluZWNhcDpyb3VuZDtzdHJva2UtbGluZWpvaW46cm91bmQ7c3Ryb2tlLXdpZHRoOjMycHgiIHgxPSIyNTYiIHgyPSIyNTYiIHkxPSIxMTIiIHkyPSI0MDAiLz48bGluZSBzdHlsZT0iZmlsbDpub25lO3N0cm9rZTojMDAwO3N0cm9rZS1saW5lY2FwOnJvdW5kO3N0cm9rZS1saW5lam9pbjpyb3VuZDtzdHJva2Utd2lkdGg6MzJweCIgeDE9IjQwMCIgeDI9IjExMiIgeTE9IjI1NiIgeTI9IjI1NiIvPjwvc3ZnPg==);
+  width: 3rem;
+  height: 3rem;
+  padding: 0.5rem;
+  border: 4px solid;
+  border-radius: 100%;
+  background: aliceblue var(--icon) no-repeat 50% 50% / 70%;
+  color: white;
+  cursor: pointer;
+
+  &:hover {
+    background-color: cornflowerblue;
+  }
+}

@@ -31,12 +31,12 @@ export class ViewTransitionCardsDemoComponent {
 
   addCard() {
     const card = newCard();
-    this.viewTransitionService.setTransitionActiveElementId(card.id);
+    this.viewTransitionService.setActiveViewTransitionNames(`card-${card.id}`);
     this.cards.update((cards) => [...cards, card]);
   }
 
   deleteCard(card: Card) {
-    this.viewTransitionService.setTransitionActiveElementId(card.id);
+    this.viewTransitionService.setActiveViewTransitionNames(`card-${card.id}`);
     this.cards.update((cards) => cards.filter((c) => c.id !== card.id));
   }
 }
