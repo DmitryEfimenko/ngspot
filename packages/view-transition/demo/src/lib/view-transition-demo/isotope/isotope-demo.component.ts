@@ -5,7 +5,7 @@ import {
   signal,
 } from '@angular/core';
 
-import { VIEW_TRANSITION_DIRECTIVES } from '@ngspot/view-transition';
+import { VIEW_TRANSITION_DECLARATIONS } from '@ngspot/view-transition';
 
 import { CardComponent } from './card.component';
 import { elements, initialQueryRules } from './data';
@@ -17,7 +17,7 @@ import { QueryRules } from './model';
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
-    ...VIEW_TRANSITION_DIRECTIVES,
+    ...VIEW_TRANSITION_DECLARATIONS,
     FilterSortFormComponent,
     CardComponent,
   ],

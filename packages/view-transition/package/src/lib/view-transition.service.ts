@@ -197,7 +197,7 @@ export class ViewTransitionService {
             this.viewTransitionFinished$.next();
           }
         })
-        .catch((error) => {
+        .catch((error: unknown) => {
           console.error('View transition error:', error);
           this.transitionActive = false;
         });

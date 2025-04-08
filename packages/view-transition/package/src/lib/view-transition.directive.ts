@@ -5,14 +5,13 @@ import {
   inject,
   input,
   OnChanges,
+  signal,
   SimpleChange,
   TemplateRef,
   ViewContainerRef,
 } from '@angular/core';
 
 import { ViewTransitionService } from './view-transition.service';
-
-import type { ViewTransitionNameForPassiveBase } from './view-transition-name-for-passive.directive';
 
 interface Context<T> {
   $implicit: T;
@@ -60,8 +59,7 @@ export class ViewTransitionRenderer<T> implements OnChanges {
   private templateRef = inject(TemplateRef);
   private viewContainerRef = inject(ViewContainerRef);
   private cdr = inject(ChangeDetectorRef);
-  private vtNameRegistry = new Set<ViewTransitionNameForPassiveBase>();
-  private isRunningTransition = false;
+  isRunningTransition = signal(false);
 
   static ngTemplateContextGuard<T>(
     dir: ViewTransitionRenderer<T>,
@@ -101,16 +99,14 @@ export class ViewTransitionRenderer<T> implements OnChanges {
       return;
     }
 
-    this.isRunningTransition = true;
-    this.setEnabledForAllVtNames(true);
+    this.isRunningTransition.set(true);
 
     this.viewTransitionService.run(
       () => {
         this.render(firstChange, currentValue);
 
         this.viewTransitionService.onViewTransitionFinishedCallback(() => {
-          this.isRunningTransition = false;
-          this.setEnabledForAllVtNames(false);
+          this.isRunningTransition.set(false);
         });
       },
       {
@@ -118,18 +114,6 @@ export class ViewTransitionRenderer<T> implements OnChanges {
         debugData: currentValue,
       },
     );
-  }
-
-  registerVtName(vtName: ViewTransitionNameForPassiveBase) {
-    if (!this.isRunningTransition) {
-      vtName.enabledThroughVtDirective.set(false);
-    }
-    this.vtNameRegistry.add(vtName);
-  }
-
-  unregisterVtName(vtName: ViewTransitionNameForPassiveBase) {
-    vtName.enabledThroughVtDirective.set(true);
-    this.vtNameRegistry.delete(vtName);
   }
 
   private render(isFirstChange: boolean, trackingData: T) {
@@ -140,11 +124,5 @@ export class ViewTransitionRenderer<T> implements OnChanges {
     }
 
     this.cdr.detectChanges();
-  }
-
-  private setEnabledForAllVtNames(isEnabled: boolean) {
-    this.vtNameRegistry.forEach((vtName) => {
-      vtName.enabledThroughVtDirective.set(isEnabled);
-    });
   }
 }

@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { RouterLink } from '@angular/router';
 
-import { VIEW_TRANSITION_DIRECTIVES } from '@ngspot/view-transition';
+import { VIEW_TRANSITION_DECLARATIONS } from '@ngspot/view-transition';
 
 import { imagesMetadata } from './data';
 
@@ -15,7 +15,7 @@ import { imagesMetadata } from './data';
     MatCardModule,
     NgOptimizedImage,
     RouterLink,
-    VIEW_TRANSITION_DIRECTIVES,
+    VIEW_TRANSITION_DECLARATIONS,
   ],
   templateUrl: './route-animation-demo.component.html',
   styleUrls: ['./route-animation-demo.component.scss'],

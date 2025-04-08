@@ -1,6 +1,4 @@
-import { Directive, effect, ElementRef, inject, input } from '@angular/core';
-
-import { ViewTransitionNameForPassiveBase } from './view-transition-name-for-passive.directive';
+import { Directive, input } from '@angular/core';
 
 /**
  * Directive that sets view transition name when the passive vtName value matches
@@ -37,27 +35,5 @@ import { ViewTransitionNameForPassiveBase } from './view-transition-name-for-pas
   standalone: true,
 })
 export class ViewTransitionForActive {
-  private el = inject<ElementRef<HTMLElement>>(ElementRef);
-
-  private viewTransitionNameForPassive = inject(
-    ViewTransitionNameForPassiveBase,
-    { self: true },
-  );
-
   name = input.required<string>({ alias: 'vtNameForActive' });
-
-  #ef = effect(() => {
-    const name = this.name();
-    const isActive = this.viewTransitionNameForPassive.isActive();
-
-    this.updateViewTransitionName(isActive, name);
-  });
-
-  private updateViewTransitionName(isActive: boolean, name: string) {
-    if (isActive) {
-      this.el.nativeElement.style.viewTransitionName = name;
-    } else {
-      this.el.nativeElement.style.removeProperty('view-transition-name');
-    }
-  }
 }

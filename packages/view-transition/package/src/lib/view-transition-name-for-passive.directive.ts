@@ -1,22 +1,21 @@
 import {
   computed,
-  DestroyRef,
   Directive,
   effect,
   ElementRef,
   inject,
   input,
   InputSignal,
-  signal,
 } from '@angular/core';
 
+import { ViewTransitionActiveGroupId } from './view-transition-active-group-id.directive';
+import { ViewTransitionForActive } from './view-transition-name-for-active.directive';
 import { ViewTransitionRenderer } from './view-transition.directive';
 import { ViewTransitionService } from './view-transition.service';
 
 @Directive()
 export abstract class ViewTransitionNameForPassiveBase {
   private el = inject<ElementRef<HTMLElement>>(ElementRef);
-  private destroyRef = inject(DestroyRef);
 
   private viewTransitionService = inject(ViewTransitionService);
 
@@ -25,49 +24,65 @@ export abstract class ViewTransitionNameForPassiveBase {
     skipSelf: true,
   });
 
+  private vtNameForActive = inject(ViewTransitionForActive, {
+    optional: true,
+    self: true,
+  });
+
+  private activeGroupId = inject(ViewTransitionActiveGroupId, {
+    optional: true,
+    self: true,
+  });
+
   abstract name: InputSignal<string>;
   abstract enabledInput: InputSignal<boolean>;
 
-  enabledThroughVtDirective = signal<boolean>(true);
+  private enabled = computed(() => {
+    const enabledThroughVtDirective =
+      this.viewTransitionRenderer?.isRunningTransition() ?? true;
 
-  enabled = computed(() => {
     return (
       this.enabledInput() &&
-      this.enabledThroughVtDirective() &&
+      enabledThroughVtDirective &&
       !this.viewTransitionService.currentRouteTransition()
     );
   });
 
   isActive = computed(() => {
     const name = this.name();
+
+    const activeGroupId = this.activeGroupId?.id();
+
     const activeVTNames =
       this.viewTransitionService.activeViewTransitionNames();
 
-    return activeVTNames?.includes(name) ?? false;
+    if (!activeVTNames || activeVTNames.length === 0) {
+      return false;
+    }
+
+    const includesVtName = activeVTNames.includes(name);
+    const includesGroupId = activeGroupId
+      ? activeVTNames.includes(activeGroupId)
+      : false;
+
+    return includesVtName || includesGroupId;
+  });
+
+  private nameToApply = computed(() => {
+    if (this.vtNameForActive && this.isActive()) {
+      return this.vtNameForActive.name();
+    }
+
+    return this.enabled() ? this.name() : 'none';
   });
 
   #ef = effect(() => {
-    const name = this.enabled() ? this.name() : 'none';
+    const name = this.nameToApply();
 
-    const isActive = this.isActive();
-
-    this.updateViewTransitionName(name, isActive);
+    this.updateViewTransitionName(name);
   });
 
-  constructor() {
-    this.viewTransitionRenderer?.registerVtName(this);
-
-    this.destroyRef.onDestroy(() => {
-      this.viewTransitionRenderer?.unregisterVtName(this);
-    });
-  }
-
-  private updateViewTransitionName(name: string, isActive: boolean) {
-    if (isActive) {
-      // let the active directive manage the name
-      return;
-    }
-
+  private updateViewTransitionName(name: string) {
     if (!this.el.nativeElement.style) {
       return;
     }
