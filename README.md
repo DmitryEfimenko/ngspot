@@ -41,7 +41,7 @@ One time config: `git config --global push.followTags true`
 
 1. Switch to main branch: `git checkout main`.
 1. Make sure you have latest: `git pull` and `npm install`.
-1. Update the version in the package's package.json file to the next version.
+1. Update the version in the package's `package.json` file to the next version.
 1. Run `git add .` and `npm run c`. Select "chore" for type
 1. Run `npm run nx -- build <project>`
 1. Run the corresponding package dry release script `npm run release:[package]:dry`.
