@@ -1,3 +1,10 @@
+## 0.0.4 (2025-04-08)
+
+
+### 🚀 Features
+
+- **view-transition:** 🔥 added vtActiveGroupId directive ([#21](https://github.com/DmitryEfimenko/ngspot/pull/21))
+
 ## 0.0.3 (2025-04-04)
 
 
