@@ -2,7 +2,12 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "../../../dist/out-tsc",
-    "types": ["jasmine", "node"]
+    "types": ["jasmine", "node", "dom-view-transitions"]
   },
-  "include": ["./src/**/*.spec.ts", "./src/**/*.test.ts", "./src/**/*.d.ts"]
+  "include": [
+    "./src/**/*.spec.ts",
+    "./src/**/*.test.ts",
+    "./src/**/*.d.ts",
+    "../../../node_modules/@types/dom-view-transitions/index.d.ts"
+  ]
 }

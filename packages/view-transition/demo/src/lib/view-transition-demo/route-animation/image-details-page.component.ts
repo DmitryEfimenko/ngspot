@@ -6,7 +6,7 @@ import {
   input,
 } from '@angular/core';
 
-import { VIEW_TRANSITION_DIRECTIVES } from '@ngspot/view-transition';
+import { VIEW_TRANSITION_DECLARATIONS } from '@ngspot/view-transition';
 
 import { imagesMetadata } from './data';
 
@@ -14,7 +14,7 @@ import { imagesMetadata } from './data';
   selector: 'ngs-vt-image-details',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [NgOptimizedImage, VIEW_TRANSITION_DIRECTIVES],
+  imports: [NgOptimizedImage, VIEW_TRANSITION_DECLARATIONS],
   template: `
     <img
       width="1024"

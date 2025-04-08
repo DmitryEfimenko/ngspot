@@ -70,7 +70,7 @@ To accommodate this, the library provides a structural directive (`*vt`) that wa
 ```ts
 @Component({
   selector: 'ngs-vt-basic-demo',
-  imports: [...VIEW_TRANSITION_DIRECTIVES],
+  imports: [...VIEW_TRANSITION_DECLARATIONS],
   styleUrl: './basic-demo.component.scss',
   templateUrl: './basic-demo.component.html',
 })
@@ -198,6 +198,31 @@ With the code above, once `setReady` method is called, the following sequence of
 
 Note, the `vtNameForPassive` directive is the same thing as `vtName` directive. It's only encouraged to use it for readability purposes together with `vtNameForActive` directive.
 
+### `vtActiveGroupId` directive
+
+Directive provides a way to target multiple elements with vtName directive by a single string:
+
+```html
+<div
+  [vtNameForPassive]="`passive-item-1`"
+  [vtNameForActive]="'active-item-animation'"
+  [vtActiveGroupId]="active-group"
+>
+  Item 1
+</div>
+
+<div
+  [vtNameForPassive]="`passive-item-2`"
+  [vtNameForActive]="'active-item-animation'"
+  [vtActiveGroupId]="active-group"
+>
+  Item 2
+</div>
+```
+```ts
+this.viewTransitionService.setActiveViewTransitionNames('active-group');
+```
+Calling `setActiveViewTransitionNames` in the example above will set `view-transition-name` CSS property on both elements to `active-item-animation`.
 
 ### Targeting many elements in the loop
 
@@ -314,11 +339,11 @@ Styles for animations specific to a particular component should also be global. 
 There are times when you need to add global styles, but with component-specific context. To achieve this, the library provides a `vt-style` component. Example of usage:
 
 ```ts
-import { VIEW_TRANSITION_DIRECTIVES } from '@ngspot/view-transition';
+import { VIEW_TRANSITION_DECLARATIONS } from '@ngspot/view-transition';
 
 @Component({
   selector: 'ngs-card',
-  imports: [...VIEW_TRANSITION_DIRECTIVES],
+  imports: [...VIEW_TRANSITION_DECLARATIONS],
   template: `
     <!-- Other component contents -->
 

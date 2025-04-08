@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 
 import {
-  VIEW_TRANSITION_DIRECTIVES,
+  VIEW_TRANSITION_DECLARATIONS,
   ViewTransitionService,
 } from '@ngspot/view-transition';
 
@@ -17,7 +17,7 @@ import { Card, newCard } from './model';
   selector: 'ngs-vt-ordering-demo',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [...VIEW_TRANSITION_DIRECTIVES, CardComponent],
+  imports: [...VIEW_TRANSITION_DECLARATIONS, CardComponent],
   styleUrls: [
     './ordering-demo.component-base-styles.scss',
     './ordering-demo.component-animations.scss',

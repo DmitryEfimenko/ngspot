@@ -5,7 +5,7 @@ import {
   input,
 } from '@angular/core';
 
-import { VIEW_TRANSITION_DIRECTIVES } from '@ngspot/view-transition';
+import { VIEW_TRANSITION_DECLARATIONS } from '@ngspot/view-transition';
 
 import { IsotopeEl } from './model';
 
@@ -13,7 +13,7 @@ import { IsotopeEl } from './model';
   selector: 'ngs-card',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [...VIEW_TRANSITION_DIRECTIVES],
+  imports: [...VIEW_TRANSITION_DECLARATIONS],
   host: {
     '[style.--pos]': 'element().index',
   },
