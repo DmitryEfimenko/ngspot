@@ -1,6 +1,5 @@
 import { DOCUMENT } from '@angular/common';
 import {
-  ChangeDetectorRef,
   Directive,
   inject,
   input,
@@ -58,7 +57,6 @@ export class ViewTransitionRenderer<T> implements OnChanges {
   private document = inject<DocumentWithViewTransition>(DOCUMENT);
   private templateRef = inject(TemplateRef);
   private viewContainerRef = inject(ViewContainerRef);
-  private cdr = inject(ChangeDetectorRef);
   isRunningTransition = signal(false);
 
   static ngTemplateContextGuard<T>(
@@ -122,7 +120,5 @@ export class ViewTransitionRenderer<T> implements OnChanges {
     if (isFirstChange) {
       this.viewContainerRef.createEmbeddedView(this.templateRef, this.context);
     }
-
-    this.cdr.detectChanges();
   }
 }
