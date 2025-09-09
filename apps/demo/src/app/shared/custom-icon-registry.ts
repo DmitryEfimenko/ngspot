@@ -11,7 +11,6 @@ import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 
 import { of } from 'rxjs';
-import { unwrapHtml } from 'safevalues';
 
 /**
  * Use SVG_ICONS (and SvgIconInfo) as "multi" providers to provide the SVG source
@@ -30,7 +29,7 @@ export const SVG_ICONS = new InjectionToken<Array<SvgIconInfo>>('SvgIcons');
 export interface SvgIconInfo {
   namespace?: string;
   name: string;
-  svgSource: TrustedHTML;
+  svgSource: string;
 }
 
 interface SvgIconMap {
@@ -93,8 +92,8 @@ export class CustomIconRegistry extends MatIconRegistry {
     // Creating a new `<div>` per icon is necessary for the SVGs to work correctly in IE11.
     const div = document.createElement('DIV');
 
-    // SECURITY: the source for the SVG icons is provided in code by trusted developers
-    div.innerHTML = unwrapHtml(svgIcon.svgSource) as string;
+    // DEMO: the source for the SVG icons is provided in code by trusted developers
+    div.innerHTML = svgIcon.svgSource;
 
     const svgElement = div.querySelector('svg') as SVGElement;
     nsIconMap[svgIcon.name] = svgElement;

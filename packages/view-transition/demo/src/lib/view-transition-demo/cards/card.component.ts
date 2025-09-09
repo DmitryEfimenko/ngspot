@@ -24,7 +24,7 @@ import { Card } from './model';
       max-width: 10vw;
       min-width: 50px;
 
-      // background-color: grey;
+      /* background-color: grey; */
     }
 
     .delete-btn {

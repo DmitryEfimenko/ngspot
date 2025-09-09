@@ -14,6 +14,7 @@ import { ViewTransitionNameForPassiveShorthandHarness } from './view-transition-
   selector: 'vt-test-host',
   template: `<ng-content></ng-content>`,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class TestHostComponent {
   isOn = signal(false);
@@ -23,6 +24,7 @@ export class TestHostComponent {
   selector: 'vt-test-harness',
   template: `<ng-content></ng-content>`,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class TestHarnessComponent {}
 

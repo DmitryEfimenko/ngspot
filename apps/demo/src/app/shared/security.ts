@@ -1,17 +1,14 @@
-import { htmlSafeByReview } from 'safevalues/restricted/reviewed';
-
-export function fromInnerHTML(el: Element): TrustedHTML {
-  // SECURITY: Existing innerHTML content is already trusted.
-  return htmlSafeByReview(el.innerHTML, '^');
+export function fromInnerHTML(el: Element): string {
+  // DEMO: using raw innerHTML. In production, ensure proper sanitization.
+  return el.innerHTML;
 }
 
-export function fromOuterHTML(el: Element): TrustedHTML {
-  // SECURITY: Existing outerHTML content is already trusted.
-  return htmlSafeByReview(el.outerHTML, '^');
+export function fromOuterHTML(el: Element): string {
+  // DEMO: using raw outerHTML. In production, ensure proper sanitization.
+  return el.outerHTML;
 }
 
-export function svg(constantSvg: TemplateStringsArray): TrustedHTML {
-  // SECURITY: Template literal argument with no interpolation is constant, and
-  // hence trusted.
-  return htmlSafeByReview(constantSvg[0], '^');
+export function svg(constantSvg: TemplateStringsArray): string {
+  // DEMO: constant SVG string. In production, ensure proper sanitization.
+  return constantSvg[0];
 }

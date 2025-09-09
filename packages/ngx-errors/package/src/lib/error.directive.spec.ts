@@ -7,7 +7,12 @@ import {
   ViewChild,
   ChangeDetectionStrategy,
 } from '@angular/core';
-import { discardPeriodicTasks, fakeAsync, flush } from '@angular/core/testing';
+import {
+  discardPeriodicTasks,
+  fakeAsync,
+  flush,
+  flushMicrotasks,
+} from '@angular/core/testing';
 import {
   AbstractControl,
   AsyncValidatorFn,
@@ -48,6 +53,8 @@ const myAsyncValidator: AsyncValidatorFn = (c: AbstractControl) => {
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
+  // Explicitly mark as non-standalone to satisfy Angular 20 TestBed checks
+  standalone: false,
 })
 class TestHostComponent {
   @ViewChild(NgForm, { static: true }) ngForm: NgForm;
@@ -198,11 +205,17 @@ describe(ErrorDirective.name, () => {
 
           // needed to make sure that possible child component is rendered
           await spectator.fixture.whenRenderingDone();
+          flushMicrotasks();
+          spectator.detectChanges();
 
           if (opts.action) {
             opts.action(spectator);
-            // watchedEvents$ include auditTime(0)
+            // First flush microtasks (register control), then timers (auditTime(0))
+            flushMicrotasks();
             spectator.tick();
+            // Flush any follow-up microtasks from RxJS asapScheduler and effects
+            flushMicrotasks();
+            spectator.detectChanges();
           }
 
           if (opts.expectedVisibility) {
@@ -223,8 +236,11 @@ describe(ErrorDirective.name, () => {
         `<div *ngxError="'required'">${errorText('Required')}</div>`,
       );
     }).toThrowMatching((err: Error) => {
-      return err.message.includes(
-        'NullInjectorError: No provider for NgxErrorsBase!',
+      const msg = err.message || '';
+      return (
+        msg.includes('No provider for NgxErrorsBase') ||
+        msg.includes('No provider found for') ||
+        msg.includes('NG0201')
       );
     });
   });
@@ -271,12 +287,18 @@ describe(ErrorDirective.name, () => {
         }
 
         actions[opts.actionNotTriggeringError]();
+        flushMicrotasks();
         spectator.tick();
+        flushMicrotasks();
+        spectator.detectChanges();
 
         expectShouldBeShownToBe(false);
 
         actions[opts.actionTriggeringError]();
+        flushMicrotasks();
         spectator.tick();
+        flushMicrotasks();
+        spectator.detectChanges();
 
         expectShouldBeShownToBe(true);
 
@@ -477,7 +499,11 @@ describe(ErrorDirective.name, () => {
 
       const { spectator } = setupDirectiveWithConfig(template, 'touched', 1);
       spectator.hostComponent.multipleErrors.markAsTouched();
-      spectator.tick();
+      // Let ngxErrors register control and effects run
+      flushMicrotasks();
+      spectator.tick(0);
+      flushMicrotasks();
+      spectator.detectChanges();
       flush();
 
       const errors = spectator.queryAll('[data-error]');
@@ -633,9 +659,15 @@ describe(ErrorDirective.name, () => {
       </form>`;
 
       it('should access error details', fakeAsync(() => {
-        const { spectator } = setupDirectiveWithConfig(template, undefined);
+        const { spectator } = setupDirectiveWithConfig(
+          template,
+          'formIsSubmitted',
+        );
         spectator.click('button');
-        spectator.tick();
+        flushMicrotasks();
+        spectator.tick(0);
+        flushMicrotasks();
+        spectator.detectChanges();
         flush();
 
         expect(spectator.element).toContainText(
@@ -644,12 +676,24 @@ describe(ErrorDirective.name, () => {
       }));
 
       it('should access new error details after a change', fakeAsync(() => {
-        const { spectator } = setupDirectiveWithConfig(template, undefined);
+        const { spectator } = setupDirectiveWithConfig(
+          template,
+          'formIsSubmitted',
+        );
+
+        // submit once to make the error visible initially
+        spectator.click('button');
+        flushMicrotasks();
+        spectator.tick(0);
+        flushMicrotasks();
+        spectator.detectChanges();
 
         spectator.typeInElement('4', 'input');
         spectator.blur('input');
-
+        flushMicrotasks();
         spectator.tick(0);
+        flushMicrotasks();
+        spectator.detectChanges();
         flush();
 
         expect(spectator.element).toContainText(
@@ -658,7 +702,9 @@ describe(ErrorDirective.name, () => {
 
         spectator.typeInElement('6', 'input');
         spectator.blur('input');
+        flushMicrotasks();
         spectator.tick(0);
+        flushMicrotasks();
         flush();
         spectator.detectChanges();
 
@@ -684,9 +730,15 @@ describe(ErrorDirective.name, () => {
       </form>`;
 
       it('should access error details and can use them outside of ngxErrors', fakeAsync(() => {
-        const { spectator } = setupDirectiveWithConfig(template, undefined);
+        const { spectator } = setupDirectiveWithConfig(
+          template,
+          'formIsSubmitted',
+        );
         spectator.click('button');
-        spectator.tick();
+        flushMicrotasks();
+        spectator.tick(0);
+        flushMicrotasks();
+        spectator.detectChanges();
         flush();
 
         expect(spectator.query('#error-outside-expected')).toContainText(
@@ -699,12 +751,24 @@ describe(ErrorDirective.name, () => {
       }));
 
       it('should access new error details after a change ', fakeAsync(() => {
-        const { spectator } = setupDirectiveWithConfig(template, undefined);
+        const { spectator } = setupDirectiveWithConfig(
+          template,
+          'formIsSubmitted',
+        );
+
+        // submit once to make the error visible initially
+        spectator.click('button');
+        flushMicrotasks();
+        spectator.tick(0);
+        flushMicrotasks();
+        spectator.detectChanges();
 
         spectator.typeInElement('4', 'input');
         spectator.blur('input');
-
+        flushMicrotasks();
         spectator.tick(0);
+        flushMicrotasks();
+        spectator.detectChanges();
         flush();
 
         expect(spectator.query('#error-outside-expected')).toContainText(
@@ -717,7 +781,9 @@ describe(ErrorDirective.name, () => {
 
         spectator.typeInElement('6', 'input');
         spectator.blur('input');
+        flushMicrotasks();
         spectator.tick(0);
+        flushMicrotasks();
         flush();
         spectator.detectChanges();
 

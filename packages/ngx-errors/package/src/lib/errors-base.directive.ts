@@ -1,6 +1,7 @@
 import {
   Directive,
   Signal,
+  VERSION,
   computed,
   effect,
   inject,
@@ -42,15 +43,20 @@ export abstract class NgxErrorsBase {
     return controlState;
   });
 
-  private registerResolvedControl = effect(
-    () => {
+  private registerResolvedControl = (() => {
+    const register = () => {
       const control = this.resolvedControl();
       if (!control) {
         return;
       }
       const form = this.formDirective?.form ?? null;
       this.errorsState.registerControl(control, form);
-    },
-    { allowSignalWrites: true },
-  );
+    };
+
+    const major = Number(VERSION.major);
+    if (!Number.isNaN(major) && major < 19) {
+      return effect(register, { allowSignalWrites: true } as any);
+    }
+    return effect(register);
+  })();
 }

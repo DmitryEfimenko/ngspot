@@ -2,9 +2,9 @@
   "name": "@ngspot/ngx-errors-material",
   "version": "4.0.1",
   "peerDependencies": {
-    "@angular/core": ">=17.1.0",
-    "@angular/forms": ">=17.1.0",
-    "@angular/material": ">=17.0.0",
+    "@angular/core": ">=20 <21",
+    "@angular/forms": ">=20 <21",
+    "@angular/material": ">=20 <21",
     "@ngspot/ngx-errors": "^4.0.0"
   },
   "dependencies": {
