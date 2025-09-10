@@ -1,11 +1,10 @@
 import {
   Directive,
   Signal,
-  VERSION,
   computed,
   effect,
   inject,
-  input,
+  input
 } from '@angular/core';
 import { AbstractControl, ControlContainer } from '@angular/forms';
 
@@ -53,10 +52,6 @@ export abstract class NgxErrorsBase {
       this.errorsState.registerControl(control, form);
     };
 
-    const major = Number(VERSION.major);
-    if (!Number.isNaN(major) && major < 19) {
-      return effect(register, { allowSignalWrites: true } as any);
-    }
     return effect(register);
   })();
 }
