@@ -79,17 +79,11 @@ function setupWithReactiveForms(
   const errorHandler = spectator.inject(ErrorHandler);
   // eslint-disable-next-line jasmine/no-unsafe-spy
   const handleErrorSpy = spyOn(errorHandler, 'handleError');
-  if (opts?.stubErrors) {
-    handleErrorSpy.and.stub();
-    try {
-      spectator.detectChanges();
-    } catch {
-      // swallow to prevent test runner from failing; ErrorHandler is stubbed
-    }
-  } else {
-    handleErrorSpy.and.callThrough();
-    spectator.detectChanges();
-  }
+  opts?.stubErrors
+    ? handleErrorSpy.and.stub()
+    : handleErrorSpy.and.callThrough();
+
+  spectator.detectChanges();
 
   return { spectator, handleErrorSpy };
 }
@@ -129,7 +123,8 @@ function expectNgxError(
   const expectedMsg = error.message.replace('NgxError: ', '');
 
   if (handleErrorSpy.calls.any()) {
-    const call = handleErrorSpy.calls.mostRecent() || handleErrorSpy.calls.first();
+    const call =
+      handleErrorSpy.calls.mostRecent() || handleErrorSpy.calls.first();
     const received = call.args[0] as Error | undefined;
     const receivedMsg = received?.message ?? '';
     expect(receivedMsg).toContain(expectedMsg);
