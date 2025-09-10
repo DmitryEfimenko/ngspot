@@ -673,25 +673,12 @@ describe(ErrorDirective.name, () => {
       }));
 
       it('should access new error details after a change', fakeAsync(() => {
-        const { spectator } = setupDirectiveWithConfig(
-          template,
-          'formIsSubmitted',
-        );
-
-        // submit once to make the error visible initially
-        spectator.click('button');
-        flushMicrotasks();
-        spectator.tick(0);
-        flushMicrotasks();
-        spectator.detectChanges();
-
+        const { spectator } = setupDirectiveWithConfig(template, undefined);
         spectator.typeInElement('4', 'input');
         spectator.blur('input');
-        flushMicrotasks();
         spectator.tick(0);
-        flushMicrotasks();
-        spectator.detectChanges();
         flush();
+        spectator.detectChanges();
 
         expect(spectator.element).toContainText(
           "Number should be greater than 10. You've typed 4.",
@@ -699,9 +686,8 @@ describe(ErrorDirective.name, () => {
 
         spectator.typeInElement('6', 'input');
         spectator.blur('input');
-        flushMicrotasks();
+        flush();
         spectator.tick(0);
-        flushMicrotasks();
         flush();
         spectator.detectChanges();
 
