@@ -2,6 +2,7 @@ import { DOCUMENT } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import {
   ErrorHandler,
+  inject,
   Inject,
   Injectable,
   InjectionToken,
@@ -46,6 +47,7 @@ const DEFAULT_NS = '$$default';
  */
 @Injectable()
 export class CustomIconRegistry extends MatIconRegistry {
+  private _domSanitizer = inject(DomSanitizer);
   private cachedSvgElements: SvgIconMap = { [DEFAULT_NS]: {} };
 
   constructor(
@@ -53,7 +55,7 @@ export class CustomIconRegistry extends MatIconRegistry {
     sanitizer: DomSanitizer,
     @Optional() @Inject(DOCUMENT) document: Document,
     errorHandler: ErrorHandler,
-    @Inject(SVG_ICONS) private svgIcons: SvgIconInfo[]
+    @Inject(SVG_ICONS) private svgIcons: SvgIconInfo[],
   ) {
     super(http, sanitizer, document, errorHandler);
   }
@@ -73,12 +75,12 @@ export class CustomIconRegistry extends MatIconRegistry {
 
   private loadSvgElement(
     iconName: string,
-    namespace?: string
+    namespace?: string,
   ): SVGElement | undefined {
     const svgIcon = this.svgIcons.find((icon) =>
       namespace
         ? icon.name === iconName && icon.namespace === namespace
-        : icon.name === iconName
+        : icon.name === iconName,
     );
 
     if (!svgIcon) {
@@ -93,7 +95,9 @@ export class CustomIconRegistry extends MatIconRegistry {
     const div = document.createElement('DIV');
 
     // DEMO: the source for the SVG icons is provided in code by trusted developers
-    div.innerHTML = svgIcon.svgSource;
+    div.innerHTML = this._domSanitizer.bypassSecurityTrustHtml(
+      svgIcon.svgSource,
+    ) as string;
 
     const svgElement = div.querySelector('svg') as SVGElement;
     nsIconMap[svgIcon.name] = svgElement;
