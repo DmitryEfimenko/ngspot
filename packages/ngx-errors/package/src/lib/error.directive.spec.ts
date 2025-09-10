@@ -236,11 +236,8 @@ describe(ErrorDirective.name, () => {
         `<div *ngxError="'required'">${errorText('Required')}</div>`,
       );
     }).toThrowMatching((err: Error) => {
-      const msg = err.message || '';
-      return (
-        msg.includes('No provider for NgxErrorsBase') ||
-        msg.includes('No provider found for') ||
-        msg.includes('NG0201')
+      return err.message.includes(
+        'NG0201: No provider found for `NgxErrorsBase`',
       );
     });
   });
