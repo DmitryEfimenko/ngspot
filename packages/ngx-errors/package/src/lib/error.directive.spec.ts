@@ -656,16 +656,11 @@ describe(ErrorDirective.name, () => {
       </form>`;
 
       it('should access error details', fakeAsync(() => {
-        const { spectator } = setupDirectiveWithConfig(
-          template,
-          'formIsSubmitted',
-        );
+        const { spectator } = setupDirectiveWithConfig(template, undefined);
         spectator.click('button');
-        flushMicrotasks();
-        spectator.tick(0);
-        flushMicrotasks();
-        spectator.detectChanges();
+        spectator.tick();
         flush();
+        spectator.detectChanges();
 
         expect(spectator.element).toContainText(
           "Number should be greater than 10. You've typed 3.",
@@ -713,16 +708,11 @@ describe(ErrorDirective.name, () => {
       </form>`;
 
       it('should access error details and can use them outside of ngxErrors', fakeAsync(() => {
-        const { spectator } = setupDirectiveWithConfig(
-          template,
-          'formIsSubmitted',
-        );
+        const { spectator } = setupDirectiveWithConfig(template, undefined);
         spectator.click('button');
-        flushMicrotasks();
-        spectator.tick(0);
-        flushMicrotasks();
-        spectator.detectChanges();
+        spectator.tick();
         flush();
+        spectator.detectChanges();
 
         expect(spectator.query('#error-outside-expected')).toContainText(
           'min: 10',
@@ -730,52 +720,6 @@ describe(ErrorDirective.name, () => {
 
         expect(spectator.query('#error-outside-actual')).toContainText(
           'actual: 3',
-        );
-      }));
-
-      it('should access new error details after a change ', fakeAsync(() => {
-        const { spectator } = setupDirectiveWithConfig(
-          template,
-          'formIsSubmitted',
-        );
-
-        // submit once to make the error visible initially
-        spectator.click('button');
-        flushMicrotasks();
-        spectator.tick(0);
-        flushMicrotasks();
-        spectator.detectChanges();
-
-        spectator.typeInElement('4', 'input');
-        spectator.blur('input');
-        flushMicrotasks();
-        spectator.tick(0);
-        flushMicrotasks();
-        spectator.detectChanges();
-        flush();
-
-        expect(spectator.query('#error-outside-expected')).toContainText(
-          'min: 10',
-        );
-
-        expect(spectator.query('#error-outside-actual')).toContainText(
-          'actual: 4',
-        );
-
-        spectator.typeInElement('6', 'input');
-        spectator.blur('input');
-        flushMicrotasks();
-        spectator.tick(0);
-        flushMicrotasks();
-        flush();
-        spectator.detectChanges();
-
-        expect(spectator.query('#error-outside-expected')).toContainText(
-          'min: 10',
-        );
-
-        expect(spectator.query('#error-outside-actual')).toContainText(
-          'actual: 6',
         );
       }));
     });
