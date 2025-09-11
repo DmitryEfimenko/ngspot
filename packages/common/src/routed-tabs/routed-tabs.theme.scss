@@ -2,12 +2,12 @@
 @use '@angular/material' as mat;
 
 @mixin color($theme) {
-  $color-config: mat.get-color-config($theme);
+  $color-config: mat.m2-get-color-config($theme);
   $background: map.get($color-config, background);
   $is-dark: map.get($color-config, 'is-dark');
 
   ngs-routed-tabs > mat-tab-group.sections > mat-tab-header {
-    background: mat.get-color-from-palette($background, app-bar);
+    background: mat.m2-get-color-from-palette($background, app-bar);
     @include mat.elevation(4);
   }
 }
@@ -17,13 +17,13 @@
 }
 
 @mixin theme($theme) {
-  $color-config: mat.get-color-config($theme);
+  $color-config: mat.m2-get-color-config($theme);
 
   @if $color-config != null {
     @include color($theme);
   }
 
-  $typography-config: mat.get-typography-config($theme);
+  $typography-config: mat.m2-get-typography-config($theme);
   @if $typography-config != null {
     @include typography($theme);
   }

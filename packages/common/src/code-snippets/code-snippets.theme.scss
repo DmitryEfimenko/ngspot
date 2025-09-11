@@ -2,19 +2,19 @@
 @use '@angular/material' as mat;
 
 @mixin color($theme) {
-  $color-config: mat.get-color-config($theme);
+  $color-config: mat.m2-get-color-config($theme);
   $foreground: map.get($color-config, foreground);
   $is-dark: map.get($color-config, 'is-dark');
 
   ngs-code-snippets {
-    $border-color: rgba(mat.get-color-from-palette($foreground, text), 0.2);
+    $border-color: rgba(mat.m2-get-color-from-palette($foreground, text), 0.2);
 
     mat-tab-header {
       border-bottom: 1px solid $border-color;
     }
 
     td.hljs-ln-numbers {
-      color: rgba(mat.get-color-from-palette($foreground, text), 0.42);
+      color: rgba(mat.m2-get-color-from-palette($foreground, text), 0.42);
       border-right: 1px solid $border-color;
     }
   }
@@ -25,13 +25,13 @@
 }
 
 @mixin theme($theme) {
-  $color-config: mat.get-color-config($theme);
+  $color-config: mat.m2-get-color-config($theme);
 
   @if $color-config != null {
     @include color($theme);
   }
 
-  $typography-config: mat.get-typography-config($theme);
+  $typography-config: mat.m2-get-typography-config($theme);
   @if $typography-config != null {
     @include typography($theme);
   }
