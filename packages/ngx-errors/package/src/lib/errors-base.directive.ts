@@ -4,7 +4,7 @@ import {
   computed,
   effect,
   inject,
-  input
+  input,
 } from '@angular/core';
 import { AbstractControl, ControlContainer } from '@angular/forms';
 
@@ -42,16 +42,12 @@ export abstract class NgxErrorsBase {
     return controlState;
   });
 
-  private registerResolvedControl = (() => {
-    const register = () => {
-      const control = this.resolvedControl();
-      if (!control) {
-        return;
-      }
-      const form = this.formDirective?.form ?? null;
-      this.errorsState.registerControl(control, form);
-    };
-
-    return effect(register);
-  })();
+  private registerResolvedControl = effect(() => {
+    const control = this.resolvedControl();
+    if (!control) {
+      return;
+    }
+    const form = this.formDirective?.form ?? null;
+    this.errorsState.registerControl(control, form);
+  });
 }
