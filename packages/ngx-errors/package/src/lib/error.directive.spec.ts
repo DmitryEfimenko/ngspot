@@ -7,12 +7,7 @@ import {
   ViewChild,
   ChangeDetectionStrategy,
 } from '@angular/core';
-import {
-  discardPeriodicTasks,
-  fakeAsync,
-  flush,
-  flushMicrotasks,
-} from '@angular/core/testing';
+import { discardPeriodicTasks, fakeAsync, flush } from '@angular/core/testing';
 import {
   AbstractControl,
   AsyncValidatorFn,
@@ -205,16 +200,16 @@ describe(ErrorDirective.name, () => {
 
           // needed to make sure that possible child component is rendered
           await spectator.fixture.whenRenderingDone();
-          flushMicrotasks();
+          flush();
           spectator.detectChanges();
 
           if (opts.action) {
             opts.action(spectator);
             // First flush microtasks (register control), then timers (auditTime(0))
-            flushMicrotasks();
+            flush();
             spectator.tick();
             // Flush any follow-up microtasks from RxJS asapScheduler and effects
-            flushMicrotasks();
+            flush();
             spectator.detectChanges();
           }
 
@@ -284,17 +279,17 @@ describe(ErrorDirective.name, () => {
         }
 
         actions[opts.actionNotTriggeringError]();
-        flushMicrotasks();
+        flush();
         spectator.tick();
-        flushMicrotasks();
+        flush();
         spectator.detectChanges();
 
         expectShouldBeShownToBe(false);
 
         actions[opts.actionTriggeringError]();
-        flushMicrotasks();
+        flush();
         spectator.tick();
-        flushMicrotasks();
+        flush();
         spectator.detectChanges();
 
         expectShouldBeShownToBe(true);
@@ -497,9 +492,9 @@ describe(ErrorDirective.name, () => {
       const { spectator } = setupDirectiveWithConfig(template, 'touched', 1);
       spectator.hostComponent.multipleErrors.markAsTouched();
       // Let ngxErrors register control and effects run
-      flushMicrotasks();
+      flush();
       spectator.tick(0);
-      flushMicrotasks();
+      flush();
       spectator.detectChanges();
       flush();
 
