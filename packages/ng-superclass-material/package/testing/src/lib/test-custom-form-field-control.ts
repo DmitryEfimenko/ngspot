@@ -20,7 +20,7 @@ export function testCustomFormFieldControl(
   expect: JestExpectLike,
   resolveArgsFn: () =>
     | CustomFormFieldControlTestContext
-    | Promise<CustomFormFieldControlTestContext>
+    | Promise<CustomFormFieldControlTestContext>,
 ) {
   testCustomFormControl(describe, it, expect, resolveArgsFn);
 

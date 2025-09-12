@@ -18,7 +18,7 @@ import { TrackRemoteDataOpts } from './model';
  * ```
  */
 export function trackRemoteData<T, E = Error>(
-  opts?: TrackRemoteDataOpts<T, E>
+  opts?: TrackRemoteDataOpts<T, E>,
 ): UnaryFunction<Observable<T>, Observable<RemoteData<T, E>>> {
   return (source$: Observable<T>) => {
     const s$ = source$.pipe(
@@ -30,10 +30,10 @@ export function trackRemoteData<T, E = Error>(
       map((res) => successState<T>(res)),
       deferredStartWith(() => {
         return loadingState<T>(
-          opts?.keepPreviousValue ? opts.keepPreviousValue.cache : undefined
+          opts?.keepPreviousValue ? opts.keepPreviousValue.cache : undefined,
         );
       }),
-      catchError((err: E) => of(errorState<E, T>(err)))
+      catchError((err: E) => of(errorState<E, T>(err))),
     );
 
     const subject = opts?.subject;
@@ -46,7 +46,7 @@ export function trackRemoteData<T, E = Error>(
       tap({
         next: (val) => subject.next(val),
         error: (error) => subject.next(error),
-      })
+      }),
     );
   };
 }

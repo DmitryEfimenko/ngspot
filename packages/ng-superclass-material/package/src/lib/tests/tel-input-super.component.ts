@@ -105,7 +105,7 @@ export class MyTelInputComponent
 
   setDescribedByIds(ids: string[]) {
     const controlElement = this.hostEl.querySelector(
-      '.example-tel-input-container'
+      '.example-tel-input-container',
     );
     controlElement?.setAttribute('aria-describedby', ids.join(' '));
   }

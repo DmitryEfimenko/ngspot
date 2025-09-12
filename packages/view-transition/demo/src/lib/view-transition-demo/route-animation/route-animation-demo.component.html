@@ -9,11 +9,11 @@
 
       <a [routerLink]="img.id">
         <img
+          alt="{{ img.title }}"
           mat-card-image
           width="200"
           height="150"
           vtNameForRouterLink="image"
-          alt="{{ img.title }}"
           [ngSrc]="img.src"
         />
       </a>

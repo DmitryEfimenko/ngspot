@@ -102,7 +102,7 @@ describe('trackRemoteData', () => {
   describe('with a "keepPreviousValue" option', () => {
     it('should work given multiple subscriptions to trackedData$', () => {
       const trackedData$ = req().pipe(
-        trackRemoteData({ keepPreviousValue: new PreviousValueCache() })
+        trackRemoteData({ keepPreviousValue: new PreviousValueCache() }),
       );
 
       const emittedValues: RemoteData[] = [];
@@ -129,10 +129,10 @@ describe('trackRemoteData', () => {
       const trackedData$ = source.pipe(
         switchMap((num) => {
           const trackedReq$ = req(num).pipe(
-            trackRemoteData({ keepPreviousValue })
+            trackRemoteData({ keepPreviousValue }),
           );
           return trackedReq$;
-        })
+        }),
       );
 
       const emittedValues: RemoteData[] = [];

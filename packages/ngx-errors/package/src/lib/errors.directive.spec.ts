@@ -24,6 +24,7 @@ import {
 @Component({
   selector: 'ngs-test-host-with-reactive-forms',
   // Explicitly mark as non-standalone to satisfy Angular 20 TestBed checks
+  // eslint-disable-next-line @angular-eslint/prefer-standalone
   standalone: false,
 })
 class TestHostWithReactiveFormsComponent {
@@ -39,6 +40,7 @@ class TestHostWithReactiveFormsComponent {
 
 @Component({
   // Explicitly mark as non-standalone to satisfy Angular 20 TestBed checks
+  // eslint-disable-next-line @angular-eslint/prefer-standalone
   standalone: false,
 })
 class TestHostWithTemplateDrivenFormsComponent {

@@ -18,7 +18,7 @@ export function syncOuterAndInnerControls(
   ngControl: NgControl,
   innerControls: AbstractControl[],
   changeDetectorRef: ChangeDetectorRef,
-  destroy$: Observable<boolean>
+  destroy$: Observable<boolean>,
 ) {
   if (!ngControl?.control) {
     return;
@@ -29,7 +29,7 @@ export function syncOuterAndInnerControls(
     ngControl,
     innerControls,
     changeDetectorRef,
-    destroy$
+    destroy$,
   );
   syncOuterAndInnerDirty(ngControl, innerControls, changeDetectorRef, destroy$);
 }
@@ -38,7 +38,7 @@ export function syncOuterToInnerErrors(
   ngControl: NgControl,
   innerControls: AbstractControl[],
   changeDetectorRef: ChangeDetectorRef,
-  destroy$: Observable<boolean>
+  destroy$: Observable<boolean>,
 ) {
   if (!ngControl || !ngControl.statusChanges) {
     return;
@@ -55,7 +55,7 @@ export function syncOuterToInnerErrors(
         }
         changeDetectorRef.detectChanges();
       }),
-      takeUntil(destroy$)
+      takeUntil(destroy$),
     )
     .subscribe();
 }
@@ -64,7 +64,7 @@ export function syncOuterAndInnerTouched(
   ngControl: NgControl,
   innerControls: AbstractControl[],
   changeDetectorRef: ChangeDetectorRef,
-  destroy$: Observable<boolean>
+  destroy$: Observable<boolean>,
 ) {
   if (!ngControl.control) {
     return;
@@ -88,7 +88,7 @@ export function syncOuterAndInnerTouched(
         }
         changeDetectorRef.detectChanges();
       }),
-      takeUntil(destroy$)
+      takeUntil(destroy$),
     )
     .subscribe();
 
@@ -108,7 +108,7 @@ export function syncOuterAndInnerDirty(
   ngControl: NgControl,
   innerControls: AbstractControl[],
   changeDetectorRef: ChangeDetectorRef,
-  destroy$: Observable<boolean>
+  destroy$: Observable<boolean>,
 ) {
   if (!ngControl.control) {
     return;
@@ -132,7 +132,7 @@ export function syncOuterAndInnerDirty(
         }
         changeDetectorRef.detectChanges();
       }),
-      takeUntil(destroy$)
+      takeUntil(destroy$),
     )
     .subscribe();
 

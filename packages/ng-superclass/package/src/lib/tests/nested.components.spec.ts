@@ -14,7 +14,7 @@ describe(NestedComponent.name, () => {
 
   async function setup<T extends { [key: string]: unknown }>(
     template: string,
-    hostProps: T
+    hostProps: T,
   ) {
     const spectator = createHost<T>(template, { hostProps });
 

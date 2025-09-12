@@ -12,7 +12,7 @@ export function Share(opts: ShareOptions = {}) {
   return (
     target: object,
     propertyKey: string | symbol,
-    descriptor: TypedPropertyDescriptor<MethodReturning<Observable<any>>>
+    descriptor: TypedPropertyDescriptor<MethodReturning<Observable<any>>>,
   ) => {
     if (!descriptor.value) {
       return descriptor;
@@ -38,7 +38,7 @@ export function Share(opts: ShareOptions = {}) {
         originalMethod.apply(context, args as any) as Observable<any>
       ).pipe(
         share(),
-        tap(() => cache.delete(key))
+        tap(() => cache.delete(key)),
       );
 
       if (!opts.when || (opts.when as any).apply(context, args)) {

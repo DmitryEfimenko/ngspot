@@ -52,7 +52,7 @@ describe(FullNameReactiveComponent.name, () => {
           .pipe(
             tap((val) => {
               receivedValues.push(val);
-            })
+            }),
           )
           .subscribe();
 

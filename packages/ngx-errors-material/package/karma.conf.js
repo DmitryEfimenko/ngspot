@@ -13,7 +13,7 @@ module.exports = function (config) {
       ...baseConfig.coverageReporter,
       dir: join(
         __dirname,
-        '../../../coverage/packages/ngx-errors-material/package'
+        '../../../coverage/packages/ngx-errors-material/package',
       ),
     },
   });

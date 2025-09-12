@@ -8,7 +8,7 @@ abstract class TestClass {
   abstract testMethod(
     arg1: string,
     arg2: number,
-    scheduler: VirtualTimeScheduler
+    scheduler: VirtualTimeScheduler,
   ): Observable<unknown>;
 }
 
@@ -26,7 +26,7 @@ describe('@Share()', () => {
       testMethod(arg1: string, arg2: number, scheduler: VirtualTimeScheduler) {
         return of<Obj>({ arg1, arg2 }).pipe(
           delay(1, scheduler),
-          tap(() => this.hitCount++)
+          tap(() => this.hitCount++),
         );
       }
     }
@@ -150,7 +150,7 @@ describe('@Share when using two instances of class', () => {
       testMethod(arg1: string, arg2: number, scheduler: VirtualTimeScheduler) {
         return of<Obj>({ arg1, arg2 }).pipe(
           delay(1, scheduler),
-          tap(() => res.hitCount++)
+          tap(() => res.hitCount++),
         );
       }
     }

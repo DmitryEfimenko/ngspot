@@ -24,7 +24,7 @@ export type Methods = Partial<Record<AbstractControlMethods, EmitValue>>;
 export function patchObjectMethodWith<T, K extends MethodNames<T>>(
   obj: T,
   methodName: K,
-  fn: TypeOfClassMethod<T, K>
+  fn: TypeOfClassMethod<T, K>,
 ) {
   const originalFn = (obj[methodName] as any).bind(obj) as TypeOfClassMethod<
     T,
@@ -50,14 +50,14 @@ export function patchObjectMethodWith<T, K extends MethodNames<T>>(
  * ```
  */
 export function extractTouchedChanges(
-  control: AbstractControl
+  control: AbstractControl,
 ): Observable<boolean> {
   const methods: Methods = {
     markAsTouched: true,
     markAsUntouched: false,
   };
   return extractMethodsIntoObservable(control, methods).pipe(
-    distinctUntilChanged()
+    distinctUntilChanged(),
   );
 }
 
@@ -72,20 +72,20 @@ export function extractTouchedChanges(
  * ```
  */
 export function extractDirtyChanges(
-  control: AbstractControl
+  control: AbstractControl,
 ): Observable<boolean> {
   const methods: Methods = {
     markAsDirty: true,
     markAsPristine: false,
   };
   return extractMethodsIntoObservable(control, methods).pipe(
-    distinctUntilChanged()
+    distinctUntilChanged(),
   );
 }
 
 function extractMethodsIntoObservable(
   control: AbstractControl,
-  methods: Methods
+  methods: Methods,
 ) {
   const changes$ = new Subject<EmitValue>();
 
@@ -97,7 +97,7 @@ function extractMethodsIntoObservable(
       methodName as MethodNames<AbstractControl>,
       () => {
         changes$.next(emitValue as boolean);
-      }
+      },
     );
   });
 

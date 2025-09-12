@@ -6,7 +6,7 @@ import { ComponentHarness } from '@angular/cdk/testing';
  * for common custom component behavior.
  */
 export abstract class CustomFormControlHarness<
-  ValueType
+  ValueType,
 > extends ComponentHarness {
   abstract setValue(value: ValueType): Promise<void>;
 

@@ -49,6 +49,7 @@ const myAsyncValidator: AsyncValidatorFn = (c: AbstractControl) => {
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   // Explicitly mark as non-standalone to satisfy Angular 20 TestBed checks
+  // eslint-disable-next-line @angular-eslint/prefer-standalone
   standalone: false,
 })
 class TestHostComponent {
@@ -104,17 +105,16 @@ function errorText(text?: string) {
 
 @Component({
   selector: 'ngs-test-child-address',
-  template: `
-    <input
+  template: `<input
       #street="ngModel"
       required
       name="street"
       [(ngModel)]="address.street"
     />
     <div [ngxErrors]="street.control">
-      <div *ngxError="'required'">${errorText('Required')}</div>
-    </div>
-  `,
+      <div *ngxError="'required'">{{ getErrorText('Required') }}</div>
+    </div>`,
+  // eslint-disable-next-line @angular-eslint/prefer-standalone
   standalone: true,
   imports: [FormsModule, ...NGX_ERRORS_DECLARATIONS],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -122,6 +122,10 @@ function errorText(text?: string) {
 })
 class TestChildComponent {
   @Input() address: { street: string };
+
+  getErrorText(text: string | undefined) {
+    return errorText(text);
+  }
 }
 
 describe(ErrorDirective.name, () => {

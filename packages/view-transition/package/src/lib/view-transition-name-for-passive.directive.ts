@@ -125,6 +125,7 @@ export abstract class ViewTransitionNameForPassiveBase {
 })
 export class ViewTransitionNameForPassiveShorthand extends ViewTransitionNameForPassiveBase {
   override name = input.required<string>({ alias: 'vtName' });
+  // eslint-disable-next-line @angular-eslint/no-input-rename
   override enabledInput = input<boolean>(true, { alias: 'vtNameEnabled' });
 }
 
@@ -146,6 +147,7 @@ export class ViewTransitionNameForPassiveShorthand extends ViewTransitionNameFor
 export class ViewTransitionNameForPassiveExplicit extends ViewTransitionNameForPassiveBase {
   override name = input.required<string>({ alias: 'vtNameForPassive' });
   override enabledInput = input<boolean>(true, {
-    alias: 'vtNameForPassiveEnabled',
+    // eslint-disable-next-line @angular-eslint/no-input-rename
+    alias: 'vtqNameForPassiveEnabled',
   });
 }

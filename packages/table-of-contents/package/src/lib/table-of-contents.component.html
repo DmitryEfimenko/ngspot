@@ -3,8 +3,8 @@
     *ngFor="let link of liveLinks$ | async; trackBy: trackById; let i = index"
   >
     <a
-      [href]="_rootUrl + '#' + link.id"
       class="docs-level-{{ link.type }} docs-link"
+      [href]="_rootUrl + '#' + link.id"
       [class.docs-active]="link.active"
     >
       {{ link.name }}

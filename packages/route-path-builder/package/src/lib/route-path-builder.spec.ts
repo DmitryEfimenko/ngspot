@@ -76,7 +76,7 @@ describe('RoutePathBuilder', () => {
 
     it('works with sub-child routes', () => {
       expect(appRoutes.child1.child2.url1().url).toBe(
-        '/child1/child2/child2Url'
+        '/child1/child2/child2Url',
       );
     });
   });

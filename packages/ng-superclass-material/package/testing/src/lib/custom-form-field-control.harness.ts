@@ -6,7 +6,7 @@ import { MatFormFieldHarness } from '@angular/material/form-field/testing';
  * for common custom component behavior.
  */
 export abstract class CustomFormFieldControlHarness<
-  ValueType
+  ValueType,
 > extends MatFormFieldHarness {
   abstract setValue(value: ValueType): Promise<void>;
 

@@ -27,7 +27,7 @@ const iconOpenLeave: AnimationMetadata[] = [
   style({ transform: 'rotate(0deg)', opacity: 1 }),
   animate(
     ANIMATION_TIMINGS,
-    style({ transform: 'rotate(270deg)', opacity: 0 })
+    style({ transform: 'rotate(270deg)', opacity: 0 }),
   ),
 ];
 
@@ -45,7 +45,7 @@ const iconCloseLeave: AnimationMetadata[] = [
   style({ transform: 'rotate(0deg)', opacity: 1 }),
   animate(
     ANIMATION_TIMINGS,
-    style({ transform: 'rotate(-270deg)', opacity: 0 })
+    style({ transform: 'rotate(-270deg)', opacity: 0 }),
   ),
 ];
 

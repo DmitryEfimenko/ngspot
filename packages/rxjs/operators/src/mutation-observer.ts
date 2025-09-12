@@ -2,7 +2,7 @@ import { Observable } from 'rxjs';
 
 export function mutationObserver(
   el: HTMLElement,
-  options: MutationObserverInit
+  options: MutationObserverInit,
 ) {
   return new Observable((subscriber) => {
     const observer = new MutationObserver((mutation) => {

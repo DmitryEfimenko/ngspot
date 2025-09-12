@@ -12,7 +12,7 @@ import { tap } from 'rxjs/operators';
  */
 export function log$<T>(
   info?: unknown,
-  predicateFn?: (data?: T) => any
+  predicateFn?: (data?: T) => any,
 ): UnaryFunction<Observable<T | null | undefined>, Observable<T>> {
   const stacktrace = getStackTrace();
   const caller = stacktrace[2];
@@ -39,8 +39,8 @@ export function log$<T>(
       },
       () => {
         log(`[${caller}] tap.complete`);
-      }
-    ) as OperatorFunction<T | null | undefined, T>
+      },
+    ) as OperatorFunction<T | null | undefined, T>,
   );
 }
 

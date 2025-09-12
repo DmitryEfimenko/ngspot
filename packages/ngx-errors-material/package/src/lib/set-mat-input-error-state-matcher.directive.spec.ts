@@ -20,6 +20,7 @@ import { SetMatInputErrorStateMatcherDirective } from './set-mat-input-error-sta
   template: '',
   changeDetection: ChangeDetectionStrategy.OnPush,
   // Angular 20: test host must not be standalone because Spectator declares it in a testing module
+  // eslint-disable-next-line @angular-eslint/prefer-standalone
   standalone: false,
 })
 export class TestComponent {

@@ -3,10 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import {
   ErrorHandler,
   inject,
-  Inject,
   Injectable,
   InjectionToken,
-  Optional,
 } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -50,14 +48,15 @@ export class CustomIconRegistry extends MatIconRegistry {
   private _domSanitizer = inject(DomSanitizer);
   private cachedSvgElements: SvgIconMap = { [DEFAULT_NS]: {} };
 
-  constructor(
-    http: HttpClient,
-    sanitizer: DomSanitizer,
-    @Optional() @Inject(DOCUMENT) document: Document,
-    errorHandler: ErrorHandler,
-    @Inject(SVG_ICONS) private svgIcons: SvgIconInfo[],
-  ) {
-    super(http, sanitizer, document, errorHandler);
+  private svgIcons = inject(SVG_ICONS);
+
+  constructor() {
+    super(
+      inject(HttpClient),
+      inject(DomSanitizer),
+      inject(DOCUMENT, { optional: true }),
+      inject(ErrorHandler),
+    );
   }
 
   override getNamedSvgIcon(iconName: string, namespace?: string) {

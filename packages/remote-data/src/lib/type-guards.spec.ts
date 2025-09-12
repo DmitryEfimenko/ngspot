@@ -74,14 +74,14 @@ const testStates = Object.freeze({
 });
 
 type testStateName = keyof typeof testStates;
-type testStateValue = typeof testStates[testStateName];
+type testStateValue = (typeof testStates)[testStateName];
 
 describe('type-guards', () => {
   testMatrix.forEach((testParams) => {
     describe(testParams.function.name, () => {
       const entries = Object.entries(testStates) as [
         testStateName,
-        testStateValue
+        testStateValue,
       ][];
       entries.forEach(([stateName, state]) => {
         it(`should return ${testParams[stateName]} when given a ${stateName}`, () => {

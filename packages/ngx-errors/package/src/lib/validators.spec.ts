@@ -34,7 +34,7 @@ describe(dependentValidator.name, () => {
         watchControl: () => controlA,
         validator: (val) => matchValidator(val),
         condition: opts.condition,
-      })
+      }),
     );
 
     return { controlA, controlB, matchValidatorSpy };

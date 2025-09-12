@@ -4,6 +4,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   ContentChildren,
+  inject,
   OnDestroy,
   QueryList,
   ViewChild,
@@ -48,12 +49,10 @@ export class RoutedTabsComponent implements AfterViewInit, OnDestroy {
 
   @ViewChild(MatTabGroup, { static: true }) tabs: MatTabGroup;
 
-  constructor(
-    private navigationFocusService: NavigationFocusService,
-    private router: Router,
-    private activatedRoute: ActivatedRoute,
-    private ga: GoogleAnalyticsService
-  ) {}
+  navigationFocusService = inject(NavigationFocusService);
+  router = inject(Router);
+  activatedRoute = inject(ActivatedRoute);
+  ga = inject(GoogleAnalyticsService);
 
   ngAfterViewInit() {
     this.syncRouteWithTabs();
@@ -112,7 +111,7 @@ export class RoutedTabsComponent implements AfterViewInit, OnDestroy {
               this.isFirstSync = false;
             }, 500);
           }
-        })
+        }),
       );
 
     this.subs.add(syncRouteWithTabs$.subscribe());

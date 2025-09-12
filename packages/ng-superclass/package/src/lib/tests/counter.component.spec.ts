@@ -21,13 +21,13 @@ describe(CounterComponent.name, () => {
 
     async function setup<T extends { [key: string]: any }>(
       template: string,
-      hostProps: T
+      hostProps: T,
     ) {
       const spectator = createHost<T>(template, { hostProps });
 
       const setViewModelSpy = spyOn(
         spectator.component.viewModel,
-        'setValue'
+        'setValue',
       ).and.callThrough();
 
       const loader = TestbedHarnessEnvironment.loader(spectator.fixture);
@@ -64,7 +64,7 @@ describe(CounterComponent.name, () => {
           .pipe(
             tap((val) => {
               receivedValues.push(val);
-            })
+            }),
           )
           .subscribe();
 

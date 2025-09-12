@@ -2,11 +2,15 @@
   "name": "@ngspot/view-transition-demo",
   "version": "0.0.0",
   "peerDependencies": {
-    "@angular/common": "^17.3.0",
-    "@angular/core": "^17.3.0"
+    "@angular/common": "20.2.4",
+    "@angular/core": "20.2.4",
+    "@angular/router": "20.2.4",
+    "@ngspot/common": "0.0.1",
+    "@angular/material": "20.2.2",
+    "@ngspot/view-transition": "0.0.4",
+    "@angular/forms": "20.2.4",
+    "rxjs": "7.8.1"
   },
-  "dependencies": {
-    "tslib": "^2.3.0"
-  },
+  "dependencies": {},
   "sideEffects": false
 }
