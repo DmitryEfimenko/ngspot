@@ -205,8 +205,7 @@ describe(ErrorDirective.name, () => {
 
           if (opts.action) {
             opts.action(spectator);
-            // First flush microtasks (register control), then timers (auditTime(0))
-            flush();
+
             spectator.tick();
             // Flush any follow-up microtasks from RxJS asapScheduler and effects
             flush();
@@ -279,7 +278,6 @@ describe(ErrorDirective.name, () => {
         }
 
         actions[opts.actionNotTriggeringError]();
-        flush();
         spectator.tick();
         flush();
         spectator.detectChanges();
@@ -287,9 +285,7 @@ describe(ErrorDirective.name, () => {
         expectShouldBeShownToBe(false);
 
         actions[opts.actionTriggeringError]();
-        flush();
         spectator.tick();
-        flush();
         spectator.detectChanges();
 
         expectShouldBeShownToBe(true);
@@ -492,7 +488,6 @@ describe(ErrorDirective.name, () => {
       const { spectator } = setupDirectiveWithConfig(template, 'touched', 1);
       spectator.hostComponent.multipleErrors.markAsTouched();
       // Let ngxErrors register control and effects run
-      flush();
       spectator.tick(0);
       flush();
       spectator.detectChanges();
