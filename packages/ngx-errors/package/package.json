@@ -1,6 +1,6 @@
 {
   "name": "@ngspot/ngx-errors",
-  "version": "4.0.3",
+  "version": "5.0.0",
   "peerDependencies": {
     "@angular/core": ">=20 <21",
     "@angular/forms": ">=20 <21",
