@@ -1,11 +1,4 @@
-import { DOCUMENT } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
-import {
-  ErrorHandler,
-  inject,
-  Injectable,
-  InjectionToken,
-} from '@angular/core';
+import { inject, Injectable, InjectionToken } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 
@@ -49,15 +42,6 @@ export class CustomIconRegistry extends MatIconRegistry {
   private cachedSvgElements: SvgIconMap = { [DEFAULT_NS]: {} };
 
   private svgIcons = inject(SVG_ICONS);
-
-  constructor() {
-    super(
-      inject(HttpClient),
-      inject(DomSanitizer),
-      inject(DOCUMENT, { optional: true }),
-      inject(ErrorHandler),
-    );
-  }
 
   override getNamedSvgIcon(iconName: string, namespace?: string) {
     const nsIconMap = this.cachedSvgElements[namespace || DEFAULT_NS];
