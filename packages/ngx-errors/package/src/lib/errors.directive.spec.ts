@@ -122,20 +122,18 @@ function expectNgxError(
     thrown = thrown ?? e;
   }
 
-  const expectedMsg = error.message.replace('NgxError: ', '');
-
   if (handleErrorSpy.calls.any()) {
     const call =
       handleErrorSpy.calls.mostRecent() || handleErrorSpy.calls.first();
     const received = call.args[0] as Error | undefined;
     const receivedMsg = received?.message ?? '';
-    expect(receivedMsg).toContain(expectedMsg);
+    expect(receivedMsg).toEqual(error.message);
     return;
   }
 
   // Fallback: ensure thrown error matches expected
   const thrownMsg = (thrown?.message as string) ?? '';
-  expect(thrownMsg).toContain(expectedMsg);
+  expect(thrownMsg).toEqual(error.message);
 }
 
 function expectNoError(
