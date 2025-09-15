@@ -4,9 +4,7 @@
   "prefix": "ngs",
   "projectType": "application",
   "sourceRoot": "apps/demo/src",
-  "tags": [
-    "app:demo"
-  ],
+  "tags": ["app:demo"],
   "targets": {
     "build": {
       "configurations": {
@@ -80,9 +78,7 @@
         "inlineStyleLanguage": "scss",
         "main": "apps/demo/src/main.ts",
         "outputPath": "dist/apps/demo",
-        "polyfills": [
-          "zone.js"
-        ],
+        "polyfills": ["zone.js"],
         "scripts": [],
         "stylePreprocessorOptions": {
           "includePaths": [
@@ -90,14 +86,10 @@
             "packages/common/src/routed-tabs"
           ]
         },
-        "styles": [
-          "apps/demo/src/css/styles.scss"
-        ],
+        "styles": ["apps/demo/src/css/styles.scss"],
         "tsConfig": "apps/demo/tsconfig.app.json"
       },
-      "outputs": [
-        "{options.outputPath}"
-      ]
+      "outputs": ["{options.outputPath}"]
     },
     "deploy": {
       "executor": "angular-cli-ghpages:deploy",
@@ -115,9 +107,7 @@
     },
     "lint": {
       "executor": "@nx/eslint:lint",
-      "outputs": [
-        "{options.outputFile}"
-      ]
+      "outputs": ["{options.outputFile}"]
     },
     "serve": {
       "configurations": {
@@ -135,10 +125,7 @@
       "executor": "@angular-devkit/build-angular:karma",
       "options": {
         "karmaConfig": "apps/demo/karma.conf.js",
-        "polyfills": [
-          "zone.js",
-          "zone.js/testing"
-        ],
+        "polyfills": ["zone.js", "zone.js/testing"],
         "tsConfig": "apps/demo/tsconfig.spec.json"
       }
     }
