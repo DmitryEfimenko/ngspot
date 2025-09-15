@@ -13,7 +13,7 @@ module.exports = function (config) {
       ...baseConfig.coverageReporter,
       dir: join(
         __dirname,
-        '../../../coverage/packages/route-path-builder/package'
+        '../../../coverage/packages/route-path-builder/package',
       ),
     },
   });

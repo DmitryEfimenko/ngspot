@@ -2,17 +2,14 @@
 /* eslint-disable @angular-eslint/no-input-rename */
 /* eslint-disable @typescript-eslint/member-ordering */
 /* eslint-disable @typescript-eslint/no-empty-function */
-/* eslint-disable @angular-eslint/no-host-metadata-property */
 import { FocusMonitor } from '@angular/cdk/a11y';
 import { BooleanInput, coerceBooleanProperty } from '@angular/cdk/coercion';
 import {
   Component,
   ElementRef,
-  Inject,
+  inject,
   Input,
   OnDestroy,
-  Optional,
-  Self,
   ViewChild,
 } from '@angular/core';
 import {
@@ -24,7 +21,6 @@ import {
   Validators,
 } from '@angular/forms';
 import {
-  MAT_FORM_FIELD,
   MatFormField,
   MatFormFieldControl,
 } from '@angular/material/form-field';
@@ -184,13 +180,15 @@ export class MyTelInputComponent
     return this.parts.invalid && this.touched;
   }
 
-  constructor(
-    private _formBuilder: FormBuilder,
-    private _focusMonitor: FocusMonitor,
-    private _elementRef: ElementRef<HTMLElement>,
-    @Optional() @Inject(MAT_FORM_FIELD) public _formField: MatFormField,
-    @Optional() @Self() public ngControl: NgControl
-  ) {
+  private _formBuilder = inject(FormBuilder);
+  private _focusMonitor = inject(FocusMonitor);
+
+  private _elementRef = inject(ElementRef<HTMLElement>);
+
+  public _formField = inject(MatFormField, { optional: true, self: false });
+  public ngControl = inject(NgControl, { optional: true, self: true });
+
+  constructor() {
     if (this.ngControl != null) {
       this.ngControl.valueAccessor = this;
     }
@@ -221,7 +219,7 @@ export class MyTelInputComponent
 
   autoFocusNext(
     control: AbstractControl,
-    nextElement?: HTMLInputElement
+    nextElement?: HTMLInputElement,
   ): void {
     if (!control.errors && nextElement) {
       this._focusMonitor.focusVia(nextElement, 'program');
@@ -236,7 +234,7 @@ export class MyTelInputComponent
 
   setDescribedByIds(ids: string[]) {
     const controlElement = this._elementRef.nativeElement.querySelector(
-      '.example-tel-input-container'
+      '.example-tel-input-container',
     )!;
     controlElement.setAttribute('aria-describedby', ids.join(' '));
   }

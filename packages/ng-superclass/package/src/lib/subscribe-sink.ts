@@ -52,7 +52,7 @@ export class SubscribeSink implements OnDestroy {
 }
 
 export function createEffectFn<T>(
-  factoryFn: (source: Observable<T>) => Observable<unknown>
+  factoryFn: (source: Observable<T>) => Observable<unknown>,
 ) {
   return function (destroyed$: Observable<boolean>) {
     const subject = new Subject<T>();

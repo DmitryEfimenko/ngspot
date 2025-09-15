@@ -13,7 +13,7 @@ module.exports = function (config) {
       ...baseConfig.coverageReporter,
       dir: join(
         __dirname,
-        '../../../coverage/packages/ng-superclass-material/package'
+        '../../../coverage/packages/ng-superclass-material/package',
       ),
     },
     failOnEmptyTestSuite: false,

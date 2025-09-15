@@ -48,7 +48,7 @@ export class FullNameReactiveComponent extends FormComponentSuperclass<
       firstName: new FormControl('', { nonNullable: true }),
       lastName: new FormControl('', { nonNullable: true }),
     },
-    { validators: FirstAndLastNameValidator() }
+    { validators: FirstAndLastNameValidator() },
   );
 
   override outerToInner = (fullName$: Observable<OuterType>) =>
@@ -60,7 +60,7 @@ export class FullNameReactiveComponent extends FormComponentSuperclass<
           lastName: lastName ?? '',
         };
         return inner;
-      })
+      }),
     );
 
   override innerToOuter = (innerValues$: Observable<InnerType>) =>
@@ -74,7 +74,7 @@ export class FullNameReactiveComponent extends FormComponentSuperclass<
           result += ` ${lastName}`;
         }
         return result;
-      })
+      }),
     );
 
   override validate(control: AbstractControl<OuterType>) {
@@ -107,6 +107,6 @@ function FirstAndLastNameValidator(): ValidatorFn {
 function isFirstAndLastNameValid({ firstName, lastName }: InnerType): boolean {
   return allowedNames.some(
     (allowed) =>
-      allowed.firstName === firstName && allowed.lastName === lastName
+      allowed.firstName === firstName && allowed.lastName === lastName,
   );
 }

@@ -26,7 +26,7 @@ export class LocalDateComponent extends FormComponentSuperclass<Date, string> {
           return ''; // happens during initialization
         }
         return date.toISOString().substring(0, 16);
-      })
+      }),
     );
 
   override innerToOuter = (outgoingValues$: Observable<string>) =>
@@ -36,7 +36,7 @@ export class LocalDateComponent extends FormComponentSuperclass<Date, string> {
           return null as unknown as Date;
         }
         return new Date(inner + 'Z');
-      })
+      }),
     );
 
   override validate(control: AbstractControl) {

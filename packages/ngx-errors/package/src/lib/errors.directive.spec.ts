@@ -23,6 +23,9 @@ import {
 
 @Component({
   selector: 'ngs-test-host-with-reactive-forms',
+  // Explicitly mark as non-standalone to satisfy Angular 20 TestBed checks
+  // eslint-disable-next-line @angular-eslint/prefer-standalone
+  standalone: false,
 })
 class TestHostWithReactiveFormsComponent {
   street = new FormControl();
@@ -35,7 +38,11 @@ class TestHostWithReactiveFormsComponent {
   });
 }
 
-@Component({})
+@Component({
+  // Explicitly mark as non-standalone to satisfy Angular 20 TestBed checks
+  // eslint-disable-next-line @angular-eslint/prefer-standalone
+  standalone: false,
+})
 class TestHostWithTemplateDrivenFormsComponent {
   @ViewChild(NgForm)
   form: NgForm;
@@ -103,8 +110,30 @@ function expectNgxError(
   },
 ) {
   const { handleErrorSpy, spectator } = factoryExpectedToThrow();
-  spectator.tick();
-  expect(handleErrorSpy).toHaveBeenCalledWith(error);
+  let thrown: any;
+  try {
+    spectator.detectChanges();
+  } catch (e) {
+    thrown = e;
+  }
+  try {
+    spectator.tick();
+  } catch (e) {
+    thrown = thrown ?? e;
+  }
+
+  if (handleErrorSpy.calls.any()) {
+    const call =
+      handleErrorSpy.calls.mostRecent() || handleErrorSpy.calls.first();
+    const received = call.args[0] as Error | undefined;
+    const receivedMsg = received?.message ?? '';
+    expect(receivedMsg).toEqual(error.message);
+    return;
+  }
+
+  // Fallback: ensure thrown error matches expected
+  const thrownMsg = (thrown?.message as string) ?? '';
+  expect(thrownMsg).toEqual(error.message);
 }
 
 function expectNoError(

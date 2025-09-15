@@ -21,7 +21,7 @@ describe(TwoInputsTemplateDrivenComponent.name, () => {
 
     async function setup<T extends { [key: string]: T[typeof key] }>(
       template: string,
-      hostProps: T
+      hostProps: T,
     ) {
       const spectator = createHost<T>(template, { hostProps });
 
@@ -62,7 +62,7 @@ describe(TwoInputsTemplateDrivenComponent.name, () => {
           .pipe(
             tap((val) => {
               receivedValues.push(val);
-            })
+            }),
           )
           .subscribe();
 

@@ -1,4 +1,3 @@
-/* eslint-disable @angular-eslint/no-host-metadata-property */
 import { AnimationOptions } from '@angular/animations';
 import { CommonModule, DOCUMENT } from '@angular/common';
 import {

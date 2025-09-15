@@ -29,7 +29,7 @@ type LimitedMatFormFieldControl<T> = Omit<
 @Directive()
 export abstract class FormComponentMaterialSuperclass<
     OuterType,
-    InnerType = OuterType
+    InnerType = OuterType,
   >
   extends FormComponentSuperclass<OuterType, InnerType>
   implements DoCheck, LimitedMatFormFieldControl<OuterType>

@@ -118,12 +118,12 @@ export abstract class RoutePathBuilder {
    */
   protected urlFromCommands(
     commands: (string | number | undefined)[],
-    navigationExtras?: UrlCreationOptions
+    navigationExtras?: UrlCreationOptions,
   ) {
     const sanitizedCommands = commands.filter((c) => !!c);
     const urlTree = this.router.createUrlTree(
       [...this.parentCommands, ...sanitizedCommands],
-      navigationExtras
+      navigationExtras,
     );
     return new AppUrl(urlTree, this.router);
   }
@@ -142,7 +142,7 @@ export abstract class RoutePathBuilder {
    */
   protected childRoutes<T extends RoutePathBuilder>(
     path: string,
-    childRoutePathBuilderClass: Type<T>
+    childRoutePathBuilderClass: Type<T>,
   ) {
     const pathBuilder = this.injector.get<T>(childRoutePathBuilderClass);
     pathBuilder.parent = this;

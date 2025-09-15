@@ -31,8 +31,7 @@
             "packages/common/src/routed-tabs"
           ]
         },
-        "scripts": [],
-        "allowedCommonJsDependencies": ["safevalues"]
+        "scripts": []
       },
       "configurations": {
         "production": {

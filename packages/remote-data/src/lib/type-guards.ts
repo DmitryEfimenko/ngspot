@@ -7,25 +7,25 @@ import {
 } from './model';
 
 export function isNotAskedState<T, E>(
-  data: RemoteData<T, E> | undefined | null
+  data: RemoteData<T, E> | undefined | null,
 ): data is NotAskedState<T> {
   return data?.state === 'notAsked';
 }
 
 export function isLoadingState<T, E>(
-  data: RemoteData<T, E> | undefined | null
+  data: RemoteData<T, E> | undefined | null,
 ): data is LoadingState<T> {
   return data?.state === 'loading';
 }
 
 export function isSuccessState<T, E>(
-  data: RemoteData<T, E> | undefined | null
+  data: RemoteData<T, E> | undefined | null,
 ): data is SuccessState<T> {
   return data?.state === 'success';
 }
 
 export function isErrorState<T, E>(
-  data: RemoteData<T, E> | undefined | null
+  data: RemoteData<T, E> | undefined | null,
 ): data is ErrorState<T, E> {
   return data?.state === 'error';
 }

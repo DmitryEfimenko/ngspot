@@ -149,11 +149,11 @@ export abstract class FormComponentSuperclass<OuterType, InnerType = OuterType>
    */
   private viewModel$ = of(null).pipe(
     map(() => this.viewModel as AbstractControl<InnerType>),
-    filterOutNullish()
+    filterOutNullish(),
   );
 
   private viewModelValueChanges$ = this.viewModel$.pipe(
-    switchMap((viewModel) => viewModel.valueChanges)
+    switchMap((viewModel) => viewModel.valueChanges),
   );
 
   /**
@@ -237,7 +237,7 @@ export abstract class FormComponentSuperclass<OuterType, InnerType = OuterType>
       this.stateChanges.next();
       this.changeDetectorRef.detectChanges();
     }),
-    shareReplay(1)
+    shareReplay(1),
   );
 
   /**
@@ -252,19 +252,19 @@ export abstract class FormComponentSuperclass<OuterType, InnerType = OuterType>
     tap((value) => {
       this.emitOutgoingValue(value);
     }),
-    shareReplay(1)
+    shareReplay(1),
   );
 
   latestValue$ = merge(
     of<null>(null),
     this.incomingValues$$,
-    this.innerToOuter$
+    this.innerToOuter$,
   );
 
   innerControlValues$: Observable<InnerType> = this.viewModel$.pipe(
     switchMap((viewModel) =>
-      viewModel.valueChanges.pipe(startWith(viewModel.value))
-    )
+      viewModel.valueChanges.pipe(startWith(viewModel.value)),
+    ),
   );
 
   constructor() {
@@ -278,11 +278,11 @@ export abstract class FormComponentSuperclass<OuterType, InnerType = OuterType>
           this.ngControl.control.valueChanges.pipe(
             conditionalStartWith(
               () => !(this.ngControl instanceof NgModel),
-              () => this.ngControl.control.value
+              () => this.ngControl.control.value,
             ),
             filter((val) => val !== this._value),
-            tap(this.incomingValues$$)
-          )
+            tap(this.incomingValues$$),
+          ),
         );
       }
       this.subscribeTo(this.outerToInner$);
@@ -293,8 +293,8 @@ export abstract class FormComponentSuperclass<OuterType, InnerType = OuterType>
 
     const markAsDirty$ = this.viewModel$.pipe(
       switchMap((viewModel) =>
-        viewModel.valueChanges.pipe(tap(() => viewModel.markAsDirty()))
-      )
+        viewModel.valueChanges.pipe(tap(() => viewModel.markAsDirty())),
+      ),
     );
     this.subscribeTo(markAsDirty$);
   }
@@ -353,7 +353,7 @@ export abstract class FormComponentSuperclass<OuterType, InnerType = OuterType>
    * @returns Stream of transformed values that conform to the type of inner control
    */
   protected outerToInner = (
-    values$: Observable<OuterType>
+    values$: Observable<OuterType>,
   ): Observable<InnerType> => {
     return values$ as unknown as Observable<InnerType>;
   };
@@ -368,7 +368,7 @@ export abstract class FormComponentSuperclass<OuterType, InnerType = OuterType>
    * @returns Stream of transformed values that conform to the type of outer control
    */
   protected innerToOuter = (
-    values$: Observable<InnerType>
+    values$: Observable<InnerType>,
   ): Observable<OuterType> => {
     return values$ as unknown as Observable<OuterType>;
   };
@@ -426,7 +426,7 @@ export abstract class FormComponentSuperclass<OuterType, InnerType = OuterType>
         if (changed) {
           this.stateChanges.next();
         }
-      })
+      }),
     );
 
     this.subscribeTo(this.focusMonitor$);
@@ -445,7 +445,7 @@ export abstract class FormComponentSuperclass<OuterType, InnerType = OuterType>
         this.ngControl,
         [this.viewModel],
         this.changeDetectorRef,
-        this.destroy$
+        this.destroy$,
       );
     }
   }

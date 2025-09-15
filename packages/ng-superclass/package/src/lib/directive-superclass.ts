@@ -46,12 +46,12 @@ export abstract class DirectiveSuperclass
 
   onChangesRan$ = this.onChangesRan$$.asObservable().pipe(
     filter((x) => x),
-    distinctUntilChanged()
+    distinctUntilChanged(),
   );
 
   ngOnChanges(changes: SimpleChanges): void {
     this.inputChanges$.next(
-      new Set(Object.getOwnPropertyNames(changes) as Array<keyof this>)
+      new Set(Object.getOwnPropertyNames(changes) as Array<keyof this>),
     );
     this.onChangesRan$$.next(true);
   }
@@ -68,10 +68,10 @@ export abstract class DirectiveSuperclass
     return merge(
       this.onChangesRan$,
       this.inputChanges$,
-      of(0).pipe(delay(0, asapScheduler))
+      of(0).pipe(delay(0, asapScheduler)),
     ).pipe(
       map(() => this[key]),
-      distinctUntilChanged()
+      distinctUntilChanged(),
     );
   }
 }

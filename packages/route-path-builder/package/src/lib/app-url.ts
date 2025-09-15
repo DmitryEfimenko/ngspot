@@ -15,7 +15,7 @@ export class AppUrl {
      * UrlTree of the route
      */
     public urlTree: UrlTree,
-    private router: Router
+    private router: Router,
   ) {
     this.url = this.urlTree.toString();
   }

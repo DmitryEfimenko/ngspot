@@ -1,6 +1,11 @@
 import { MediaMatcher } from '@angular/cdk/layout';
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, HostBinding } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  HostBinding,
+  inject,
+} from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
@@ -45,24 +50,24 @@ export class AppComponent {
     map((project) => {
       const link = window.location.href;
       const tweetText = encodeURIComponent(
-        `Check out @ngspot/${project?.name ?? '*'}\n\n${link}`
+        `Check out @ngspot/${project?.name ?? '*'}\n\n${link}`,
       );
       return `https://twitter.com/intent/tweet?text=${tweetText}`;
-    })
+    }),
   );
 
   githubLink$ = this.activeProject$$.pipe(
-    map((project) => project?.githubLink)
+    map((project) => project?.githubLink),
   );
 
   @HostBinding('class.dark')
   isDarkTheme = true;
 
-  constructor(
-    private changeDetectorRef: ChangeDetectorRef,
-    private media: MediaMatcher,
-    private hljsLoader: HighlightLoader
-  ) {
+  private changeDetectorRef = inject(ChangeDetectorRef);
+  private media = inject(MediaMatcher);
+  private hljsLoader = inject(HighlightLoader);
+
+  constructor() {
     this.wireMediaListener();
     this.setTheme();
   }

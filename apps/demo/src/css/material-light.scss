@@ -43,7 +43,7 @@ $mat-light-theme-background: (
 );
 
 // colors are the same as in light theme
-$theme: mat.define-light-theme((
+$theme: mat.m2-define-light-theme((
   color: (
     primary: palette.$primary,
     accent: palette.$accent,

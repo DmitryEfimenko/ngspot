@@ -96,7 +96,7 @@ export class IfAnimatedDirective
         }
       }),
       skip(1),
-      switchMap((val) => this.createPlayerAndPlay$(val))
+      switchMap((val) => this.createPlayerAndPlay$(val)),
     );
 
     this.subs.add(obs$.subscribe());
@@ -203,17 +203,17 @@ export class IfAnimatedDirective
   private determineChildElSelectors() {
     this.walkAnimationMetadata(
       this.animationEnter,
-      this.animateChildElSelectorsEnter
+      this.animateChildElSelectorsEnter,
     );
     this.walkAnimationMetadata(
       this.animationLeave,
-      this.animateChildElSelectorsLeave
+      this.animateChildElSelectorsLeave,
     );
   }
 
   private walkAnimationMetadata(
     metadata: AnimationMetadata | AnimationMetadata[],
-    selectorsArray: string[]
+    selectorsArray: string[],
   ) {
     const arr = Array.isArray(metadata) ? metadata : [metadata];
     for (const metadata of arr) {
@@ -231,7 +231,7 @@ export class IfAnimatedDirective
 
   private visitMetadata(
     metadata: AnimationMetadata,
-    selectorsArray: string[]
+    selectorsArray: string[],
   ): AnimationMetadata | AnimationMetadata[] | undefined {
     switch (metadata.type) {
       case AnimationMetadataType.Query:
@@ -281,7 +281,7 @@ export class IfAnimatedDirective
 
   private setAnimateElRef() {
     const embeddedViewRef = this.viewContainerRef.createEmbeddedView(
-      this.templateRef
+      this.templateRef,
     );
 
     // make sure to render all elements inside of the embedded view ref.

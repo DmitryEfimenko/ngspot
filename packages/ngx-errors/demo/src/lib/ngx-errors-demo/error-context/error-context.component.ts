@@ -1,4 +1,3 @@
-import { JsonPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 import {
@@ -15,7 +14,7 @@ const snippetTs = require('raw-loader!./snippet.txt').default;
 @Component({
   selector: 'ngs-error-context',
   standalone: true,
-  imports: [CODE_SNIPPETS_DIRECTIVES, ErrorContextResultComponent, JsonPipe],
+  imports: [CODE_SNIPPETS_DIRECTIVES, ErrorContextResultComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <ngs-code-snippets

@@ -34,7 +34,7 @@ export const smoothHorizontalCollapse = (params: {
   return trigger('smoothHorizontalCollapse', [
     state(
       'true',
-      style({ opacity: 0, display: 'none', ...sizingPropsCollapsed })
+      style({ opacity: 0, display: 'none', ...sizingPropsCollapsed }),
     ),
     state('false', style({ opacity: 1, ...sizingPropsExpanded })),
     transition('true => false', [
@@ -83,7 +83,7 @@ export const animateCssProperty = (params: {
         query('@*', [animateChild()], { optional: true }),
         animate(
           timingWithDelay,
-          style({ [params.propName]: params.trueValue })
+          style({ [params.propName]: params.trueValue }),
         ),
       ]),
     ]),

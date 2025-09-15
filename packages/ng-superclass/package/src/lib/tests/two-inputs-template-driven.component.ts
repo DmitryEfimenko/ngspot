@@ -1,9 +1,4 @@
-import {
-  AfterViewInit,
-  ChangeDetectionStrategy,
-  Component,
-  ViewChild,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
 import {
   AbstractControl,
   FormControl,
@@ -11,8 +6,8 @@ import {
   NgModel,
 } from '@angular/forms';
 
-import { merge, Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { FormComponentSuperclass } from '../form-component-superclass';
 
@@ -58,7 +53,7 @@ export class TwoInputsTemplateDrivenComponent extends FormComponentSuperclass<
 
   override viewModel = new FormControl<InnerType>(
     { val1: '', val2: '' },
-    { nonNullable: true }
+    { nonNullable: true },
   );
 
   override outerToInner = (outerValues$: Observable<OuterType>) =>
@@ -71,14 +66,14 @@ export class TwoInputsTemplateDrivenComponent extends FormComponentSuperclass<
         this.val1 = inner.val1;
         this.val2 = inner.val2;
         return inner;
-      })
+      }),
     );
 
   override innerToOuter = (innerValues$: Observable<InnerType>) =>
     innerValues$.pipe(
       map((inner) => {
         return inner.val1 + inner.val2;
-      })
+      }),
     );
 
   override validate(control: AbstractControl) {

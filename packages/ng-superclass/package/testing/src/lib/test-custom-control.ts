@@ -15,7 +15,7 @@ export function testCustomFormControl(
   expect: JestExpectLike,
   resolveArgsFn: () =>
     | CustomControlTestContext
-    | Promise<CustomControlTestContext>
+    | Promise<CustomControlTestContext>,
 ) {
   describe('Test custom component common behavior', () => {
     async function setup() {

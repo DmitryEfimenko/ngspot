@@ -13,7 +13,7 @@ module.exports = function (config) {
       ...baseConfig.coverageReporter,
       dir: join(
         __dirname,
-        '../../../coverage/packages/expandable-input/package'
+        '../../../coverage/packages/expandable-input/package',
       ),
     },
   });

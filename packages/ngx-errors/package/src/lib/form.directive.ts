@@ -1,4 +1,4 @@
-import { Directive, Optional, Self } from '@angular/core';
+import { Directive, inject } from '@angular/core';
 import { FormGroupDirective, NgForm } from '@angular/forms';
 
 export type MaybeParentForm = FormGroupDirective | NgForm | null;
@@ -10,10 +10,11 @@ export type MaybeParentForm = FormGroupDirective | NgForm | null;
   standalone: true,
 })
 export class NgxErrorsFormDirective {
-  constructor(
-    @Self() @Optional() private ngForm: NgForm | null,
-    @Self() @Optional() private formGroupDirective: FormGroupDirective | null,
-  ) {}
+  ngForm: NgForm | null = inject(NgForm, { self: true, optional: true });
+  formGroupDirective: FormGroupDirective | null = inject(FormGroupDirective, {
+    self: true,
+    optional: true,
+  });
 
   get form(): MaybeParentForm {
     return this.ngForm ?? this.formGroupDirective;

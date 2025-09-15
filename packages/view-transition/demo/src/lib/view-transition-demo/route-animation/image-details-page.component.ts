@@ -17,11 +17,11 @@ import { imagesMetadata } from './data';
   imports: [NgOptimizedImage, VIEW_TRANSITION_DECLARATIONS],
   template: `
     <img
+      alt="{{ image().title }}"
       width="1024"
       height="768"
       class="mb-3"
       vtNameForRouting="image"
-      alt="{{ image().title }}"
       [ngSrc]="image().src"
     />
 

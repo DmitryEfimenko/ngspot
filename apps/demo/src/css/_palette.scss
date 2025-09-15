@@ -99,6 +99,6 @@ $warn-palette: (
   )
 );
 
-$primary: mat.define-palette($primary-palette, 500, 100, 900);
-$accent: mat.define-palette($accent-palette, 500, 200, 900);
-$warn: mat.define-palette($warn-palette, 300, 100, 900);
+$primary: mat.m2-define-palette($primary-palette, 500, 100, 900);
+$accent: mat.m2-define-palette($accent-palette, 500, 200, 900);
+$warn: mat.m2-define-palette($warn-palette, 300, 100, 900);

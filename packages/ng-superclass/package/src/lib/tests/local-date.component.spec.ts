@@ -17,7 +17,7 @@ describe(LocalDateComponent.name, () => {
 
     async function setup<T extends { [key: string]: any }>(
       template: string,
-      hostProps: T
+      hostProps: T,
     ) {
       const spectator = createHost<T>(template, { hostProps });
 

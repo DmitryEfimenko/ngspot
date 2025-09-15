@@ -47,7 +47,7 @@ export function filterOutNullish<T>(): OperatorFunction<
 
 export function conditionalStartWith<T>(
   condition: () => boolean,
-  cb: () => T
+  cb: () => T,
 ): OperatorFunction<unknown, T> {
   return function (source: Observable<any>) {
     return defer(() => {

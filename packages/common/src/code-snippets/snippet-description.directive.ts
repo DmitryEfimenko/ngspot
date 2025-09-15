@@ -1,9 +1,9 @@
-import { Directive, TemplateRef } from '@angular/core';
+import { Directive, inject, TemplateRef } from '@angular/core';
 
 @Directive({
   selector: '[ngsSnippetDescription]',
   standalone: true,
 })
 export class SnippetDescriptionDirective {
-  constructor(public templateRef: TemplateRef<any>) {}
+  public templateRef: TemplateRef<any> = inject(TemplateRef);
 }

@@ -109,19 +109,19 @@ export abstract class ExpandableInputBase implements AfterContentInit {
   private sanityCheck() {
     if (!this.expInputDirective) {
       throw new ExpInputError(
-        'You need to include an element with *ngsExpInput structural directive'
+        'You need to include an element with *ngsExpInput structural directive',
       );
     }
 
     if (!this.iconOpenDirective) {
       throw new ExpInputError(
-        'You need to include an element with *ngsExpIconOpen structural directive'
+        'You need to include an element with *ngsExpIconOpen structural directive',
       );
     }
 
     if (!this.iconCloseDirective) {
       throw new ExpInputError(
-        'You need to include an element with *ngsExpIconClose structural directive'
+        'You need to include an element with *ngsExpIconClose structural directive',
       );
     }
   }

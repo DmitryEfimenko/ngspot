@@ -42,15 +42,12 @@ export abstract class NgxErrorsBase {
     return controlState;
   });
 
-  private registerResolvedControl = effect(
-    () => {
-      const control = this.resolvedControl();
-      if (!control) {
-        return;
-      }
-      const form = this.formDirective?.form ?? null;
-      this.errorsState.registerControl(control, form);
-    },
-    { allowSignalWrites: true },
-  );
+  private registerResolvedControl = effect(() => {
+    const control = this.resolvedControl();
+    if (!control) {
+      return;
+    }
+    const form = this.formDirective?.form ?? null;
+    this.errorsState.registerControl(control, form);
+  });
 }

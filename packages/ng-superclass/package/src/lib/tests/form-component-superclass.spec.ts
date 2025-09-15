@@ -27,8 +27,8 @@ describe(FormComponentSuperclass.name, () => {
           withLatestFrom(this.latestValue$),
           tap(([_, latestVal]) => {
             console.log(latestVal);
-          })
-        )
+          }),
+        ),
       );
 
       ngOnInit() {

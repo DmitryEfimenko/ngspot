@@ -30,10 +30,10 @@ export class HighlightContentDirective implements OnInit, OnDestroy {
     delay(0),
     map(() => this.el.innerHTML),
     switchMap((contents) =>
-      this.highlightJS.highlightAuto(contents, hljs.listLanguages())
+      this.highlightJS.highlightAuto(contents, hljs.listLanguages()),
     ),
     map((result) => result.value),
-    tap((highlighted) => (this.highlightTarget.innerHTML = highlighted ?? ''))
+    tap((highlighted) => (this.highlightTarget.innerHTML = highlighted ?? '')),
   );
 
   ngOnInit() {
