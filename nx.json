@@ -5,53 +5,71 @@
     "groups": {
       "expandable-input": {
         "projects": ["expandable-input"],
-        "releaseTagPattern": "{projectName}-{version}"
+        "releaseTag": {
+          "pattern": "{projectName}-{version}"
+        }
       },
       "ngx-errors": {
         "projects": ["ngx-errors"],
-        "releaseTagPattern": "{projectName}-{version}"
+        "releaseTag": {
+          "pattern": "{projectName}-{version}"
+        }
       },
       "ngx-errors-material": {
         "projects": ["ngx-errors-material"],
-        "releaseTagPattern": "{projectName}-{version}"
+        "releaseTag": {
+          "pattern": "{projectName}-{version}"
+        }
       },
       "ng-superclass": {
         "projects": ["ng-superclass"],
-        "releaseTagPattern": "{projectName}-{version}"
+        "releaseTag": {
+          "pattern": "{projectName}-{version}"
+        }
       },
       "ng-superclass-material": {
         "projects": ["ng-superclass-material"],
-        "releaseTagPattern": "{projectName}-{version}"
+        "releaseTag": {
+          "pattern": "{projectName}-{version}"
+        }
       },
       "remote-data": {
         "projects": ["remote-data"],
-        "releaseTagPattern": "{projectName}-{version}"
+        "releaseTag": {
+          "pattern": "{projectName}-{version}"
+        }
       },
       "remote-data-rx": {
         "projects": ["remote-data-rx"],
-        "releaseTagPattern": "{projectName}-{version}"
+        "releaseTag": {
+          "pattern": "{projectName}-{version}"
+        }
       },
       "route-path-builder": {
         "projects": ["route-path-builder"],
-        "releaseTagPattern": "{projectName}-{version}"
+        "releaseTag": {
+          "pattern": "{projectName}-{version}"
+        }
       },
       "rxjs": {
         "projects": ["rxjs"],
-        "releaseTagPattern": "{projectName}-{version}"
+        "releaseTag": {
+          "pattern": "{projectName}-{version}"
+        }
       },
       "view-transition": {
         "projects": ["view-transition"],
-        "releaseTagPattern": "{projectName}-{version}"
+        "releaseTag": {
+          "pattern": "{projectName}-{version}"
+        }
       }
     },
     "projectsRelationship": "independent",
-    "releaseTagPattern": "{projectName}-{version}",
     "version": {
       "preVersionCommand": "npx nx run-many -t build",
-      "generatorOptions": {
-        "packageRoot": "dist/packages/{projectName}/package",
-        "currentVersionResolver": "registry"
-      }
+      "currentVersionResolver": "registry",
+      "preserveLocalDependencyProtocols": false,
+      "manifestRootsToUpdate": ["dist/packages/{projectName}/package"]
     },
     "changelog": {
       "projectChangelogs": {
@@ -62,6 +80,9 @@
           "versionTitleDate": true
         }
       }
+    },
+    "releaseTag": {
+      "pattern": "{projectName}-{version}"
     }
   },
   "generators": {
