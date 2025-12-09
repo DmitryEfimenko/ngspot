@@ -1,107 +1,111 @@
 {
-  "name": "demo",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "demo",
+  "prefix": "ngs",
   "projectType": "application",
   "sourceRoot": "apps/demo/src",
-  "prefix": "ngs",
-  "tags": ["app:demo"],
+  "tags": [
+    "app:demo"
+  ],
   "targets": {
     "build": {
+      "configurations": {
+        "development": {
+          "baseHref": "/ngspot/",
+          "buildOptimizer": false,
+          "extractLicenses": false,
+          "namedChunks": true,
+          "optimization": false,
+          "sourceMap": true,
+          "vendorChunk": true
+        },
+        "production": {
+          "baseHref": "/ngspot/",
+          "budgets": [
+            {
+              "maximumError": "844kb",
+              "type": "initial"
+            },
+            {
+              "maximumError": "35kb",
+              "maximumWarning": "2kb",
+              "type": "anyComponentStyle"
+            }
+          ],
+          "fileReplacements": [
+            {
+              "replace": "apps/demo/src/environments/environment.ts",
+              "with": "apps/demo/src/environments/environment.prod.ts"
+            }
+          ],
+          "outputHashing": "all"
+        },
+        "stats": {
+          "budgets": [
+            {
+              "maximumError": "2mb",
+              "maximumWarning": "1mb",
+              "type": "initial"
+            }
+          ],
+          "extractLicenses": false,
+          "fileReplacements": [
+            {
+              "replace": "apps/demo/src/environments/environment.ts",
+              "with": "apps/demo/src/environments/environment.prod.ts"
+            }
+          ],
+          "namedChunks": true,
+          "outputHashing": "none",
+          "sourceMap": {
+            "scripts": true,
+            "styles": true,
+            "vendor": true
+          },
+          "statsJson": true
+        }
+      },
+      "defaultConfiguration": "production",
       "executor": "@angular-devkit/build-angular:browser",
-      "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/apps/demo",
-        "index": "apps/demo/src/index.html",
-        "main": "apps/demo/src/main.ts",
-        "polyfills": ["zone.js"],
-        "tsConfig": "apps/demo/tsconfig.app.json",
-        "inlineStyleLanguage": "scss",
         "assets": [
           "apps/demo/src/assets",
           {
-            "input": "apps/demo/src/",
             "glob": "manifest.json",
+            "input": "apps/demo/src/",
             "output": "/"
           }
         ],
-        "styles": ["apps/demo/src/css/styles.scss"],
+        "index": "apps/demo/src/index.html",
+        "inlineStyleLanguage": "scss",
+        "main": "apps/demo/src/main.ts",
+        "outputPath": "dist/apps/demo",
+        "polyfills": [
+          "zone.js"
+        ],
+        "scripts": [],
         "stylePreprocessorOptions": {
           "includePaths": [
             "packages/common/src/code-snippets",
             "packages/common/src/routed-tabs"
           ]
         },
-        "scripts": []
+        "styles": [
+          "apps/demo/src/css/styles.scss"
+        ],
+        "tsConfig": "apps/demo/tsconfig.app.json"
       },
-      "configurations": {
-        "production": {
-          "budgets": [
-            {
-              "type": "initial",
-              "maximumError": "844kb"
-            },
-            {
-              "type": "anyComponentStyle",
-              "maximumWarning": "2kb",
-              "maximumError": "33kb"
-            }
-          ],
-          "outputHashing": "all",
-          "baseHref": "/ngspot/",
-          "fileReplacements": [
-            {
-              "replace": "apps/demo/src/environments/environment.ts",
-              "with": "apps/demo/src/environments/environment.prod.ts"
-            }
-          ]
-        },
-        "development": {
-          "buildOptimizer": false,
-          "optimization": false,
-          "vendorChunk": true,
-          "extractLicenses": false,
-          "sourceMap": true,
-          "namedChunks": true,
-          "baseHref": "/ngspot/"
-        },
-        "stats": {
-          "outputHashing": "none",
-          "sourceMap": {
-            "styles": true,
-            "scripts": true,
-            "vendor": true
-          },
-          "namedChunks": true,
-          "extractLicenses": false,
-          "statsJson": true,
-          "budgets": [
-            {
-              "type": "initial",
-              "maximumWarning": "1mb",
-              "maximumError": "2mb"
-            }
-          ],
-          "fileReplacements": [
-            {
-              "replace": "apps/demo/src/environments/environment.ts",
-              "with": "apps/demo/src/environments/environment.prod.ts"
-            }
-          ]
-        }
-      },
-      "defaultConfiguration": "production"
+      "outputs": [
+        "{options.outputPath}"
+      ]
     },
-    "serve": {
-      "executor": "@angular-devkit/build-angular:dev-server",
-      "configurations": {
-        "production": {
-          "buildTarget": "demo:build:production"
-        },
-        "development": {
-          "buildTarget": "demo:build:development"
-        }
-      },
-      "defaultConfiguration": "development"
+    "deploy": {
+      "executor": "angular-cli-ghpages:deploy",
+      "options": {
+        "baseHref": "/ngspot/",
+        "cname": "undefined",
+        "dir": "dist/apps/demo"
+      }
     },
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
@@ -111,22 +115,31 @@
     },
     "lint": {
       "executor": "@nx/eslint:lint",
-      "outputs": ["{options.outputFile}"]
+      "outputs": [
+        "{options.outputFile}"
+      ]
+    },
+    "serve": {
+      "configurations": {
+        "development": {
+          "buildTarget": "demo:build:development"
+        },
+        "production": {
+          "buildTarget": "demo:build:production"
+        }
+      },
+      "defaultConfiguration": "development",
+      "executor": "@angular-devkit/build-angular:dev-server"
     },
     "test": {
       "executor": "@angular-devkit/build-angular:karma",
       "options": {
-        "tsConfig": "apps/demo/tsconfig.spec.json",
         "karmaConfig": "apps/demo/karma.conf.js",
-        "polyfills": ["zone.js", "zone.js/testing"]
-      }
-    },
-    "deploy": {
-      "executor": "angular-cli-ghpages:deploy",
-      "options": {
-        "baseHref": "/ngspot/",
-        "cname": "undefined",
-        "dir": "dist/apps/demo"
+        "polyfills": [
+          "zone.js",
+          "zone.js/testing"
+        ],
+        "tsConfig": "apps/demo/tsconfig.spec.json"
       }
     }
   }
