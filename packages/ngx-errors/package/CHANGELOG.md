@@ -1,3 +1,9 @@
+# 5.0.0 (2025-12-09)
+
+### 🚀 Features
+
+- bump deps and adapt code to angular 20 ([#23](https://github.com/DmitryEfimenko/ngspot/pull/23))
+
 ## 4.0.3 (2025-03-12)
 
 
