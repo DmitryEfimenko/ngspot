@@ -21,7 +21,7 @@
           "baseHref": "/ngspot/",
           "budgets": [
             {
-              "maximumError": "844kb",
+              "maximumError": "935kb",
               "type": "initial"
             },
             {

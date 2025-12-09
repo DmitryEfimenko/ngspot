@@ -1,11 +1,11 @@
 {
   "name": "@ngspot/ngx-errors-material",
-  "version": "4.0.1",
+  "version": "5.0.0",
   "peerDependencies": {
     "@angular/core": ">=20 <21",
     "@angular/forms": ">=20 <21",
     "@angular/material": ">=20 <21",
-    "@ngspot/ngx-errors": "^4.0.0"
+    "@ngspot/ngx-errors": "^5.0.0"
   },
   "dependencies": {
     "tslib": "^2.3.0"
