@@ -1,3 +1,13 @@
+# 5.0.0 (2025-12-09)
+
+### 🚀 Features
+
+- bump deps and adapt code to angular 20 ([#23](https://github.com/DmitryEfimenko/ngspot/pull/23))
+
+### 🧱 Updated Dependencies
+
+- Updated ngx-errors to 5.0.0
+
 ## [4.0.1](https://github.com/DmitryEfimenko/ngspot/compare/ngx-errors-material-4.0.1-rc.1...ngx-errors-material-4.0.1) (2024-05-20)
 
 ## [4.0.1-rc.1](https://github.com/DmitryEfimenko/ngspot/compare/ngx-errors-material-4.0.1-rc.0...ngx-errors-material-4.0.1-rc.1) (2024-05-20)
