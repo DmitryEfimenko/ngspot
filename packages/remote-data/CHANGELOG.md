@@ -1,3 +1,25 @@
+## 1.3.0 (2026-03-14)
+
+### 🚀 Features
+
+- **remote-data:** 🔥 support cjs and esm ([9341267](https://github.com/DmitryEfimenko/ngspot/commit/9341267))
+- bump deps and adapt code to angular 20 ([#23](https://github.com/DmitryEfimenko/ngspot/pull/23))
+- **ngspot:** 🔥 update repo to ng17 ([895f811](https://github.com/DmitryEfimenko/ngspot/commit/895f811))
+- ⚠️  **ng-superclass:** 🔥 improve FormComponentSuperclass ([#13](https://github.com/DmitryEfimenko/ngspot/pull/13))
+- **expandable-input:** 🔥 version 1.0 ([#5](https://github.com/DmitryEfimenko/ngspot/pull/5))
+
+### 🩹 Fixes
+
+- **demo:** 🐞 incorrect baseHref in table of contents ([aba3844](https://github.com/DmitryEfimenko/ngspot/commit/aba3844))
+
+### ⚠️  Breaking Changes
+
+- **ng-superclass:** 🔥 improve FormComponentSuperclass  ([#13](https://github.com/DmitryEfimenko/ngspot/pull/13))
+  🧨
+  * Removed `WrappedFormControlSuperclass` and `WrappedFormControlSuperclass`.
+  * Changes in `FormComponentSuperclass`:
+    * `emitOutgoingValue` method is now private. To sync the inner state to the outer, use `this.viewModel.setValue()` method. For more info, see README.md
+
 ### [1.2.1](https://github.com/DmitryEfimenko/ngspot/compare/remote-data-1.2.0...remote-data-1.2.1) (2022-06-22)
 
 
