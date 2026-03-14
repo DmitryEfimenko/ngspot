@@ -35,6 +35,10 @@
       },
       "remote-data": {
         "projects": ["remote-data"],
+        "version": {
+          "preVersionCommand": "npx nx build remote-data",
+          "manifestRootsToUpdate": ["dist/packages/remote-data/package"]
+        },
         "releaseTag": {
           "pattern": "{projectName}-{version}"
         }
@@ -66,7 +70,6 @@
     },
     "projectsRelationship": "independent",
     "version": {
-      "preVersionCommand": "npx nx run-many -t build",
       "currentVersionResolver": "registry",
       "preserveLocalDependencyProtocols": false,
       "manifestRootsToUpdate": ["dist/packages/{projectName}/package"]

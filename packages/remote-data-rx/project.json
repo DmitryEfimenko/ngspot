@@ -7,13 +7,16 @@
   "targets": {
     "build": {
       "executor": "@nx/js:tsc",
-      "outputs": ["{options.outputPath}"],
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}/package"],
       "dependsOn": ["^build"],
       "options": {
-        "outputPath": "dist/packages/remote-data-rx",
+        "outputPath": "dist/packages/remote-data-rx/package",
         "main": "packages/remote-data-rx/src/index.ts",
         "tsConfig": "packages/remote-data-rx/tsconfig.lib.json",
-        "assets": ["packages/remote-data-rx/*.md"]
+        "assets": [
+          "packages/remote-data-rx/package.json",
+          "packages/remote-data-rx/*.md"
+        ]
       }
     },
     "publish": {

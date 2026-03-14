@@ -93,6 +93,7 @@
     "@nx/eslint": "22.1.2",
     "@nx/eslint-plugin": "22.1.2",
     "@nx/js": "22.1.2",
+    "@nx/rollup": "^22.1.2",
     "@nx/workspace": "22.1.2",
     "@schematics/angular": "20.3.9",
     "@swc-node/register": "1.9.2",

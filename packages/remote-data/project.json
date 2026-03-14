@@ -1,18 +1,24 @@
 {
   "name": "remote-data",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "packages/remote-data/src",
+  "sourceRoot": "packages/remote-data",
   "projectType": "library",
   "tags": ["lib", "lib:remote-data"],
   "targets": {
     "build": {
-      "executor": "@nx/js:tsc",
-      "outputs": ["{options.outputPath}"],
+      "executor": "@nx/rollup:rollup",
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}/package"],
       "options": {
-        "outputPath": "dist/packages/remote-data",
         "main": "packages/remote-data/src/index.ts",
+        "outputPath": "dist/packages/remote-data/package",
+        "generatePackageJson": true,
         "tsConfig": "packages/remote-data/tsconfig.lib.json",
-        "assets": ["packages/remote-data/*.md"]
+        "format": ["esm", "cjs"],
+        "assets": [
+          "packages/remote-data/package.json",
+          "packages/remote-data/README.md",
+          "packages/remote-data/CHANGELOG.md"
+        ]
       }
     },
     "publish": {
